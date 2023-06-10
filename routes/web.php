@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Users\ManageUser;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -20,4 +21,5 @@ Route::group(['middleware'=> ['auth']], function () {
     Route::post('/logout', [HomeController::class, 'doLogout'])->name('logout');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/profile', Dashboard::class)->name('profile');
+    Route::get('/users', ManageUser::class);
 });
