@@ -1,0 +1,261 @@
+@font-face {
+    font-family: 'Futura PT Book';
+    src: url('../fonts/FuturaPT-Book.woff2') format('woff2'),
+    url('../fonts/FuturaPT-Book.woff') format('woff'),
+    url('../fonts/FuturaPT-Book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura PT Medium';
+    src: url('../fonts/FuturaPT-Medium.woff2') format('woff2'),
+    url('../fonts/FuturaPT-Medium.woff') format('woff'),
+    url('../fonts/FuturaPT-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+body {
+    margin: 0 0;
+    padding: 0 0;
+    font-family: 'Futura PT Book';
+}
+
+p {
+    font-size: 18px;
+}
+
+b {
+    font-family: 'Futura PT Medium';
+    font-weight: 500;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 900px;
+    /*border: 1px solid red;*/
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+.header-section{
+    margin-top: 0;
+    padding-top: 0px;
+}
+.header {
+    text-align: center;
+    padding: 0;
+}
+
+.header img {
+    width: 71px;
+}
+.header p {
+    margin-top:9px;
+    font-size: 10px;
+}
+
+.order-details-top-address {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0 60px;
+}
+
+.order-details-top-address .top-address {
+    text-align: right;
+}
+
+.order-details-table {
+    padding: 0 0 30px;
+}
+
+.order-details-table table {
+    width: 100%;
+}
+
+.order-details-table table tr th {
+    font-family: 'Futura PT Book';
+    font-weight: 400;
+    background-color: #F4EEE6;
+    padding: 10px 12px;
+    font-size: 18px;
+    color: #424242;
+    border-bottom: 2px solid #8D6600;
+}
+
+.order-details-table table tr td {
+    padding: 10px 12px;
+    font-size: 18px;
+    color: #424242;
+}
+
+.order-details-table table tr td:first-child {
+    color: #8D6600;
+}
+
+.order-details-table table tr.item td {
+    background-color: #F4EEE6;
+}
+
+.order-details-table table tr.item td:first-child {
+    color: #424242;
+}
+
+.order-info-table {
+    padding: 0 0 30px;
+}
+
+.order-info-table table {
+    width: 100%;
+}
+
+.order-info-table table tr td {
+    padding: 10px 12px;
+    font-size: 18px;
+    color: #424242;
+    width: 33%;
+    font-family: 'Futura PT Medium';
+    font-weight: 500;
+}
+
+.order-info-table table tr td:first-child {
+    color: #8D6600;
+}
+
+.order-message {
+    padding: 0 0 50px;
+}
+
+.delivery-consent {
+    padding: 0 0 70px;
+}
+
+.delivery-consent p {
+    font-size: 20px;
+    padding: 30px 0 15px;
+    border-bottom: 2px solid #8D6600;
+    position: relative;
+    margin-right: 145px;
+}
+
+.delivery-consent p span {
+    background-color: #fff;
+    position: absolute;
+    display: inline-block;
+    padding: 10px 15px 10px 0;
+    top: 10px;
+}
+
+.delivery-message {
+    padding: 0 0 180px;
+}
+
+.delivery-message p {
+    font-size: 20px;
+    line-height: 32px;
+}
+
+.footer {
+    padding: 0 0 20px;
+    border-top: 1px solid #8D6600;
+}
+
+.footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    column-gap: 40px;
+}
+.footer ul li {
+    position: relative;
+}
+
+.footer ul li:after {
+    content: '.';
+    position: absolute;
+    right: -22px;
+    top: 22px;
+    font-size: 30px;
+    line-height: 1px;
+}
+
+.footer ul li p a {
+    color: #000;
+    text-decoration: none;
+}
+
+.footer ul li:last-child:after {
+    content: none;
+}
+
+.laben-font{
+    font-size: 12px;
+    font-weight: bold;
+}
+table{
+    width: 100%;
+}
+.qr-table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.qr-td {
+    width: 33%;
+    padding-top: 10px;
+}
+.pl-13{
+    padding-left: 13px;
+}
+.pl-26{
+    padding-left: 26px;
+}
+.pr-13{
+    padding-right: 13px;
+}
+.border-top{
+    border-top: 2px dotted #C8AC64;
+}
+
+.border-right{
+    border-right: 2px dotted #C8AC64;
+}
+.top-text{
+    color: #8D6600;
+    font-weight: bold;
+    letter-spacing: 0.1em !important;
+}
+.details{
+    font-size: 10px;
+    font-weight: 450;
+}
+.qr-code {
+    padding: 10px 0;
+}
+.golden{
+    color: #8D6600;
+}
+.bold{
+    font-weight: bold !important;;
+}
+.text-golden{
+    color: #8D6600;
+    font-weight: bold;
+    letter-spacing: 0.1em !important;
+}
+.text-sm{
+    font-size: 10px;
+    line-height: 10px !important;
+    /*margin-bottom: 3px !important;*/
+}
