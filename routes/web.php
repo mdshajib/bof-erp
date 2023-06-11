@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Users\ManageUser;
+use App\Http\Livewire\Category\ManageCategory;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -21,5 +22,6 @@ Route::group(['middleware'=> ['auth']], function () {
     Route::post('/logout', [HomeController::class, 'doLogout'])->name('logout');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/profile', Dashboard::class)->name('profile');
-    Route::get('/users', ManageUser::class);
+    Route::get('/users', ManageUser::class)->name('user.manage');
+    Route::get('/categories', ManageCategory::class)->name('manage.category');
 });
