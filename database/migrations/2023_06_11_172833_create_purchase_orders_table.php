@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attribute_terms', function (Blueprint $table) {
+        Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('attribute_id')->references('id')->on('attributes')->onDelete('Cascade');
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('purchase_number')->nullable();
+            $table->float('gross_amount', 8, 2);
+            $table->float('discount_amount', 8, 2)->default(0);
+            $table->float('net_payment_amount', 8, 2);
+            $table->date('order_date')->nullable();
+            $table->foreignId('generated_by')->references('id')->on('users')->onDelete('Cascade');
+            $table->text('internal_comments')->nullable();
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attribute_terms');
+        Schema::dropIfExists('purchase_orders');
     }
 };

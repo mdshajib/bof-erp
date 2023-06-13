@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('Cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->tinyInteger('low_quantity_alert')->default(5);
+            $table->string('image_path')->nullable();
+            $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
 
             $table->softDeletes($column = 'deleted_at', $precision = 0);

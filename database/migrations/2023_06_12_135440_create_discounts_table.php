@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_variations', function (Blueprint $table) {
+        Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('Cascade');
-            $table->string('variant_name')->nullable();
-            $table->string('image_path')->nullable();
-            $table->float('cogs_price', 8, 2);
-            $table->float('selling_price', 8, 2);
-            $table->tinyInteger('low_quantity_alert')->default(5);
-            $table->string('stock_status')->default('instock');
+            $table->foreignId('variation_id')->nullable()->references('id')->on('product_variations')->onDelete('Cascade');
+            $table->string('discount_type');
+            $table->float('amount', 8, 2);
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_variations');
+        Schema::dropIfExists('discounts');
     }
 };

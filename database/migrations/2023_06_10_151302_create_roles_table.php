@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
 
             $table->softDeletes($column = 'deleted_at', $precision = 0);

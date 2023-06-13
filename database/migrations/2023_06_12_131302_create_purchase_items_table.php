@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_variations', function (Blueprint $table) {
+        Schema::create('purchase_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('purchase_order_id')->references('id')->on('purchase_orders')->onDelete('Cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('Cascade');
-            $table->string('variant_name')->nullable();
-            $table->string('image_path')->nullable();
-            $table->float('cogs_price', 8, 2);
-            $table->float('selling_price', 8, 2);
-            $table->tinyInteger('low_quantity_alert')->default(5);
-            $table->string('stock_status')->default('instock');
+            $table->foreignId('variation_id')->references('id')->on('product_variations')->onDelete('Cascade');
+            $table->string('sku_id')->nullable();
+            $table->integer('quantity');
+            $table->float('price', 8, 2);
             $table->tinyInteger('is_active')->default(1);
-            $table->timestamps();
-
             $table->softDeletes($column = 'deleted_at', $precision = 0);
+
+            $table->foreign('sku_id')->references('id')->on('skus')->onDelete('Cascade');
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_variations');
+        Schema::dropIfExists('purchase_items');
     }
 };
