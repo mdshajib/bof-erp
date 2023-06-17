@@ -26,6 +26,7 @@ return new class extends Migration
             $table->tinyInteger('is_active')->default(1);
             $table->foreignId('created_by')->nullable()->references('id')->on('users')->onDelete('Cascade');
             $table->foreignId('updated_by')->nullable()->references('id')->on('users')->onDelete('Cascade');
+            $table->foreignId('deleted_by')->nullable()->references('id')->on('users')->onDelete('Cascade');
             $table->timestamps();
 
             $table->softDeletes($column = 'deleted_at', $precision = 0);

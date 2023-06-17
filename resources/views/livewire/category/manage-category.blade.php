@@ -118,7 +118,7 @@
         </x-slot>
     </x-table.table>
     <div class="row">
-        <div class="col-sm-12 col-md-5">{{ pagination_stats_text($category_list) }}</div>
+{{--        <div class="col-sm-12 col-md-5">{{ pagination_stats_text($category_list) }}</div>--}}
         <div class="col-sm-12 col-md-7">{{ $category_list->links() }}</div>
     </div>
     @include('livewire.category._edit_category')

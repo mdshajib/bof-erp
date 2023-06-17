@@ -1,80 +1,24 @@
 <form wire:submit.prevent="submit">
     <x-modal :has-button="false" modal-id="categoryModal" on="openCategoryModal" title="Add New Category" size="lg">
-        <div class="col-md-6">
-            <div class="mb-3">
-                <label class="form-label" for="parent_id">Parent Category</label>
-                <select class="form-select" name="parent_id" id="parent_id" wire:model="parent_id">
-                    <option>None</option>
-                    @foreach($list as $category)
-                    <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
-                    
-                </select>
-                @error('parent_id') <span class="text-danger">{{ $message }}</span> @enderror
-            </div>
-        </div>
         <div class="row" wire:key="add_category">
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label required" for="name_de">Category Name DE</label>
-                    <input type="text" class="form-control" id="name_de"  
-                    wire:model.defer="name_de">
-                    @error('name_de') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label required" for="name">Category Name EN</label>
-                    <input type="text" class="form-control" id="name"  
+                    <label class="form-label required" for="name">Category Name</label>
+                    <input type="text" class="form-control" id="name"
                     wire:model.defer="name">
                     @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
             </div>
-            <!-- <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label" for="display_name_de">Display Name DE</label>
-                    <input type="text" class="form-control" id="display_name_de" 
-                    wire:model.defer="display_name_de">
-                    @error('display_name_de') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div>
+
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label class="form-label" for="display_name">Display Name EN</label>
-                    <input type="text" class="form-control" id="display_name" 
-                    wire:model.defer="display_name">
-                    @error('display_name') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div> -->
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label required" for="slug_de">Slug DE</label>
-                    <input type="text" class="form-control" id="slug_de" 
-                    wire:model.defer="slug_de">
-                    @error('slug_de') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label required" for="slug">Slug EN</label>
-                    <input type="text" class="form-control" id="slug" 
+                    <label class="form-label required" for="slug">Slug</label>
+                    <input type="text" class="form-control" id="slug"
                     wire:model.defer="slug">
                     @error('slug') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label required" for="taxcode">Tax Code</label>
-                    <select class="form-select" name="taxcode" id="taxcode" wire:model.defer="taxcode">
-                        <option value="">Select</option>
-                        <option value="520">2.5% (Tax code 520)</option>
-                        <option value="510">7.7% (Tax code 510)</option>
-                        <option value="700">0% (Tax Code 700)</option>
-                        <option value="920">0% (Tax Code 920)</option>
-                    </select>
-                    @error('vat') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div>
+
             <div class="row">
              <div class="col-xl-12">
 			   <div class="card">
@@ -112,7 +56,7 @@
                                     </label>
                                     @error('permissions') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
-								
+
                             </div>
                             <div class="col-md-6">
 							    <div class="form-check mb-3">
