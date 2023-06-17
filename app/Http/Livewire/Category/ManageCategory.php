@@ -25,6 +25,8 @@ class ManageCategory extends BaseComponent
     public $filter = [
         'name'          => ''
     ];
+    public $name;
+    public $slug;
 
     public function render()
     {
@@ -57,6 +59,28 @@ class ManageCategory extends BaseComponent
         $this->resetErrorBag();
         $this->dispatchBrowserEvent('openCategoryModal');
     }
+
+    public function submit()
+    {
+        $rules = [
+            'name'            => 'required|unique:categories,name',
+            'slug'            => 'required|unique:categories,slug',
+        ];
+
+        $messages = [
+            'name.required'           => 'The name is required',
+            'slug.required'           => 'A Slug is required',
+            'slug.unique'             => 'Slug must be different',
+        ];
+
+        $validatedData = $this->validate($rules, $messages);
+
+        Category::create($validatedData);
+        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Active',  'message' => 'New category created successfully']);
+        $this->reset();
+        $this->hideModal();
+    }
+
 
     public function CategoryconfirmDelete($categoryid)
     {

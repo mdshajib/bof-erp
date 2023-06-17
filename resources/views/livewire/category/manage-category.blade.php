@@ -62,11 +62,8 @@
                      </div>
                  </th> -->
                 <x-table.th sortable :direction="$sorts['name'] ?? null" wire:click="sortBy('name')">{{ __('Category Name') }}</x-table.th>
-                <x-table.th sortable :direction="$sorts['name_de'] ?? null" wire:click="sortBy('name')">{{ __('Category Name De') }}</x-table.th>
-                <x-table.th >{{ __('Parent Category') }}</x-table.th>
-            <!-- <x-table.th>{{ __('Display Name') }}</x-table.th> -->
                 <x-table.th>{{ __('Slug') }}</x-table.th>
-            <!-- <x-table.th>{{ __('Status') }}</x-table.th> -->
+                <x-table.th>{{ __('Status') }}</x-table.th>
                 <x-table.th style="width: 62px">{{ __('Action') }}</x-table.th>
             </tr>
             @if ( count($selected) > 0 )
@@ -90,24 +87,16 @@
         <x-slot name="body">
             @forelse($category_list as $category)
                 <tr wire:key='{{ $category->id }}'>
-                <!-- <td>
-                        <x-form.check wire:model="selected" value="{{ $category->id }}" id="ck_select{{ $category->id }}"/>
-                    </td> -->
+
                     <td>
                         {{$category->name}}
                     </td>
-                    <td>
-                        {{$category->name_de}}
-                    </td>
-                    <td>{{ $category->parent_category ? $category->parent_category->name : null }}</td>
-                <!-- <td>
-					   {{$category->display_name}}
-                    </td> -->
                     <td>{{$category->slug}}</td>
+                    <td>{{ $category->is_active == 1 ? 'Active' : 'Inactive' }}</td>
 
                     <td>
                         <button type="button" wire:click="openCategoryEditModal({{$category->id}})" wire:loading.class="bg-gray" class="btn btn-secondary btn-sm"><i class="fa fa-edit"></i></button>
-                    <!--<button wire:click="CategoryconfirmDelete({{ $category->id }})" class="btn btn-primary btn-sm"><i class="fas fa-trash"></i></button> --->
+                        <button wire:click="CategoryconfirmDelete({{ $category->id }})" class="btn btn-primary btn-sm"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             @empty
