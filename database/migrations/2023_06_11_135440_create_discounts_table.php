@@ -19,7 +19,13 @@ return new class extends Migration
             $table->float('amount', 8, 2);
             $table->dateTime('start_date')->nullable();
             $table->dateTime('end_date')->nullable();
+            $table->integer('max_uses_user')->nullable();
+            $table->integer('used_user')->nullable();
+            $table->float('max_discount', 8, 2)->default(0);
+            $table->float('min_discount', 8, 2)->default(0);
             $table->tinyInteger('is_active')->default(1);
+            $table->foreignId('created_by')->nullable()->references('id')->on('users')->onDelete('Cascade');
+            $table->foreignId('updated_by')->nullable()->references('id')->on('users')->onDelete('Cascade');
             $table->timestamps();
 
             $table->softDeletes($column = 'deleted_at', $precision = 0);

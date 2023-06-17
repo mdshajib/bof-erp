@@ -24,6 +24,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
         });
     }

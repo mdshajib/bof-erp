@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('sku_id')->nullable();
             $table->float('unit_sales_price', 8, 2);
             $table->float('quantity', 8, 2);
+            $table->float('gross_amount', 8, 2);
+            $table->foreignId('applied_discount_id')->nullable()->references('id')->on('discounts')->onDelete('Cascade');
             $table->float('discount_amount', 8, 2)->default(0);
             $table->float('tax_amount', 8, 2)->default(0);
             $table->float('total_sales_price', 8, 2)->default(0);
