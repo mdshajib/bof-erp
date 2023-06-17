@@ -7,6 +7,8 @@ use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Users\ManageUser;
 use App\Http\Livewire\Category\ManageCategory;
+use App\Http\Livewire\Inventory\Stockin;
+use App\Http\Livewire\Inventory\ManageStock;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -24,4 +26,8 @@ Route::group(['middleware'=> ['auth']], function () {
     Route::get('/profile', Dashboard::class)->name('profile');
     Route::get('/users', ManageUser::class)->name('user.manage');
     Route::get('/categories', ManageCategory::class)->name('manage.category');
+    Route::get('/inventory', ManageStock::class)->name('inventory.manage');
+    Route::get('/inventory/stockin', Stockin::class)->name('inventory.stockin');
 });
+
+Route::get('/bar', \App\Http\Livewire\BarCode\Scabber::class);
