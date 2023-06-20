@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('outlet_id')->references('id')->on('outlets')->onDelete('Cascade');
             $table->string('purchase_number')->nullable();
-//            $table->string('supplier_name')->nullable();
-//            $table->string('supplier_address')->nullable();
-            $table->float('gross_amount', 8, 2);
+            $table->float('gross_amount', 8, 2)->default(0);
             $table->float('discount_amount', 8, 2)->default(0);
-            $table->float('net_payment_amount', 8, 2);
+            $table->float('net_payment_amount', 8, 2)->default(0);
             $table->date('order_date')->nullable();
             $table->foreignId('generated_by')->references('id')->on('users')->onDelete('Cascade');
             $table->text('internal_comments')->nullable();

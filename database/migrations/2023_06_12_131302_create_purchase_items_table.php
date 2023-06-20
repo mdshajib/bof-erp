@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('purchase_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('outlet_id')->references('id')->on('outlets')->onDelete('Cascade');
             $table->foreignId('purchase_order_id')->references('id')->on('purchase_orders')->onDelete('Cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('Cascade');
-            $table->foreignId('variation_id')->references('id')->on('product_variations')->onDelete('Cascade');
+            $table->foreignId('variation_id')->nullable()->references('id')->on('product_variations')->onDelete('Cascade');
             $table->string('sku_id')->nullable();
-            $table->integer('quantity');
-            $table->float('price', 8, 2);
+            $table->integer('quantity')->default(0);
+            $table->float('price', 8, 2)->default(0);
             $table->tinyInteger('is_active')->default(1);
             $table->softDeletes($column = 'deleted_at', $precision = 0);
 

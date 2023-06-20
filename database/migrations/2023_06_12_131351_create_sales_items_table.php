@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sales_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('outlet_id')->references('id')->on('outlets')->onDelete('Cascade');
             $table->foreignId('sales_order_id')->references('id')->on('sales_orders')->onDelete('Cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('Cascade');
             $table->foreignId('variation_id')->nullable()->references('id')->on('product_variations')->onDelete('Cascade');
@@ -26,7 +27,7 @@ return new class extends Migration
             $table->float('total_sales_price', 8, 2)->default(0);
             $table->string('note')->nullable();
             $table->tinyInteger('is_exchanged')->default(0);
-            $table->float('exchanged_quantity', 8, 2)->default(0);
+            $table->integer('exchanged_quantity')->default(0);
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
 
