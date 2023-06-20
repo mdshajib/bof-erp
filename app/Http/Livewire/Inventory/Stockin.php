@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Inventory;
 
 use App\Http\Livewire\BaseComponent;
+use App\Models\Sku;
 
 class Stockin extends BaseComponent
 {
@@ -17,6 +18,15 @@ class Stockin extends BaseComponent
 
     public function AddStock()
     {
-        $this->sku = '';
+        $this->findProductBySku($this->sku);
+    }
+
+    public function findProductBySku($sku)
+    {
+        $product = Sku::query()->find($sku);
+        if(! $product){
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error',  'message' => 'Sku not found']);
+            $this->sku = '';
+        }
     }
 }
