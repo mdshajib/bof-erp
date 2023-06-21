@@ -9,7 +9,22 @@
                 <li class="menu-title" data-key="t-menu">Menu</li>
                 <x-menu.item text="Dashboard" link="{{ route('dashboard') }}" icon="home" class="{{ (request()->is('dashboard*')) ? 'active' : '' }} "/>
                 <x-menu.item text="Manage Users" link="{{ route('user.manage') }}" icon="users" class="{{ (request()->is('users')) ? 'active' : '' }}"/>
-                <x-menu.item text="Manage Category" link="{{ route('manage.category') }}" icon="list" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
+                <x-menu.list text="Category Management" icon="list" class="{{ (request()->is('categor*')) ? 'mm-active' : '' }}">
+                    <x-menu.item text="Manage Category" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Manage Attribute" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Manage Terms" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
+                </x-menu.list>
+
+                <x-menu.list text="Product Management" icon="package" class="{{ (request()->is('product*')) ? 'mm-active' : '' }}">
+                    <x-menu.item text="Add Product" link="{{ route('product.create') }}" class="{{ (request()->is('products/create')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Manage Products" link="{{ route('product.manage') }}" class="{{ (request()->is('products')) ? 'active' : '' }} "/>
+                </x-menu.list>
+
+                <x-menu.list text="Order Management" icon="shopping-cart" class="{{ (request()->is('order*')) ? 'mm-active' : '' }}">
+                    <x-menu.item text="Order Create" link="{{ route('order.create') }}" class="{{ (request()->is('order/create')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Orders" link="{{ route('order.manage') }}" class="{{ (request()->is('orders')) ? 'active' : '' }}"/>
+                </x-menu.list>
+
             </ul>
         </div>
     </div>

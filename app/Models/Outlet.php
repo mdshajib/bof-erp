@@ -11,5 +11,7 @@ class Outlet extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = ['id'];
+
     protected $dates = ['deleted_at'];
 }

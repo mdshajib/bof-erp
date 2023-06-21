@@ -92,11 +92,12 @@
                         {{$category->name}}
                     </td>
                     <td>{{$category->slug}}</td>
-                    <td>{{ $category->is_active == 1 ? 'Active' : 'Inactive' }}</td>
-
+                    <td>
+                        @livewire('toggle-switch', ['model'=>$category, 'field'=>'is_active'], key($category->id))
+                    </td>
                     <td>
                         <button type="button" wire:click="openCategoryEditModal({{$category->id}})" wire:loading.class="bg-gray" class="btn btn-secondary btn-sm"><i class="fa fa-edit"></i></button>
-                        <button wire:click="CategoryconfirmDelete({{ $category->id }})" class="btn btn-primary btn-sm"><i class="fas fa-trash"></i></button>
+{{--                        <button wire:click="CategoryconfirmDelete({{ $category->id }})" class="btn btn-primary btn-sm"><i class="fas fa-trash"></i></button>--}}
                     </td>
                 </tr>
             @empty

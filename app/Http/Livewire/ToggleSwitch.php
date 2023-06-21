@@ -49,34 +49,8 @@ class ToggleSwitch extends BaseComponent
 
     public function updated($field, $value)
     {
-        if ($this->model->getTable() == 'products') {
-            $model  = $this->model;
-            $status = $value ? 'publish' : 'draft';
-            ProductStatusJob::dispatch($model->id, $status);
-           // (new ProductStatusService)->changeProductStatus($model->id, $status);
-        } elseif ($this->model->getTable() == 'contacts') {
-            $model         = $this->model;
-            $getEmail      =ContactEmail::where('contact_id', $model->id)->first();
-            if ($getEmail && $getEmail->email !=null) {
-                $api           =new ApiBaseService();
-                $status        = $value ? 'active' : 'deactive';
-                $data['email'] =$getEmail->email;
-                $data['status']=$status;
-                $api->wp_post('vicafe-users-567276-2080816', $data);
-            }
-        } elseif ($this->model->getTable() == 'discounts') {
-            $api           =new ApiBaseService();
-            $model         = $this->model;
-            $status        = $value ? 'publish' : 'draft';
-            if ($model->type=='coupon') {
-                $data['coupon_id'] =$model->remote_id;
-                $data['status']    =$status;
-                $res               =$api->wp_post('vicafe-coupons-567276-2080816', $data);
-            } elseif ($model->type=='basic') {
-                $data['discount_id'] =$model->remote_id;
-                $data['status']      =$status;
-                $res                 =$api->wp_post('vicafe-discounts-567276-2080816', $data);
-            }
-        }
+//        if ($this->model->getTable() == 'users') {
+//            $model  = $this->model;
+//        }
     }
 }

@@ -2,12 +2,12 @@
     <x-modal :has-button="false" modal-id="CategoryEditModal" on="openEditCategoryModal" title="Edit Category" size="lg">
     <div class="row" wire:key="update_category">
 
-        @if($categoryid)
+        @if($category_id)
         <div class="mb-3 d-none">
-                <label class="form-label" for="categoryid">Id</label>
-                <input type="text" class="form-control" id="categoryid" value="{{$categoryid}}" placeholder="Category ID"
-                    wire:model="categoryid">
-                @error('categoryid') <span class="text-danger">{{ $message }}</span> @enderror
+                <label class="form-label" for="category_id">Id</label>
+                <input type="text" class="form-control" id="category_id" value="{{$category_id}}" placeholder="Category ID"
+                    wire:model="category_id">
+                @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
         @endif
         <div class="col-md-6">

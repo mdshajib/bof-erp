@@ -17,6 +17,8 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
+    protected $guarded = ['id'];
+
     /**
      * The attributes that are mass assignable.
      *

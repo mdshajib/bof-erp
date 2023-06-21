@@ -18,7 +18,7 @@ class ManageCategory extends BaseComponent
 
     protected $listeners = ['deleteConfirm' => 'categoryDelete', 'deleteCancel'=> 'categoryDeleteCancel'];
 
-    public $categoryid;
+    public $category_id;
 
     public $categoryIdBeingRemoved=null;
 
@@ -81,10 +81,22 @@ class ManageCategory extends BaseComponent
         $this->hideModal();
     }
 
-
-    public function CategoryconfirmDelete($categoryid)
+    public function openCategoryEditModal($category_id)
     {
-        $this->categoryIdBeingRemoved = $categoryid;
+        $this->resetErrorBag();
+        $category                 = Category::find($category_id);
+        $this->category_id        = $category->id;
+        $this->name               = $category->name;
+        $this->slug               = $category->slug;
+
+//        $this->initAttribute($category->id);
+        $this->dispatchBrowserEvent('openEditCategoryModal');
+    }
+
+
+    public function CategoryconfirmDelete($category_id)
+    {
+        $this->categoryIdBeingRemoved = $category_id;
         $this->dispatchBrowserEvent('show-delete-notification');
     }
 
