@@ -68,7 +68,8 @@ class CreateOrder extends BaseComponent
             'total'          => 222,
         ];
         $this->row_section[] = $row_section;
-        $this->barcode = null;
+        $this->barcode       = null;
+        $this->product_name  = null;
     }
 
     public function saveOrder()
@@ -82,7 +83,7 @@ class CreateOrder extends BaseComponent
             $this->product_list = ProductVariation::query()
                 ->select('id', 'product_id', 'variation_name')
 //                ->with('product:id,title')
-                ->Where('variant_name', 'like', '%'.$value.'%')
+                ->Where('variation_name', 'like', '%'.$value.'%')
                 ->limit(10)->get();
         }
         else {
