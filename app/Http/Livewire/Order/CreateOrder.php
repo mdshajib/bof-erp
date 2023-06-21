@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Order;
 
 use App\Http\Livewire\BaseComponent;
+use App\Models\ProductVariation;
 
 class CreateOrder extends BaseComponent
 {
@@ -17,6 +18,9 @@ class CreateOrder extends BaseComponent
     public $internal_comments;
 
     public $customer_name;
+
+    public $product_list = [];
+
     public $payment_method = 'cash';
 
     public $paid_amount = null;
@@ -54,7 +58,7 @@ class CreateOrder extends BaseComponent
     {
         $row_section = [
             'id'             => 0,
-            'product'        => 'Product Name',
+            'product'        => $this->barcode,
             'variant_id'     => null,
             'sku'            => null,
             'quantity'       => null,
@@ -64,9 +68,29 @@ class CreateOrder extends BaseComponent
             'total'          => 222,
         ];
         $this->row_section[] = $row_section;
+        $this->barcode = null;
     }
 
     public function saveOrder()
+    {
+
+    }
+
+    public function updatedProductName($value)
+    {
+        if (strlen($this->product_name) > 2) {
+            $this->product_list = ProductVariation::query()
+                ->select('id', 'product_id', 'variation_name')
+//                ->with('product:id,title')
+                ->Where('variant_name', 'like', '%'.$value.'%')
+                ->limit(10)->get();
+        }
+        else {
+            $this->product_list = [];
+        }
+    }
+
+    public function getProductInfo($variant_id)
     {
 
     }

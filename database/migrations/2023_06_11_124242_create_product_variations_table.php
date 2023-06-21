@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('product_variations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('Cascade');
-            $table->string('variant_name')->nullable();
+            $table->string('variation_name')->nullable();
             $table->string('image_path')->nullable();
             $table->float('cogs_price', 8, 2);
             $table->float('selling_price', 8, 2);
