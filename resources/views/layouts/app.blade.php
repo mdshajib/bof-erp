@@ -196,9 +196,6 @@
         <!-- pace js -->
         <script src="{{ asset('assets/js/pace.min.js') }}"></script>
 
-        <!-- apexcharts -->
-        <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
-
         <!-- choices js -->
         <script src="{{ asset('assets/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
         <!-- twitter-bootstrap-wizard js -->

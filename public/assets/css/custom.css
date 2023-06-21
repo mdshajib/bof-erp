@@ -407,13 +407,33 @@ textarea:focus {
 }
 
 .invoice-table {
-    --bs-table-bg: #d8c59136 !important;
+    --bs-table-bg: #47977b !important;
+    color: #FFFFFF;
+}
+.order-create .form-control {
+    max-height: 35px;
+}
+.invoice-table-light {
+    --bs-table-bg: #47977b14 !important;
+}
+
+.invoice-table th{
+    color: #FFFFFF;
 }
 
 .table .table-light {
     color: black;
-    border-color: #006A4Ead;
-    --bs-table-bg: #006A4Ead !important;
+    border-color: #47977b;
+    --bs-table-bg: #47977b !important;
+}
+.order .table > :not(caption) > * > * {
+    padding: 0.2rem 0.75rem;
+}
+.order-summary_table .table > :not(caption) > * > * {
+    padding: 0.3rem 0.75rem;
+}
+.invoice-table-light .form-control {
+    max-height: 30px;
 }
 
 td {
