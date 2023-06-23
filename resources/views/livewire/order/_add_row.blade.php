@@ -30,6 +30,6 @@
 </tr>
 @empty
     <tr>
-        <td colspan="7"> <span class="text-danger mt-3">Product not added !!</span></td>
+        <td colspan="8"> <span class="text-danger mt-3 text">Product not added !!</span></td>
     </tr>
 @endforelse

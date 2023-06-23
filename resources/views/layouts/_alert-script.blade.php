@@ -27,13 +27,32 @@
             </div>
         `);
     });
+
+    window.addEventListener('show-due-order-submission',event=>{
+        Swal.fire({
+            title: 'Are you sure ?',
+            text: "You want to place this order with due amount",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#006A4E',
+            cancelButtonColor: '#fd625e',
+            confirmButtonText: 'Yes, place order'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                livewire.emit('orderConfirmEvent');
+            }else if (result.dismiss) {
+                livewire.emit('orderCancelEvent');
+            }
+        })
+    });
+
     window.addEventListener('show-delete-notification',event=>{
         Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#C9AC60',
+        confirmButtonColor: '#006A4E',
         cancelButtonColor: '#fd625e',
         confirmButtonText: 'Yes, delete it'
         }).then((result) => {
@@ -50,7 +69,7 @@
         text: "You already sent reminder",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#C9AC60',
+        confirmButtonColor: '#006A4E',
         cancelButtonColor: '#fd625e',
         confirmButtonText: 'Yes, send it'
         }).then((result) => {
@@ -67,7 +86,7 @@
         text: "You won't be able to revert this",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#C9AC60',
+        confirmButtonColor: '#006A4E',
         cancelButtonColor: '#fd625e',
         confirmButtonText: 'Yes, delete it'
         }).then((result) => {

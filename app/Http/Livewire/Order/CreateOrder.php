@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Order;
 
 use App\Http\Livewire\BaseComponent;
-use App\Models\ProductVariation;
 use App\Services\OrderCreateService;
 use Exception;
 
@@ -22,6 +21,8 @@ class CreateOrder extends BaseComponent
     public $paid_amount    = 0;
     public $row_section    = [];
     public $order_summary  = [];
+
+    protected $listeners = ['orderConfirmEvent' => 'orderConfirm', 'orderCancelEvent'=> 'orderCancel'];
 
     public function mount()
     {
@@ -49,25 +50,25 @@ class CreateOrder extends BaseComponent
 
         if (array_search($sku_with_item->variation->id, array_column($this->row_section, 'variant_id')) !== FALSE) {
             $this->dispatchBrowserEvent('notify', ['type' => 'warning', 'title' => 'Cart Warning', 'message' => 'This Product Already added in cart!!' ]);
-            $this->barcode = null;
+            $this->barcode      = null;
             $this->product_name = null;
         }
         else {
             $row_section = [
-                'id' => 0,
-                'product' => $sku_with_item->variation->variation_name,
-                'variant_id' => $sku_with_item->variation->id,
-                'sku' => $sku_with_item->id,
-                'quantity' => 1,
-                'stock' => $sku_with_item->stock->quantity - 1,
-                'unit_price' => $sku_with_item->variation->selling_price,
-                'discount' => 0,
+                'id'             => 0,
+                'product'        => $sku_with_item->variation->variation_name,
+                'variant_id'     => $sku_with_item->variation->id,
+                'sku'            => $sku_with_item->id,
+                'quantity'       => 1,
+                'stock'          => $sku_with_item->stock->quantity - 1,
+                'unit_price'     => $sku_with_item->variation->selling_price,
+                'discount'       => 0,
                 'total_discount' => 0,
-                'total' => $sku_with_item->variation->selling_price,
+                'total'          => $sku_with_item->variation->selling_price,
             ];
             $this->row_section[] = $row_section;
-            $this->barcode = null;
-            $this->product_name = null;
+            $this->barcode       = null;
+            $this->product_name  = null;
         }
         $this->summaryTable();
     }
@@ -89,7 +90,6 @@ class CreateOrder extends BaseComponent
     public function updating($name, $value)
     {
         $fields = explode('.', $name);
-//        dd($fields);
         if(count($fields) > 1) {
             $key = $fields[1];
             if ($fields[2] == 'quantity') {
@@ -102,7 +102,6 @@ class CreateOrder extends BaseComponent
 
     public function updated($name, $value)
     {
-
         $fields = explode('.', $name);
 
         if(count($fields) > 1) {
@@ -117,7 +116,6 @@ class CreateOrder extends BaseComponent
                 $this->row_section[$key]['total']          = $this->row_section[$key]['quantity'] * $this->row_section[$key]['unit_price'];
                 $this->row_section[$key]['total_discount'] = $this->row_section[$key]['quantity'] * $this->row_section[$key]['discount'];
                 $this->summaryTable();
-
             }
         }
     }
@@ -139,19 +137,52 @@ class CreateOrder extends BaseComponent
 
     public function saveOrder()
     {
-        if( $this->order_summary['due'] > 0){
+        $rules = [
+            'row_section.*.quantity'   => 'required|numeric|min:1',
+            'row_section.*.unit_price' => 'required',
+        ];
+        $messages=[
+            'row_section.*.quantity.required'   => 'Quantity required',
+            'row_section.*.quantity.min'        => 'Quantity should be greater than 0',
+            'row_section.*.unit_price.required' => 'Unit price required',
+        ];
 
+        $this->validate($rules, $messages);
+
+        if( $this->order_summary['due'] > 0){
+            $this->dispatchBrowserEvent('show-due-order-submission');
+        }else{
+            $this->orderConfirm();
         }
+    }
+
+    public function orderConfirm()
+    {
+        try {
+           $order_payload['items']             = $this->row_section;
+           $order_payload['phone']             = $this->phone;
+           $order_payload['customer_name']     = $this->customer_name;
+           $order_payload['paid_amount']       = $this->paid_amount;
+           $order_payload['payment_method']    = $this->payment_method;
+           $order_payload['order_note']        = $this->order_note;
+           $order_payload['internal_comments'] = $this->internal_comments;
+           $order_payload['order_summary']     = $this->order_summary;
+
+            $status = ( new OrderCreateService())->storeOrder($order_payload);
+
+        }catch(Exception $ex){
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
+        }
+    }
+    public function orderCancel()
+    {
+        //
     }
 
     public function updatedProductName($value)
     {
         if (strlen($this->product_name) > 2) {
-            $this->product_list = ProductVariation::query()
-                ->select('id', 'product_id', 'variation_name')
-//                ->with('product:id,title')
-                ->Where('variation_name', 'like', '%'.$value.'%')
-                ->limit(10)->get();
+            $this->product_list = (new OrderCreateService())->productSuggestions($value);
         }
         else {
             $this->product_list = [];
