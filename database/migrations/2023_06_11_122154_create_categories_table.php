@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('type')->nullable();
             $table->tinyInteger('is_active')->default(1);
             $table->foreignId('updated_by')->nullable()->references('id')->on('users')->onDelete('Cascade');
             $table->foreignId('deleted_by')->nullable()->references('id')->on('users')->onDelete('Cascade');

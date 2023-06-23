@@ -19,7 +19,7 @@
                         <div class="row">
                             <div class="col-md-6 col-lg-6">
                                 <div class="mb-2">
-                                    <form wire:submit.prevent="addRow" name="product_find">
+                                    <form wire:submit.prevent="readBarcode" name="product_find">
                                         <label for="barcode" class="form-label required">Barcode</label>
                                         <div class="form-group has-search">
                                             <span class="fa fa-search form-control-feedback"></span>
@@ -87,7 +87,7 @@
                     <div class="col-md-3">
                         <div class="mb-2">
                             <label for="paid_amount" class="form-label required">Paid Amount</label>
-                            <input type="number" class="form-control" id="paid_amount" placeholder="Paid Amount" wire:model.defer="paid_amount">
+                            <input type="number" class="form-control" id="paid_amount" placeholder="Paid Amount" wire:model.lazy="paid_amount">
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -111,10 +111,11 @@
                                     <th width="30%">Product Name</th>
                                     <th width="15%">Quantity</th>
                                     <th width="15%">Unit Price</th>
-                                    <th width="10%">Discount</th>
+                                    <th width="8%">Discount</th>
                                     <th width="10%">Total Discount</th>
-                                    <th width="10%">Total</th>
-                                    <th width="10%">Action</th>
+                                    <th width="8%">Total</th>
+                                    <th width="6%">Stock</th>
+                                    <th width="6%">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -132,19 +133,19 @@
                                 <tbody>
                                 <tr>
                                     <td>Sub Total (Without Discount)</td>
-                                    <td><strong>22 Tk</strong></td>
+                                    <td><strong>{{ $order_summary['sub_total'] }} Tk</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Total Discount</td>
-                                    <td><strong>33 Tk</strong></td>
+                                    <td><strong> {{ $order_summary['total_discount'] }} Tk</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Net Amount</td>
-                                    <td><strong>0 Tk</strong></td>
+                                    <td><strong> {{ $order_summary['net_amount'] }} Tk</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Due</td>
-                                    <td><strong>55 Tk</strong></td>
+                                    <td><strong> {{ $order_summary['due'] }} Tk</strong></td>
                                 </tr>
                                 </tbody>
                             </table>

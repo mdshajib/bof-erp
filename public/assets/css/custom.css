@@ -441,7 +441,7 @@ td {
 }
 
 .dialog {
-    width: 96%;
+    width: 93%;
     position: absolute;
     min-height: 40px;
     max-height: 330px;
@@ -452,14 +452,15 @@ td {
 }
 
 .dialog div {
-    padding: 10px 10px;
+    padding: 5px 10px;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .dialog div:hover {
-    background: #f2f2f2;
+    background: #47977b;
+    color: #fff;
 }
 
 div.page-loading {

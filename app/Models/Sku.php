@@ -14,4 +14,20 @@ class Sku extends Model
     protected $guarded = ['id'];
 
     protected $dates = ['deleted_at'];
+
+    public function purchase_item()
+    {
+        return $this->hasOne(PurchaseItem::class, 'sku_id' ,'id');
+    }
+
+    public function variation()
+    {
+        return $this->belongsTo(ProductVariation::class, 'variation_id', 'id');
+    }
+
+    public function stock()
+    {
+        return $this->hasOne(Stock::class, 'sku_id', 'id');
+    }
+
 }

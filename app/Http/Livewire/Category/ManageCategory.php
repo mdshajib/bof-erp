@@ -27,6 +27,7 @@ class ManageCategory extends BaseComponent
     ];
     public $name;
     public $slug;
+    public $type='ready made';
 
     public function render()
     {
@@ -81,6 +82,30 @@ class ManageCategory extends BaseComponent
         $this->hideModal();
     }
 
+    public function updateCategory()
+    {
+        $rules = [
+            'name'            => 'required|unique:categories,name,'.$this->category_id.',id',
+            'slug'            => 'required|unique:categories,slug,'.$this->category_id.',id',
+            'type'            => 'required',
+        ];
+
+        $messages = [
+            'name.required'   => 'The Category is required',
+            'slug.required'   => 'A Slug is required',
+            'type.required'   => 'Type is required',
+        ];
+
+        $this->validate($rules, $messages);
+        $category['name'] = $this->name;
+        $category['slug'] = $this->slug;
+        $category['type'] = $this->type;
+
+        Category::where('id', $this->category_id)->update($category);
+        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Category',  'message' => 'Category updated Successfully']);
+        $this->hideModal();
+    }
+
     public function openCategoryEditModal($category_id)
     {
         $this->resetErrorBag();
@@ -88,6 +113,7 @@ class ManageCategory extends BaseComponent
         $this->category_id        = $category->id;
         $this->name               = $category->name;
         $this->slug               = $category->slug;
+        $this->type               = $category->type;
 
 //        $this->initAttribute($category->id);
         $this->dispatchBrowserEvent('openEditCategoryModal');

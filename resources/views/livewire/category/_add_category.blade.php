@@ -1,21 +1,33 @@
 <form wire:submit.prevent="submit">
     <x-modal :has-button="false" modal-id="categoryModal" on="openCategoryModal" title="Add New Category" size="lg">
         <div class="row" wire:key="add_category">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label required" for="name">Category Name</label>
-                    <input type="text" class="form-control" id="name"
-                    wire:model.defer="name">
-                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label required" for="name">Category Name</label>
+                        <input type="text" class="form-control" id="name"
+                        wire:model.defer="name">
+                        @error('name') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label required" for="slug">Slug</label>
-                    <input type="text" class="form-control" id="slug"
-                    wire:model.defer="slug">
-                    @error('slug') <span class="text-danger">{{ $message }}</span> @enderror
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label required" for="slug">Slug</label>
+                        <input type="text" class="form-control" id="slug"
+                        wire:model.defer="slug">
+                        @error('slug') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label required" for="type">Type</label>
+                        <select id="type" class="form-control" wire:model.defer="type">
+                            <option value="ready made">Ready Made</option>
+                            <option value="made in house">Made In House</option>
+                        </select>
+
+                    </div>
                 </div>
             </div>
 

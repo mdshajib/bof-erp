@@ -55,14 +55,9 @@
     <x-table.table>
         <x-slot name="head">
             <tr>
-                <!-- <th width="50px">
-                     <div class="form-check">
-                         <input type="checkbox" class="form-check-input" wire:model="selectPage" id="check_all">
-                         <label class="form-check-label" for="check_all"></label>
-                     </div>
-                 </th> -->
                 <x-table.th sortable :direction="$sorts['name'] ?? null" wire:click="sortBy('name')">{{ __('Category Name') }}</x-table.th>
                 <x-table.th>{{ __('Slug') }}</x-table.th>
+                <x-table.th>{{ __('Type') }}</x-table.th>
                 <x-table.th>{{ __('Status') }}</x-table.th>
                 <x-table.th style="width: 62px">{{ __('Action') }}</x-table.th>
             </tr>
@@ -92,6 +87,9 @@
                         {{$category->name}}
                     </td>
                     <td>{{$category->slug}}</td>
+                    <td>
+                        {{ucwords($category->type) }}
+                    </td>
                     <td>
                         @livewire('toggle-switch', ['model'=>$category, 'field'=>'is_active'], key($category->id))
                     </td>
