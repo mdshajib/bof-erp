@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\SalesOrder;
+use App\Models\User;
+use App\Observers\CategoryObserver;
+use App\Observers\SalesOrderObserver;
+use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -35,4 +41,15 @@ class EventServiceProvider extends ServiceProvider
     {
         return false;
     }
+
+    /**
+     * The model observers for your application.
+     *
+     * @var array
+     */
+    protected $observers = [
+        User::class       => [UserObserver::class],
+        Category::class   => [CategoryObserver::class],
+        SalesOrder::class => [SalesOrderObserver::class],
+    ];
 }

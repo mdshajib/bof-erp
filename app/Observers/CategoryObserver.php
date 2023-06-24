@@ -7,6 +7,13 @@ use App\Models\Category;
 class CategoryObserver
 {
     /**
+     * Handle events after all transactions are committed.
+     *
+     * @var bool
+     */
+    public $afterCommit = true;
+
+    /**
      * Handle the Category "created" event.
      */
     public function created(Category $category): void
