@@ -22,7 +22,7 @@ class CreateOrder extends BaseComponent
     public $row_section    = [];
     public $order_summary  = [];
 
-    protected $listeners = ['orderConfirmEvent' => 'orderConfirm', 'orderCancelEvent'=> 'orderCancel'];
+    protected $listeners = ['orderConfirmEvent' => 'orderConfirm', 'orderCancelModalEvent'=> 'orderCancelModal'];
 
     public function mount()
     {
@@ -202,7 +202,12 @@ class CreateOrder extends BaseComponent
     }
     public function orderCancel()
     {
-        //
+        $this->initDefaults();
+    }
+
+    public function orderCancelModal()
+    {
+
     }
 
     public function updatedProductName($value)

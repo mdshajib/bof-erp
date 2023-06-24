@@ -41,7 +41,7 @@
             if (result.isConfirmed) {
                 livewire.emit('orderConfirmEvent');
             }else if (result.dismiss) {
-                livewire.emit('orderCancelEvent');
+                livewire.emit('orderCancelModalEvent');
             }
         })
     });

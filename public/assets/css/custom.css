@@ -779,3 +779,6 @@ input[switch]:checked+label:after {
 .last-row-bold .table tr td {
     font-size: 13px;
 }
+.w-46 {
+    width: 46% !important;
+}

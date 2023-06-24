@@ -153,9 +153,17 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <div class="col-md-4 mt-2">
-                            <div class="d-grid gap-2">
-                                <button type="button" wire:click="saveOrder"  class="btn btn-primary btn-light">Confirm Order</button>
-                            </div>
+{{--                            <div class="d-grid gap-2">--}}
+{{--                                <button type="button" wire:click="saveOrder"  class="btn btn-primary btn-light">Confirm Order</button>--}}
+{{--                            </div>--}}
+                            <button type="button" wire:click="saveOrder"  class="btn btn-primary btn-light btn-label w-50 me-2">
+                                <i class="fas fa-shopping-basket label-icon"></i>
+                                Confirm Order
+                            </button>
+                            <button type="button" wire:click="orderCancel"  class="btn btn-danger btn-label w-46">
+                                <i class="bx bx-block label-icon"></i>
+                                Cancel Order
+                            </button>
                         </div>
                     </div>
                 </div>
