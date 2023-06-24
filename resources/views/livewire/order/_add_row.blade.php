@@ -17,13 +17,13 @@
         {{ $row_section[$key]['total_discount'] }}
     </td>
 	<td>
-        {{ number_format($row_section[$key]['total'] ,2) }}
+        {{ number_format($row_section[$key]['gross_amount'] ,2) }}
 	</td>
     <td>
         {{ $row_section[$key]['stock'] }}
     </td>
 	<td>
-		@if(count($row_section) > 1)
+		@if(count($row_section) > 0)
 		<button class="btn btn-link" wire:click.prevent="removeRow({{ $key }}, {{ $value['id'] }})"><i class="fa fa-trash"></i></button>
 		@endif
 	</td>

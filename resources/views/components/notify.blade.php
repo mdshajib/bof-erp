@@ -16,7 +16,7 @@
             showIcon: true,
             position:'right top',
             autoclose: true,
-            autotimeout: 3000
+            autotimeout: 5000
         });
     });
 </script>

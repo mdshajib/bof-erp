@@ -3,22 +3,24 @@
 namespace App\Services;
 
 use App\Models\ProductVariation;
+use App\Models\SalesItem;
 use App\Models\SalesOrder;
 use App\Models\Sku;
+use App\Traits\StockAndTransaction;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
 class OrderCreateService
 {
-    /**
-     * Function details
-     */
+    use StockAndTransaction;
+
      public function skuFind($barcode)
      {
         try
         {
             $sku_with_item = Sku::query()
+                ->select('id','variation_id','product_id')
                 ->with([
                     'variation:id,variation_name,cogs_price,selling_price,low_quantity_alert',
                     'stock:sku_id,quantity'
@@ -53,6 +55,7 @@ class OrderCreateService
         try
         {
             $sku_with_item = Sku::query()
+                ->select('id','variation_id','product_id')
                 ->with([
                     'variation:id,variation_name,cogs_price,selling_price,low_quantity_alert',
                     'stock:sku_id,quantity'
@@ -98,10 +101,43 @@ class OrderCreateService
             $sales_order->is_paid            = $order_payload['order_summary']['due'] > 0 ? 0 : 1;
 
             $sales_order->save();
-            DB::commit();
 
+            $this->storeOrderItems($order_payload, $sales_order->id);
+            DB::commit();
             return true;
         } catch(Exception $ex) {
+            DB::rollBack();
+            throw $ex;
+        }
+    }
+
+    public function storeOrderItems($order_payload, $sales_order_id)
+    {
+        try {
+            foreach ($order_payload['items'] as $item){
+                $order_item = [];
+                $order_item['outlet_id']           = auth()->user()->outlet_id;
+                $order_item['sales_order_id']      = $sales_order_id;
+                $order_item['product_id']          = $item['product_id'];
+                $order_item['variation_id']        = $item['variation_id'];
+                $order_item['sku_id']              = $item['sku'];
+                $order_item['unit_sales_price']    = $item['unit_price'];
+                $order_item['quantity']            = $item['quantity'];
+                $order_item['gross_amount']        = $item['gross_amount'];
+                $order_item['applied_discount_id'] = $item['applied_discount_id'];
+                $order_item['discount_amount']     = $item['discount'];
+                $order_item['tax_amount']          = 0;
+                $order_item['total_sales_price']   = $item['total_sales_price'];
+                $order_item['note']   = null;
+
+                SalesItem::create($order_item);
+                $this->stockDecrement($item['sku'], $item['quantity']);
+                $this->createTransaction( $item );
+
+            }
+
+        } catch(Exception $ex)
+        {
             throw $ex;
         }
     }

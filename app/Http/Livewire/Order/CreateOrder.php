@@ -26,7 +26,7 @@ class CreateOrder extends BaseComponent
 
     public function mount()
     {
-        $this->initDefaults();
+        $this->initDefaultsSummary();
     }
 
     public function render()
@@ -34,7 +34,7 @@ class CreateOrder extends BaseComponent
         return $this->view('livewire.order.create-order');
     }
 
-    private function initDefaults()
+    private function initDefaultsSummary()
     {
         $this->order_summary = [
             'sub_total'       => 0,
@@ -42,6 +42,19 @@ class CreateOrder extends BaseComponent
             'net_amount'      => 0,
             'due'             => 0,
         ];
+
+    }
+
+    private function initDefaults()
+    {
+        $this->row_section      = [];
+        $this->paid_amount       = 0;
+        $this->phone             = null;
+        $this->customer_name     = null;
+        $this->internal_comments = null;
+        $this->order_note        = null;
+        $this->payment_method    = 'cash';
+        $this->initDefaultsSummary();
 
     }
 
@@ -55,20 +68,23 @@ class CreateOrder extends BaseComponent
         }
         else {
             $row_section = [
-                'id'             => 0,
-                'product'        => $sku_with_item->variation->variation_name,
-                'variant_id'     => $sku_with_item->variation->id,
-                'sku'            => $sku_with_item->id,
-                'quantity'       => 1,
-                'stock'          => $sku_with_item->stock->quantity - 1,
-                'unit_price'     => $sku_with_item->variation->selling_price,
-                'discount'       => 0,
-                'total_discount' => 0,
-                'total'          => $sku_with_item->variation->selling_price,
+                'id'                  => 0,
+                'product'             => $sku_with_item->variation->variation_name,
+                'product_id'          => $sku_with_item->product_id,
+                'variation_id'        => $sku_with_item->variation_id,
+                'sku'                 => $sku_with_item->id,
+                'quantity'            => 1,
+                'stock'               => $sku_with_item->stock->quantity,
+                'unit_price'          => $sku_with_item->variation->selling_price,
+                'discount'            => 0,
+                'applied_discount_id' => null,
+                'total_discount'      => 0,
+                'gross_amount'        => $sku_with_item->variation->selling_price,
+                'total_sales_price'   => $sku_with_item->variation->selling_price,
             ];
-            $this->row_section[] = $row_section;
-            $this->barcode       = null;
-            $this->product_name  = null;
+            $this->row_section[]      = $row_section;
+            $this->barcode            = null;
+            $this->product_name       = null;
         }
         $this->summaryTable();
     }
@@ -78,7 +94,7 @@ class CreateOrder extends BaseComponent
         try {
             $sku_with_item = (new OrderCreateService())->skuFind($this->barcode);
             if( $sku_with_item->stock->quantity <= $sku_with_item->variation->low_quantity_alert){
-                $this->dispatchBrowserEvent('notify', ['type' => 'warning', 'title' => 'Stock Alert', 'message' => 'Limited stock, available quantity: '.$item->stock->quantity ]);
+                $this->dispatchBrowserEvent('notify', ['type' => 'warning', 'title' => 'Stock Alert', 'message' => 'Stock limited, available quantity: '.$sku_with_item->stock->quantity ]);
             }
             $this->addRow($sku_with_item);
 
@@ -111,10 +127,11 @@ class CreateOrder extends BaseComponent
                     $this->row_section[$key]['quantity'] = 1;
                 }
                 if ($value > $this->row_section[$key]['stock']) {
-                    $this->row_section[$key]['quantity']   = $this->row_section[$key]['stock'];
+                    $this->row_section[$key]['quantity']      = $this->row_section[$key]['stock'];
                 }
-                $this->row_section[$key]['total']          = $this->row_section[$key]['quantity'] * $this->row_section[$key]['unit_price'];
-                $this->row_section[$key]['total_discount'] = $this->row_section[$key]['quantity'] * $this->row_section[$key]['discount'];
+                $this->row_section[$key]['gross_amount']      = $this->row_section[$key]['quantity'] * $this->row_section[$key]['unit_price'];
+                $this->row_section[$key]['total_discount']    = $this->row_section[$key]['quantity'] * $this->row_section[$key]['discount'];
+                $this->row_section[$key]['total_sales_price'] = $this->row_section[$key]['gross_amount'] * $this->row_section[$key]['total_discount'];
                 $this->summaryTable();
             }
         }
@@ -127,9 +144,10 @@ class CreateOrder extends BaseComponent
 
     public function summaryTable()
     {
+        $this->initDefaultsSummary();
         foreach ($this->row_section as $item){
-            $this->order_summary['sub_total']      = $item['unit_price'] * $item['quantity'];
-            $this->order_summary['total_discount'] = $item['discount'] * $item['quantity'];
+            $this->order_summary['sub_total']      += $item['quantity'] * $item['unit_price'];
+            $this->order_summary['total_discount'] += $item['quantity'] * $item['discount'];
             $this->order_summary['net_amount']     = $this->order_summary['sub_total']  - $this->order_summary['total_discount'];
             $this->order_summary['due']            = $this->order_summary['net_amount'] - $this->paid_amount;
         }
@@ -148,6 +166,10 @@ class CreateOrder extends BaseComponent
         ];
 
         $this->validate($rules, $messages);
+
+        if(count($this->row_section) < 1){
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Empty Cart', 'message' => 'Cart is empty. Please add products']);
+        }
 
         if( $this->order_summary['due'] > 0){
             $this->dispatchBrowserEvent('show-due-order-submission');
@@ -169,6 +191,10 @@ class CreateOrder extends BaseComponent
            $order_payload['order_summary']     = $this->order_summary;
 
             $status = ( new OrderCreateService())->storeOrder($order_payload);
+            if($status){
+                $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Order', 'message' => 'New order has been completed']);
+                $this->initDefaults();
+            }
 
         }catch(Exception $ex){
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
@@ -194,7 +220,7 @@ class CreateOrder extends BaseComponent
         try {
             $sku_with_item = (new OrderCreateService())->variationFind($variant_id);
             if( $sku_with_item->stock->quantity <= $sku_with_item->variation->low_quantity_alert){
-                $this->dispatchBrowserEvent('notify', ['type' => 'warning', 'title' => 'Stock Alert', 'message' => 'Limited stock, available quantity: '.$item->stock->quantity ]);
+                $this->dispatchBrowserEvent('notify', ['type' => 'warning', 'title' => 'Stock Alert', 'message' => 'Limited stock, available quantity: '.$sku_with_item->stock->quantity ]);
             }
             $this->addRow($sku_with_item);
             $this->product_list = [];
@@ -206,9 +232,9 @@ class CreateOrder extends BaseComponent
 
     public function removeRow($index)
     {
-        if (count($this->row_section) > 1) {
+        if (count($this->row_section) > 0) {
             unset($this->row_section[$index]);
-            // calculate again total, discount
+            $this->summaryTable();
         }
     }
 }
