@@ -3,7 +3,8 @@
 namespace App\Http\Livewire\Inventory;
 
 use App\Http\Livewire\BaseComponent;
-use App\Models\Sku;
+use App\Services\StockManagementService;
+use Exception;
 
 class Stockin extends BaseComponent
 {
@@ -13,20 +14,26 @@ class Stockin extends BaseComponent
 
     public function render()
     {
-        return $this->view('livewire.inventory.stockin');
+        $data['transactions'] = $this->transactionList();
+        return $this->view('livewire.inventory.stockin', $data);
     }
 
     public function AddStock()
     {
-        $this->findProductBySku($this->sku);
-    }
-
-    public function findProductBySku($sku)
-    {
-        $product = Sku::query()->find($sku);
-        if(! $product){
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error',  'message' => 'Sku not found']);
+        try{
+            $status = (new StockManagementService())->findProductBySku($this->sku, $this->stock_type);
+            if($status != null) {
+                $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Stock Operation', 'message' => $status]);
+                $this->sku = '';
+            }
+        } catch(Exception $ex){
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Stock Error',  'message' => $ex->getMessage() ]);
             $this->sku = '';
         }
+    }
+
+    public function transactionList()
+    {
+        return  (new StockManagementService())->todaysTransaction();
     }
 }

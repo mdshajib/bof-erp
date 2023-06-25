@@ -72,7 +72,34 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                    Today's Transaction list will show here
+                    <x-table.table>
+                        <x-slot name="head">
+                            <tr>
+                                <x-table.th>{{ __('Product') }}</x-table.th>
+                                <x-table.th>{{ __('Stock Quantity') }}</x-table.th>
+                                <x-table.th>{{ __('SKU') }}</x-table.th>
+                                <x-table.th>{{ __('Type') }}</x-table.th>
+                                <x-table.th>{{ __('Adjust') }}</x-table.th>
+                            </tr>
+                        </x-slot>
+                        <x-slot name="body">
+                            @php $i=0; @endphp
+                            @forelse ($transactions as $transaction)
+                                <tr>
+                                    <td> {{ $transaction->variation?->variation_name }} </td>
+                                    <td> {{ number_format($transaction->quantity , 2) }} </td>
+                                    <td> {{ $transaction->sku_id }} </td>
+                                    <td> {{ ucwords($transaction->type) }} </td>
+                                    <td> {{ $transaction->is_adjust == 1 ? 'Yes' : 'No' }} </td>
+
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="9" class="text-center">{{ __('No Record Found!') }}</td>
+                                </tr>
+                            @endforelse
+                        </x-slot>
+                    </x-table.table>
                 </div>
             </div>
         </div>

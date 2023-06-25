@@ -38,4 +38,14 @@ trait StockAndTransaction
         return Transaction::create($transaction);
     }
 
+    public function todayTransactions()
+    {
+        return Transaction::query()
+            ->select('variation_id','sku_id','quantity','type','is_adjust','stock_after_transaction')
+            ->with(['variation:id,variation_name'])
+            ->latest()
+            ->take(8)
+            ->get();
+    }
+
 }
