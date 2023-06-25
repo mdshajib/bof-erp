@@ -8,7 +8,7 @@ use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Users\ManageUser;
 use App\Http\Livewire\Category\ManageCategory;
 use App\Http\Livewire\Product\AddProduct;
-use App\Http\Livewire\Product\ManageProducts;
+use App\Http\Livewire\Product\ManageProduct;
 use App\Http\Livewire\Product\UpdateProduct;
 use App\Http\Livewire\Order\CreateOrder;
 use App\Http\Livewire\Order\ManageOrder;
@@ -35,7 +35,7 @@ Route::group(['middleware'=> ['auth']], function () {
 
 //    Products Routes
     Route::get('products/create', AddProduct::class)->name('product.create');
-    Route::get('products', ManageProducts::class)->name('product.manage');
+    Route::get('products', ManageProduct::class)->name('product.manage');
     Route::get('products/{product_id}/edit', UpdateProduct::class)->name('product.edit');
 
 //    Orders Routes

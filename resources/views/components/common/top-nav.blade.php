@@ -5,19 +5,19 @@
             <div class="navbar-brand-box">
                 <a href="#" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{url('/')}}/assets/images/bof-logo.svg" alt="" height="42">
+                        <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{url('/')}}/assets/images/bof-logo.svg" alt="" height="42"> <span class="logo-txt">{{ config('app.name') }}</span>
+                        <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42"> <span class="logo-txt">{{ config('app.name') }}</span>
                     </span>
                 </a>
 
                 <a href="#" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{url('/')}}/assets/images/bof-logo.svg" alt="" height="42">
+                        <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{url('/')}}/assets/images/bof-logo.svg" alt="" height="42"> <span class="logo-txt">{{ config('app.name') }}</span>
+                        <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42"> <span class="logo-txt">{{ config('app.name') }}</span>
                     </span>
                 </a>
             </div>

@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="BOF ERP" name="description" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{url('/')}}/assets/images/bof-logo.svg">
+        <link rel="shortcut icon" href="{{url('/')}}/assets/images/favicon.ico">
         <!-- filepond css --->
 		<link href="{{ asset('assets/libs/filepond/css/filepond.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/libs/filepond/css/filepond-plugin-image-preview.css')}}" rel="stylesheet">
