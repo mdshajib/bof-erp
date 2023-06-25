@@ -1,3 +1,4 @@
+<div>
 @section('page-title')
     Order Create
 @endsection
@@ -172,6 +173,7 @@
     </div> <!-- end col -->
 </div>
 <x-notify/>
+</div>
 
 @push('footer')
 

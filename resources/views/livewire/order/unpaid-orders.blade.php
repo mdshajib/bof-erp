@@ -8,7 +8,7 @@
             <li class="breadcrumb-item">
                 <a href="javascript: void(0);">Order Management</a>
             </li>
-            <li class="breadcrumb-item active">All Orders</li>
+            <li class="breadcrumb-item active">Unpaid Orders</li>
         </x-common.header>
     @endsection
 
@@ -96,7 +96,7 @@
                     <td> {{ $order->user->first_name }} {{ $order->user->last_name }}</td>
                     <td>
 
-    {{--                    <button wire:click="OrderView({{ $order->id }})" class="btn btn-secondary btn-sm"><i class="fa fa-eye fa-color-primary"></i></button>--}}
+                        {{--                    <button wire:click="OrderView({{ $order->id }})" class="btn btn-secondary btn-sm"><i class="fa fa-eye fa-color-primary"></i></button>--}}
                     </td>
                 </tr>
             @empty
@@ -106,11 +106,5 @@
             @endforelse
         </x-slot>
     </x-table.table>
-        <div class="row">
-            <div class="col-sm-12 col-md-5"><?php echo pagination_stats_text($orders); ?></div>
-            <div class="col-sm-12 col-md-7">{{ $orders->links() }}</div>
-        </div>
-        @include('livewire.order._order_details')
-        @include('livewire.x-loading')
     <x-notify/>
 </div>

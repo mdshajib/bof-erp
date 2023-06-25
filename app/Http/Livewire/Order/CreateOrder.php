@@ -60,13 +60,16 @@ class CreateOrder extends BaseComponent
 
     public function addRow($sku_with_item)
     {
+        $key = array_search($sku_with_item->variation->id, array_column($this->row_section, 'variation_id'));
 
-        if (array_search($sku_with_item->variation->id, array_column($this->row_section, 'variant_id')) !== FALSE) {
-            $this->dispatchBrowserEvent('notify', ['type' => 'warning', 'title' => 'Cart Warning', 'message' => 'This Product Already added in cart!!' ]);
-            $this->barcode      = null;
-            $this->product_name = null;
-        }
-        else {
+//        if (array_search($sku_with_item->variation->id, array_column($this->row_section, 'variation_id')) !== FALSE) {
+//            $this->dispatchBrowserEvent('notify', ['type' => 'warning', 'title' => 'Cart Warning', 'message' => 'This Product Already added in cart!!' ]);
+//
+//            $this->barcode      = null;
+//            $this->product_name = null;
+//        }
+
+        if($key === FALSE){
             $row_section = [
                 'id'                  => 0,
                 'product'             => $sku_with_item->variation->variation_name,
@@ -85,8 +88,14 @@ class CreateOrder extends BaseComponent
             $this->row_section[]      = $row_section;
             $this->barcode            = null;
             $this->product_name       = null;
+            $this->summaryTable();
         }
-        $this->summaryTable();
+        else {
+             $this->row_section[$key]['quantity'] += 1;
+            $this->barcode            = null;
+            $this->product_name       = null;
+            $this->checkQuantityStock($this->row_section[$key]['quantity'], $key);
+        }
     }
 
     public function readBarcode()
@@ -99,6 +108,7 @@ class CreateOrder extends BaseComponent
             $this->addRow($sku_with_item);
 
         }catch(Exception $ex){
+            $this->barcode      = null;
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
         }
 
@@ -116,6 +126,20 @@ class CreateOrder extends BaseComponent
         }
     }
 
+    private function checkQuantityStock($value, $key)
+    {
+        if ($this->row_section[$key]['quantity'] < 1) {
+            $this->row_section[$key]['quantity'] = 1;
+        }
+        if ($value > $this->row_section[$key]['stock']) {
+            $this->row_section[$key]['quantity']      = $this->row_section[$key]['stock'];
+        }
+        $this->row_section[$key]['gross_amount']      = $this->row_section[$key]['quantity'] * $this->row_section[$key]['unit_price'];
+        $this->row_section[$key]['total_discount']    = $this->row_section[$key]['quantity'] * $this->row_section[$key]['discount'];
+        $this->row_section[$key]['total_sales_price'] = $this->row_section[$key]['gross_amount'] * $this->row_section[$key]['total_discount'];
+        $this->summaryTable();
+    }
+
     public function updated($name, $value)
     {
         $fields = explode('.', $name);
@@ -123,16 +147,7 @@ class CreateOrder extends BaseComponent
         if(count($fields) > 1) {
             $key          = $fields[1];
             if ($fields[2] == 'quantity') {
-                if ($this->row_section[$key]['quantity'] < 1) {
-                    $this->row_section[$key]['quantity'] = 1;
-                }
-                if ($value > $this->row_section[$key]['stock']) {
-                    $this->row_section[$key]['quantity']      = $this->row_section[$key]['stock'];
-                }
-                $this->row_section[$key]['gross_amount']      = $this->row_section[$key]['quantity'] * $this->row_section[$key]['unit_price'];
-                $this->row_section[$key]['total_discount']    = $this->row_section[$key]['quantity'] * $this->row_section[$key]['discount'];
-                $this->row_section[$key]['total_sales_price'] = $this->row_section[$key]['gross_amount'] * $this->row_section[$key]['total_discount'];
-                $this->summaryTable();
+                $this->checkQuantityStock($value, $key);
             }
         }
     }
@@ -169,6 +184,7 @@ class CreateOrder extends BaseComponent
 
         if(count($this->row_section) < 1){
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Empty Cart', 'message' => 'Cart is empty. Please add products']);
+            return false;
         }
 
         if( $this->order_summary['due'] > 0){
@@ -176,6 +192,7 @@ class CreateOrder extends BaseComponent
         }else{
             $this->orderConfirm();
         }
+        return true;
     }
 
     public function orderConfirm()
@@ -239,6 +256,7 @@ class CreateOrder extends BaseComponent
     {
         if (count($this->row_section) > 0) {
             unset($this->row_section[$index]);
+            $this->row_section = array_values($this->row_section);
             $this->summaryTable();
         }
     }

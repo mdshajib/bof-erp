@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/resources/.DS_Store
+/resources/views/.DS_Store
+/resources/views/livewire/.DS_Store

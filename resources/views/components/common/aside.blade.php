@@ -22,7 +22,8 @@
 
                 <x-menu.list text="Order Management" icon="shopping-cart" class="{{ (request()->is('order*')) ? 'mm-active' : '' }}">
                     <x-menu.item text="Order Create" link="{{ route('order.create') }}" class="{{ (request()->is('order/create')) ? 'active' : '' }}"/>
-                    <x-menu.item text="Orders" link="{{ route('order.manage') }}" class="{{ (request()->is('orders')) ? 'active' : '' }}"/>
+                    <x-menu.item text="All Orders" link="{{ route('order.manage') }}" class="{{ (request()->is('orders')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Unpaid Orders" link="{{ route('order.unpaid') }}" class="{{ (request()->is('orders/unpaid')) ? 'active' : '' }}"/>
                 </x-menu.list>
 
             </ul>

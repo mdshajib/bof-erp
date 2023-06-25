@@ -12,6 +12,7 @@ use App\Http\Livewire\Product\ManageProducts;
 use App\Http\Livewire\Product\UpdateProduct;
 use App\Http\Livewire\Order\CreateOrder;
 use App\Http\Livewire\Order\ManageOrder;
+use App\Http\Livewire\Order\UnpaidOrders;
 use App\Http\Livewire\Inventory\Stockin;
 use App\Http\Livewire\Inventory\ManageStock;
 
@@ -40,6 +41,7 @@ Route::group(['middleware'=> ['auth']], function () {
 //    Orders Routes
     Route::get('orders/create', CreateOrder::class)->name('order.create');
     Route::get('orders', ManageOrder::class)->name('order.manage');
+    Route::get('orders/unpaid', UnpaidOrders::class)->name('order.unpaid');
 //    Inventory Routes
     Route::get('/inventory', ManageStock::class)->name('inventory.manage');
     Route::get('/inventory/stockin', Stockin::class)->name('inventory.stockin');

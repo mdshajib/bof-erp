@@ -4,14 +4,12 @@ namespace App\Http\Livewire\Order;
 
 use App\Http\Livewire\BaseComponent;
 use App\Models\SalesOrder;
-use App\Models\User;
-use App\Services\OrderManagementService;
 use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
 use App\Traits\WithPerPagePagination;
 use App\Traits\WithSorting;
 
-class ManageOrder extends BaseComponent
+class UnpaidOrders extends BaseComponent
 {
     use WithPerPagePagination;
     use WithCachedRows;
@@ -19,8 +17,6 @@ class ManageOrder extends BaseComponent
     use WithBulkActions;
 
     public $order_number;
-    public $view_row_section = [];
-    public $order_id;
     public $filter = [
         'order_number'    => ''
     ];
@@ -28,7 +24,7 @@ class ManageOrder extends BaseComponent
     public function render()
     {
         $data['orders'] = $this->rows;
-        return $this->view('livewire.order.manage-order', $data);
+        return $this->view('livewire.order.unpaid-orders', $data);
     }
 
     public function getRowsQueryProperty()
@@ -36,7 +32,8 @@ class ManageOrder extends BaseComponent
         $query = SalesOrder::query()
             ->with(['user:id,first_name,last_name'])
             ->select('id','order_number','order_date','paid_amount','due_amount','gross_amount','net_payment_amount','generated_by','is_paid')
-            ->when($this->filter['order_number'], fn ($q, $order_number) => $q->where('order_number', 'like', "%{$order_number}%"));
+            ->when($this->filter['order_number'], fn ($q, $order_number) => $q->where('order_number', 'like', "%{$order_number}%"))
+            ->where('is_paid', 0);
 
         return $this->applySorting($query);
     }
@@ -61,12 +58,4 @@ class ManageOrder extends BaseComponent
         $this->reset('filter');
         $this->hideOffCanvas();
     }
-
-    public function OrderView($order_id)
-    {
-        $order_data = (new OrderManagementService())->viewOrderDetails($order_id);
-        $this->dispatchBrowserEvent('openOrderViewModal');
-    }
-
-
 }
