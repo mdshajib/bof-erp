@@ -14,4 +14,14 @@ class Stock extends Model
     protected $guarded = ['id'];
 
     protected $dates = ['deleted_at'];
+
+    public function variation()
+    {
+        return $this->belongsTo(ProductVariation::class, 'variation_id', 'id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
 }

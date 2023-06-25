@@ -26,6 +26,11 @@
                     <x-menu.item text="Unpaid Orders" link="{{ route('order.unpaid') }}" class="{{ (request()->is('orders/unpaid')) ? 'active' : '' }}"/>
                 </x-menu.list>
 
+                <x-menu.list text="Inventory Management" icon="book" class="{{ (request()->is('inventory*')) ? 'mm-active' : '' }}">
+                    <x-menu.item text="Inventory" link="{{ route('inventory.manage') }}" class="{{ (request()->is('inventory')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Stock IN" link="{{ route('inventory.stockin') }}" class="{{ (request()->is('/inventory/stockin')) ? 'active' : '' }}"/>
+                </x-menu.list>
+
             </ul>
         </div>
     </div>

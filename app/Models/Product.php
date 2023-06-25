@@ -14,4 +14,9 @@ class Product extends Model
     protected $guarded = ['id'];
 
     protected $dates = ['deleted_at'];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+    }
 }
