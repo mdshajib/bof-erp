@@ -4,13 +4,13 @@
         <div class="col-sm-6">
             <div>
                 <h5 class="font-size-15 mb-3">Billed For:</h5>
-                <p class="mb-1">Customer Name:</p>
-                <p class="mb-1">Customer Phone:</p>
+                <p class="mb-1"> Name: {{ $order_info['customer_name'] }} </p>
+                <p class="mb-1"> Phone: {{ $order_info['customer_phone'] }} </p>
             </div>
 {{--            @if ($internal_comments)--}}
                 <div class="mt-4">
                     <h5 class="font-size-15">Internal Comments:</h5>
-                    <p class="mb-1"></p>
+                    <p class="mb-1"> {{ $order_info['internal_comments'] }} </p>
                 </div>
 {{--            @endif--}}
         </div>
@@ -23,12 +23,12 @@
             <div>
                 <div>
                     <h5 class="font-size-15">Order Date:</h5>
-                    <p></p>
+                    <p> {{ $order_info['order_date'] }} </p>
                 </div>
 
                 <div class="mt-4">
-                    <h5 class="font-size-15">Delivery Notes:</h5>
-                    <p class="mb-1">Note</p>
+                    <h5 class="font-size-15">Order Notes:</h5>
+                    <p class="mb-1"> {{ $order_info['order_notes'] }} </p>
                 </div>
             </div>
         </div>
@@ -44,116 +44,48 @@
                             <th>Item</th>
                             <th>Quantity</th>
                             <th>Unit Price</th>
-                            <th>Discounted</th>
-                            <th>Discounted Price</th>
+                            <th>Discount</th>
+                            <th>Total Discount</th>
                             <th class="text-end" style="width: 120px;">Price</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        @php $i=0; $two = 0; $seven = 0; @endphp
                         @foreach($view_row_section as $product)
                         <tr>
-                            <th scope="row"></th>
+                            <td> {{ $product['id'] }} </td>
                             <td>
-                                <h5 class="font-size-15 mb-1"></h5>
-                                <p class="font-size-13 text-muted mb-0"></p>
+                                <h5 class="font-size-15 mb-1"> {{ $product['product'] }} </h5>
                             </td>
-                            <td></td>
-                            <td> CHF</td>
-                            <td> CHF</td>
-                            <td> CHF</td>
-                            <td class="text-end"> CHF</td>
+                            <td> {{ $product['quantity'] }} </td>
+                            <td>  {{ $product['unit_price'] }} Tk</td>
+                            <td>  {{ $product['discount'] }} Tk</td>
+                            <td>  {{ $product['total_discount'] }} Tk</td>
+                            <td class="text-end">  {{ $product['gross_amount'] }} Tk</td>
                         </tr>
                         @endforeach
-                        <tr>
-                            <th scope="row" colspan="6" class="text-end">Sub Total(Without Discount & Vat)</th>
-                            <td class="text-end"> CHF</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">
-                                Discount</th>
-                            <td class="border-0 text-end"> CHF</td>
-                        </tr>
-                        @if( $two > 0)
-                        <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">
-                                Vat(2.5%)</th>
-                            <td class="border-0 text-end"> CHF
-                            </td>
-                        </tr>
-                        @endif
-                        @if( $seven > 0)
-                        <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">
-                                Vat(7.7%)</th>
-                            <td class="border-0 text-end">CHF
-                            </td>
-                        </tr>
-                        @endif
-                        @if(!$depot_total)
-                        <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">Delivery Charge</th>
-                            <td class="border-0 text-end">
-                            CHF
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">
-                                Delivery Vat(7.7%)</th>
-                            <td class="border-0 text-end"> CHF</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">
-                                Delivery Charge (With Vat)</th>
-                            <td class="border-0 text-end"> CHF</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">Total</th>
-                            <td class="border-0 text-end"><h4 class="m-0"> CHF</h4></td>
-                        </tr>
-                        @endif
                     </tbody>
                 </table>
 
-                <div class="pb-3"><strong>Return Products</strong></div>
                 <table class="table table-nowrap align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Item</th>
-                            <th></th>
-                            <th>Quantity</th>
-                            <th>Unit Price</th>
-                            <th class="text-end" colspan="2">Total Price</th>
-                        </tr>
-                    </thead>
                     <tbody>
-
                         <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">
-                                Depot Return Amount</th>
-                            <td class="border-0 text-end">CHF</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">Delivery Charge</th>
+                            <th scope="row" colspan="6" class="border-0 text-end">Sub Total (Without Discount)</th>
                             <td class="border-0 text-end">
-                            	CHF
+                                {{ $order_summary['sub_total'] }} Tk
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">
-                                Delivery Vat(7.7%)</th>
-                            <td class="border-0 text-end"> CHF</td>
+                            <th scope="row" colspan="6" class="border-0 text-end"> Total Discount </th>
+                            <td class="border-0 text-end"> {{ $order_summary['total_discount'] }} Tk</td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">
-                                Delivery Charge (With Vat)</th>
-                            <td class="border-0 text-end"> CHF</td>
+                            <th scope="row" colspan="6" class="border-0 text-end">Net Amount </th>
+                            <td class="border-0 text-end"> {{ $order_summary['net_amount'] }} Tk</td>
                         </tr>
                         <tr>
-                            <th scope="row" colspan="6" class="border-0 text-end">Total</th>
-                            <td class="border-0 text-end"><h4 class="m-0"> CHF</h4></td>
+                            <th scope="row" colspan="6" class="border-0 text-end">Due</th>
+                            <td class="border-0 text-end"><h4 class="m-0"> {{ $order_summary['due'] }} Tk</h4></td>
                         </tr>
                     </tbody>
                 </table>

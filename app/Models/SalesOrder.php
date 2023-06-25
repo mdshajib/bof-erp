@@ -19,4 +19,14 @@ class SalesOrder extends Model
     {
         return $this->belongsTo(User::class, 'generated_by', 'id');
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(Contact::class, 'contact_id', 'id');
+    }
+
+    public function sales_items()
+    {
+        return $this->hasMany(SalesItem::class);
+    }
 }

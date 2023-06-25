@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Order;
 
 use App\Http\Livewire\BaseComponent;
 use App\Models\SalesOrder;
-use App\Models\User;
 use App\Services\OrderManagementService;
 use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
@@ -20,6 +19,8 @@ class ManageOrder extends BaseComponent
 
     public $order_number;
     public $view_row_section = [];
+    public $order_summary    = [];
+    public $order_info       = [];
     public $order_id;
     public $filter = [
         'order_number'    => ''
@@ -64,7 +65,15 @@ class ManageOrder extends BaseComponent
 
     public function OrderView($order_id)
     {
+        $this->order_id = $order_id;
+
         $order_data = (new OrderManagementService())->viewOrderDetails($order_id);
+        if(count($order_data) > 0){
+            $this->view_row_section = $order_data['items'];
+            $this->order_summary    = $order_data['summary'];
+            $this->order_info       = $order_data['order_info'];
+            $this->order_number = $this->order_info['order_number'];
+        }
         $this->dispatchBrowserEvent('openOrderViewModal');
     }
 

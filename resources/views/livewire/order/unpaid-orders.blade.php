@@ -94,9 +94,9 @@
                         @endif
                     </td>
                     <td> {{ $order->user->first_name }} {{ $order->user->last_name }}</td>
+                    <td></td>
                     <td>
-
-                        {{--                    <button wire:click="OrderView({{ $order->id }})" class="btn btn-secondary btn-sm"><i class="fa fa-eye fa-color-primary"></i></button>--}}
+                        <button wire:click="OrderView({{ $order->id }})" class="btn btn-secondary btn-sm"><i class="fa fa-eye fa-color-primary"></i></button>
                     </td>
                 </tr>
             @empty
@@ -106,5 +106,6 @@
             @endforelse
         </x-slot>
     </x-table.table>
+        @include('livewire.order._order_details')
     <x-notify/>
 </div>

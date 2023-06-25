@@ -23,6 +23,7 @@ return new class extends Migration
             $table->float('gross_amount', 8, 2);
             $table->foreignId('applied_discount_id')->nullable()->references('id')->on('discounts')->onDelete('Cascade');
             $table->float('discount_amount', 8, 2)->default(0);
+            $table->float('total_discount_amount', 8, 2)->default(0);
             $table->float('tax_amount', 8, 2)->default(0);
             $table->float('total_sales_price', 8, 2)->default(0);
             $table->string('note')->nullable();
