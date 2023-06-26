@@ -324,8 +324,8 @@ table.dataTable>thead .sorting_desc_disabled:after {
 
 fieldset.fieldset-border {
     border: 0.5px solid #8080806b !important;
-    padding: 0 1.4em 1.4em 1.4em !important;
-    margin: 0 0 1.5em 0 !important;
+    padding: 0 1.4em 1em 1.4em !important;
+    margin: 0 0 1em 0 !important;
     -webkit-box-shadow: 0px 0px 0px 0px #000;
     box-shadow: 0px 0px 0px 0px #000;
 }
