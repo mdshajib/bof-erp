@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Supplier;
 
 use App\Http\Livewire\BaseComponent;
 use App\Models\Supplier;
+use App\Services\SupplierManagementService;
 use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
 use App\Traits\WithPerPagePagination;
@@ -20,17 +21,17 @@ class ManageSupplier extends BaseComponent
 
     public $supplierIdBeingRemoved = null;
     public $supplier_id;
-    public $name;
-
-    public $address;
-
-    public $phone;
-
-    public $active = true;
 
     public $filter = [
         'name'     => null,
         'address'  => null
+    ];
+
+    public $supplier = [
+        'name'     => null,
+        'phone'    => null,
+        'address'  => null,
+        'active'   => true,
     ];
 
     public function render()
@@ -75,77 +76,71 @@ class ManageSupplier extends BaseComponent
 
     public function supplierDelete()
     {
-        if ($this->supplierIdBeingRemoved != null) {
-            $supplier  = Supplier::findorFail($this->supplierIdBeingRemoved);
-            $supplier->delete();
-            $this->dispatchBrowserEvent('deleted', ['message' => 'Supplier deleted successfully']);
+        try {
+            if ($this->supplierIdBeingRemoved != null) {
+                $status = (new SupplierManagementService())->delete($this->supplierIdBeingRemoved );
+                if($status) {
+                    $this->dispatchBrowserEvent('deleted', ['message' => 'Supplier deleted successfully']);
+                }
+            }
         }
-        return redirect()->back();
+        catch(Exception $ex) {
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Supplier', 'message' => $ex->getMessage() ]);
+        }
     }
 
     public function openEditSupplierModal($supplier_id)
     {
-        $this->resetErrorBag();
-        $this->resetValidation();
-        $this->supplier_id = $supplier_id;
+        try{
+            $this->resetErrorBag();
+            $this->resetValidation();
+            $this->supplier_id = $supplier_id;
+            $supplier = (new SupplierManagementService())->showSupplier($supplier_id);
+            if(count($supplier) > 0) {
+                $this->supplier = $supplier;
+            }
+            $this->dispatchBrowserEvent('openNewSupplierModal');
 
-        $supplier       = Supplier::query()->findOrFail($supplier_id);
-        $this->name     = $supplier->name;
-        $this->phone    = $supplier->phone;
-        $this->address  = $supplier->address;
-        $this->active   = $supplier->is_active;
+        } catch(Exception $ex) {
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Supplier', 'message' => $ex->getMessage() ]);
+        }
 
-        $this->dispatchBrowserEvent('openNewSupplierModal');
     }
 
     public function submit()
     {
         $rules = [
-            'name'    => 'required',
-            'address' => 'required',
+            'supplier.name'    => 'required',
+            'supplier.address' => 'required',
         ];
 
         $messages = [
-            'name.required'    => 'Name field id required',
-            'address.required' => 'Address field is required'
+            'supplier.name.required'    => 'Name field id required',
+            'supplier.address.required' => 'Address field is required'
         ];
 
         $this->validate($rules, $messages);
 
-        if (! $this->supplier_id) {
-            $this->save();
-        } else {
-            $this->update();
-        }
-
-        $this->reset();
-        $this->hideModal();
-    }
-
-    public function save()
-    {
-        $data['name']      = $this->name;
-        $data['phone']     = $this->phone;
-        $data['address']   = $this->address;
-        $data['is_active'] = $this->active;
-        Supplier::create($data);
-
-        $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Supplier', 'message' => 'Supplier created successfully']);
-    }
-
-    public function update()
-    {
         try {
-            $supplier             = Supplier::find($this->supplier_id);
-            $supplier->name       = $this->name;
-            $supplier->phone      = $this->phone;
-            $supplier->address    = $this->address;
-            $supplier->is_active  = $this->active;
-            $supplier->save();
+            if (! $this->supplier_id) {
+                $status = (new SupplierManagementService())->save( $this->supplier);
+                if($status) {
+                    $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Supplier', 'message' => 'Supplier created successfully']);
+                }
+            } else {
+                $status = (new SupplierManagementService())->update($this->supplier_id, $this->supplier);
+                if($status) {
+                    $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Supplier', 'message' => 'Supplier updated successfully']);
+                }
+            }
 
-            $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Supplier', 'message' => 'Supplier updated successfully']);
-        } catch (\Exception $ex) {
-            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Supplier', 'message' => 'Unable to update']);
+            $this->reset();
+            $this->hideModal();
+        } catch (Exception $ex) {
+
+            $this->reset();
+            $this->hideModal();
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Supplier', 'message' => $ex->getMessage() ]);
         }
     }
 

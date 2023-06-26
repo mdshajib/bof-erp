@@ -8,31 +8,31 @@
 
          <x-form.input
             type="text"
-            wire:model.defer='name'
+            wire:model.defer='supplier.name'
             id="name"
             label="Name"
             placeholder="Supplier Name"
-            :error="$errors->first('name')"
+            :error="$errors->first('supplier.name')"
         />
 
         <x-form.input
             type="text"
-            wire:model.defer='phone'
+            wire:model.defer='supplier.phone'
             id="txt_phone"
             label="Phone"
             placeholder="Phone"
-            :error="$errors->first('phone')"
+            :error="$errors->first('supplier.phone')"
         />
 
         <x-form.input
             type="text"
-            wire:model.defer='address'
+            wire:model.defer='supplier.address'
             id="txt_address"
             label="Address"
             placeholder="Address"
-            :error="$errors->first('address')"
+            :error="$errors->first('supplier.address')"
         />
-        <x-form.check wire:model='active' id="txt_active" label="Active"/>
+        <x-form.check wire:model='supplier.active' id="txt_active" label="Active"/>
      <x-slot name="footer">
          <button type="submit" class="btn btn-primary">Save</button>
      </x-slot>
