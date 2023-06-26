@@ -35,6 +35,11 @@ class ManageUser extends BaseComponent
 
     protected $userRepository;
 
+    public $filter = [
+        'name'     => null,
+        'email'    => null
+    ];
+
 
     public function mount()
     {
@@ -50,7 +55,9 @@ class ManageUser extends BaseComponent
 
     public function getRowsQueryProperty()
     {
-        $query = User::query();
+        $query = User::query()
+            ->when($this->filter['name'], fn ($q, $name)  => $q->where('first_name', 'like', "%{$name}%"))
+            ->when($this->filter['email'], fn ($q, $email)  => $q->where('email', 'like', "%{$email}%"));
 
         return $this->applySorting($query);
     }
@@ -162,8 +169,21 @@ class ManageUser extends BaseComponent
             $user  = User::findorFail($this->userIdBeingRemoved);
             $user->delete();
             $this->dispatchBrowserEvent('deleted', ['message' => 'User deleted successfully']);
-
-            return redirect()->back();
         }
+        return redirect()->back();
+    }
+
+    public function search()
+    {
+        $this->hideOffCanvas();
+        $this->resetPage();
+
+        return $this->rows;
+    }
+
+    public function resetSearch()
+    {
+        $this->reset('filter');
+        $this->hideOffCanvas();
     }
 }

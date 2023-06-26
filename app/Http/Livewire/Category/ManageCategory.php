@@ -38,11 +38,7 @@ class ManageCategory extends BaseComponent
     public function getRowsQueryProperty()
     {
         $query = Category::query()
-            ->when(
-                $this->filter['name'],
-                fn ($q, $name) => $q->where('name', 'like', "%{$name}%")
-                    ->orWhere('name_de', 'like', "%$name%")
-            );
+            ->when($this->filter['name'], fn ($q, $name) => $q->where('name', 'like', "%{$name}%"));
 
         return $this->applySorting($query);
     }

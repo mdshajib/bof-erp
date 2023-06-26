@@ -1,24 +1,24 @@
 <div>
     @section('page-title')
-        Manage Users
+        Manage Supplier
     @endsection
 
 
     @section('header')
-        <x-common.header title="Manage Users">
+        <x-common.header title="Manage Supplier">
             <li class="breadcrumb-item">
-                <a href="javascript: void(0);">User Management</a>
+                <a href="javascript: void(0);">Supplier Management</a>
             </li>
-            <li class="breadcrumb-item active">Users</li>
+            <li class="breadcrumb-item active">Manage Supplier</li>
         </x-common.header>
     @endsection
 
     <x-action-box>
         <x-slot name="left">
-            <button wire:click="openNewUserModal()" type="button" class="btn waves-effect btn-primary">
-                <i class="fa fa-plus me-2"></i> New User
+            <button wire:click="openNewSupplierModal" type="button" class="btn waves-effect btn-primary">
+                <i class="fa fa-plus me-2"></i> New Supplier
             </button>
-            @include('livewire.users._add_update_user')
+            @include('livewire.supplier._add_update_supplier')
 
         </x-slot>
         <x-slot name="right">
@@ -41,7 +41,7 @@
                     <x-offcanvas id="offcanvasFilter" size="sm" title="Search">
                         <form>
                             <x-form.input id="txt_name_filter" wire:model.defer="filter.name" placeholder="{{ __('Name') }}" />
-                            <x-form.input id="txt_name_filter" wire:model.defer="filter.email" placeholder="{{ __('Email') }}" />
+                            <x-form.input id="txt_name_filter" wire:model.defer="filter.address" placeholder="{{ __('Address') }}" />
                             <button type="submit" wire:click.prevent="search" class="btn btn-primary">Search</button>
                             <button type="button" wire:click.prevent="resetSearch" class="btn btn-link">Reset</button>
                         </form>
@@ -57,34 +57,23 @@
         <x-slot name="head">
             <tr>
                 <x-table.th>Name</x-table.th>
-                <x-table.th>Email</x-table.th>
-                <x-table.th>Role</x-table.th>
+                <x-table.th>Phone</x-table.th>
+                <x-table.th>Address</x-table.th>
                 <x-table.th style="width: 98px">Status</x-table.th>
                 <x-table.th style="width: 90px">Action</x-table.th>
             </tr>
         </x-slot>
         <x-slot name="body">
-            @forelse($users as $user)
+            @forelse($suppliers as $supplier)
                 <tr>
-                    <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td>{{ $supplier->name }}</td>
+                    <td>{{ $supplier->phone }}</td>
+                    <td>{{ $supplier->address }}</td>
                     <td>
-                        <span class="badge badge-soft-primary">{{ $user->role }}</span>
+                        @livewire('toggle-switch', ['model'=>$supplier, 'field'=>'is_active','name'=>$supplier->name], key($supplier->id))
                     </td>
                     <td>
-                        @if($user->id == auth()->user()->id)
-                            <span class="badge badge-soft-primary">Active</span>
-                        @else
-                            @livewire('toggle-switch', ['model'=>$user, 'field'=>'is_active','name'=>$user->first_name.' '.$user->last_name], key($user->id))
-                        @endif
-                    </td>
-                    <td>
-                        <button type="button"  wire:click="openEditUserModal({{ $user->id }})"  class="btn btn-secondary btn-sm"> <i class="fa fa-edit fa-color-primary"></i> </button>
-                        @if($user->id == auth()->user()->id)
-
-                        @else
-                            <a wire:click="UserconfirmDelete({{ $user->id }})" class="btn btn-primary btn-sm"><i class="fas fa-trash"></i></a>
-                        @endif
+                        <button type="button"  wire:click="openEditSupplierModal({{ $supplier->id }})"  class="btn btn-secondary btn-sm"> <i class="fa fa-edit fa-color-primary"></i> </button>
                     </td>
                 </tr>
             @empty
@@ -95,8 +84,8 @@
         </x-slot>
     </x-table.table>
     <div class="row">
-        <div class="col-sm-12 col-md-5">{{ pagination_stats_text($users) }} </div>
-        <div class="col-sm-12 col-md-7">{{ $users->links() }}</div>
+        <div class="col-sm-12 col-md-5">{{ pagination_stats_text($suppliers) }} </div>
+        <div class="col-sm-12 col-md-7">{{ $suppliers->links() }}</div>
     </div>
     @include('livewire.x-loading')
     <x-notify/>

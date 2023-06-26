@@ -15,6 +15,8 @@
                     <x-menu.item text="Manage Terms" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
                 </x-menu.list>
 
+                <x-menu.item text="Supplier Management" link="{{ route('supplier.manage') }}" icon="home" class="{{ (request()->is('suppliers*')) ? 'active' : '' }} "/>
+
                 <x-menu.list text="Product Management" icon="package" class="{{ (request()->is('product*')) ? 'mm-active' : '' }}">
                     <x-menu.item text="Add Product" link="{{ route('product.create') }}" class="{{ (request()->is('products/create')) ? 'active' : '' }}"/>
                     <x-menu.item text="Manage Products" link="{{ route('product.manage') }}" class="{{ (request()->is('products')) ? 'active' : '' }} "/>

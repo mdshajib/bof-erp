@@ -15,6 +15,7 @@ use App\Http\Livewire\Order\ManageOrder;
 use App\Http\Livewire\Order\UnpaidOrders;
 use App\Http\Livewire\Inventory\Stockin;
 use App\Http\Livewire\Inventory\ManageStock;
+use App\Http\Livewire\Supplier\ManageSupplier;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -45,6 +46,11 @@ Route::group(['middleware'=> ['auth']], function () {
 //    Inventory Routes
     Route::get('/inventory', ManageStock::class)->name('inventory.manage');
     Route::get('/inventory/stockin', Stockin::class)->name('inventory.stockin');
+
+    // Supplier Routes
+    Route::get('/suppliers', ManageSupplier::class)->name('supplier.manage');
+
+
 });
 
 Route::get('/bar', \App\Http\Livewire\BarCode\Scabber::class);
