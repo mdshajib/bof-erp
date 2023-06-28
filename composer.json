@@ -15,7 +15,8 @@
         "mike42/escpos-php": "^4.0",
         "milon/barcode": "^10.0",
         "mpdf/mpdf": "^8.0",
-        "predis/predis": "^2.1"
+        "predis/predis": "^2.1",
+        "spatie/laravel-activitylog": "^4.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
