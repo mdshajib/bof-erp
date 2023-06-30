@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Product;
 use App\Http\Livewire\BaseComponent;
 use App\Models\Category;
 use App\Models\Supplier;
+use App\Services\ProductCreateService;
 use Exception;
 use Livewire\WithFileUploads;
 
@@ -43,16 +44,17 @@ class AddProduct extends BaseComponent
     {
         $variation = [
             'id'                  => 0,
+            'variation_name'      => null,
             'low_quantity_alert'  => 5,
             'path'                => null
         ];
 
         $this->variation_section[] = $variation;
 
-        $this->image_section = [[
+        $this->image_section = [
             'id'            => 0,
             'path'          => null,
-        ]];
+        ];
     }
 
     public function productInfoSubmit()
@@ -83,6 +85,7 @@ class AddProduct extends BaseComponent
     {
         $variation = [
                 'id'                  => 0,
+                'variation_name'      => null,
                 'low_quantity_alert'  => 5,
                 'path'                => null
         ];
@@ -108,11 +111,12 @@ class AddProduct extends BaseComponent
 
     private function initPrices()
     {
-        foreach ($this->variation_section as $variation) {
-            $data['variation_id']            = 0;
-            $data['variation_name']          = $this->createVariationName($variation);
-            $data['cogs_price']              = 0;
-            $data['selling_price']           = 0;
+        foreach ($this->variation_section as $key => $variation) {
+            $data['variation_id']                            = 0;
+            $data['variation_name']                          = $this->createVariationName($variation);
+            $this->variation_section[$key]['variation_name'] = $data['variation_name'];
+            $data['cogs_price']                              = 0;
+            $data['selling_price']                           = 0;
 
             $this->price_section[] = $data;
         }
@@ -147,12 +151,11 @@ class AddProduct extends BaseComponent
     {
         try {
             $rules = [
-                'image_section.*.path' => 'sometimes|required',
-                'image_section.*.path' => 'sometimes|required|max:2048|dimensions:max_width=2000,max_height=2000,min_width=500,min_height=500',
+                'image_section.path' => 'sometimes|required|max:2048|dimensions:max_width=2000,max_height=2000,min_width=500,min_height=500',
             ];
 
             $this->validate($rules);
-
+            $status = (new ProductCreateService())->createProduct($this->product_info, $this->variation_section, $this->price_section, $this->image_section);
         } catch (Exception $ex) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Product Price', 'message' => $ex->getMessage() ]);
         }

@@ -98,7 +98,11 @@
                         @endif
                     </td>
                     <td> {{ $product->supplier->name }}, {{ $product->supplier->address }}</td>
-                    <td></td>
+                    <td>
+                        @if($product->image_path)
+                            <img src="{{ $product->image_path }}" alt="product-image" class="me-1" height="55">
+                        @endif
+                    </td>
                     <td>
                         @livewire('toggle-switch', ['model'=>$product, 'field'=>'is_active','name'=>$product->title], key($product->id))
                     </td>
