@@ -162,7 +162,7 @@ body[data-sidebar-size=sm] .navbar-brand-box {
 }
 
 .twitter-bs-wizard .twitter-bs-wizard-nav .nav-link.active .step-icon {
-    background-color: rgb(201 172 96 / 21%);
+    background-color: #e9c054b5;
     color: #006A4E;
     border-color: rgb(201 172 96);
 }

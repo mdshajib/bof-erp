@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="BOF ERP" name="description" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{url('/')}}/assets/images/bof-logo.svg">
+        <link rel="shortcut icon" href="{{url('/')}}/assets/images/favicon.ico">
 
         <!-- preloader css -->
         <link rel="stylesheet" href="{{ asset('assets/css/preloader.css') }}" type="text/css" />

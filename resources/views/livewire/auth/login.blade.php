@@ -5,10 +5,10 @@
     <div class="auth-full-page-content d-flex p-sm-5 p-4">
         <div class="w-100">
             <div class="d-flex flex-column h-100">
-                <div class="mb-2 mb-md-5 text-center">
+                <div class="mb-0 mb-md-1 text-center">
                     <a href="" class="d-block auth-logo">
                         <img
-                            src="{{url('/')}}/assets/images/bof-logo.svg" alt="" height="66">
+                            src="{{url('/')}}/assets/images/bof.png" alt="" height="90">
                         <span class="logo-txt d-block mt-3">{{ config('app.name') }}</span>
                     </a>
                 </div>

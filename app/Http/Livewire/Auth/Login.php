@@ -29,7 +29,7 @@ class Login extends PublicBaseComponent
             if(!Auth::attempt(['email' => $this->email, 'password' => $this->password,'is_active' => 1])){
                 throw new Exception('Access denied. Please enter valid credential.');
             }
-            return redirect()->route('dashboard');
+            return redirect()->intended('dashboard');
         }catch ( Exception $ex){
             session()->flash('error', $ex->getMessage());
         }

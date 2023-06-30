@@ -25,14 +25,6 @@
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-
-            <!-- App Search
-            <form class="app-search d-none d-lg-block">
-                <div class="position-relative">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <button class="btn btn-primary" type="button"><i class="bx bx-search-alt align-middle"></i></button>
-                </div>
-            </form> -->
         </div>
 
         <div class="d-flex">
@@ -70,7 +62,6 @@
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
                     <a class="dropdown-item" href="{{ route('profile') }}"><i class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> Profile</a>
-                    <!-- <a class="dropdown-item" href="auth-lock-screen.html"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> Lock screen</a> -->
                     <div class="dropdown-divider"></div>
 
                     <form method="POST" action="{{ route('logout') }}">

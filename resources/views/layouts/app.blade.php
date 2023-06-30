@@ -213,7 +213,8 @@
         <script src="{{ asset('assets/libs/dropzone/min/dropzone.min.js') }}"></script>
         <script src="{{ asset('assets/js/app.js') }}"></script>
         <!-- Alpine js 3 -->
-        <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
+        <script defer src="{{ asset('assets/js/alpinejs@3.2.4_dist_cdn.min.js') }}"></script>
+{{--        <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>--}}
         <!-- filepond js --->
         <script src="{{ asset('assets/libs/filepond/js/filepond-plugin-file-validate-type.js')}}"></script>
         <script src="{{ asset('assets/libs/filepond/js/filepond-plugin-file-validate-size.js')}}"></script>
