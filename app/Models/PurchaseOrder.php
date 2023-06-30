@@ -16,6 +16,11 @@ class PurchaseOrder extends Model
     protected $guarded = ['id'];
 
     protected $dates = ['deleted_at'];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'generated_by', 'id');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

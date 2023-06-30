@@ -2,12 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
 
-class Profile extends Component
+class Profile extends BaseComponent
 {
     public function render()
     {
-        return view('livewire.profile');
+        return $this->view('livewire.profile');
     }
 }

@@ -22,6 +22,11 @@
                     <x-menu.item text="Manage Products" link="{{ route('product.manage') }}" class="{{ (request()->is('products')) ? 'active' : '' }} "/>
                 </x-menu.list>
 
+                <x-menu.list text="Purchase Management" icon="shopping-cart" class="{{ (request()->is('purchases*')) ? 'mm-active' : '' }}">
+                    <x-menu.item text="Purchase Order" link="{{ route('purchase.create') }}" class="{{ (request()->is('purchases/create')) ? 'active' : '' }}"/>
+                    <x-menu.item text="All Purchase" link="{{ route('purchase.manage') }}" class="{{ (request()->is('purchases')) ? 'active' : '' }}"/>
+                </x-menu.list>
+
                 <x-menu.list text="Order Management" icon="shopping-cart" class="{{ (request()->is('order*')) ? 'mm-active' : '' }}">
                     <x-menu.item text="Order Create" link="{{ route('order.create') }}" class="{{ (request()->is('order/create')) ? 'active' : '' }}"/>
                     <x-menu.item text="All Orders" link="{{ route('order.manage') }}" class="{{ (request()->is('orders')) ? 'active' : '' }}"/>

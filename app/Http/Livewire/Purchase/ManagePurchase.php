@@ -2,12 +2,58 @@
 
 namespace App\Http\Livewire\Purchase;
 
-use Livewire\Component;
+use App\Http\Livewire\BaseComponent;
+use App\Traits\WithBulkActions;
+use App\Traits\WithCachedRows;
+use App\Traits\WithPerPagePagination;
+use App\Traits\WithSorting;
+use App\Models\PurchaseOrder;
 
-class ManagePurchase extends Component
+class ManagePurchase extends BaseComponent
 {
+    use WithPerPagePagination;
+    use WithCachedRows;
+    use WithSorting;
+    use WithBulkActions;
+
+    public $purchase_id;
+    public $filter = [
+        'purchase_number'    => null
+    ];
+
     public function render()
     {
-        return view('livewire.purchase.manage-purchase');
+        $data['orders'] = $this->rows;
+        return $this->view('livewire.purchase.manage-purchase', $data);
+    }
+
+    public function getRowsQueryProperty()
+    {
+        $query = PurchaseOrder::query()
+            ->with(['user:id,first_name,last_name'])
+            ->when($this->filter['purchase_number'], fn ($q, $purchase_number) => $q->where('purchase_number', 'like', "%{$purchase_number}%"));
+
+        return $this->applySorting($query);
+    }
+
+    public function getRowsProperty()
+    {
+        return $this->cache(function () {
+            return $this->applyPagination($this->rowsQuery);
+        });
+    }
+
+    public function search()
+    {
+        $this->hideOffCanvas();
+        $this->resetPage();
+
+        return $this->rows;
+    }
+
+    public function resetSearch()
+    {
+        $this->reset('filter');
+        $this->hideOffCanvas();
     }
 }
