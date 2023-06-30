@@ -248,6 +248,8 @@ class CreateOrder extends BaseComponent
             $this->product_list = [];
 
         }catch(Exception $ex){
+            $this->product_name = null;
+            $this->product_list = [];
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
         }
     }

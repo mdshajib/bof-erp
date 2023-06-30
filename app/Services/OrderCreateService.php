@@ -27,7 +27,7 @@ class OrderCreateService
                 ])
                 ->find($barcode);
             if(! $sku_with_item){
-                throw new Exception('Barcode not found!');
+                throw new Exception('Barcode not found in SKU table. Might be need purchase!');
             }
             if( $sku_with_item->stock == null || $sku_with_item->stock?->quantity < 1){
                 throw new Exception('Stock out this product!');
@@ -67,7 +67,7 @@ class OrderCreateService
                     return $q->where('stocks.quantity', '>', 0);
                 })->first();
             if(! $sku_with_item){
-                throw new Exception('Barcode not found!');
+                throw new Exception('Product not found in SKU table. Might be need purchase!');
             }
             if( $sku_with_item->stock == null || $sku_with_item->stock?->quantity < 1){
                 throw new Exception('Stock out this product!');
