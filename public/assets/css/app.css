@@ -513,6 +513,7 @@ body[data-layout-mode=dark] .right-bar {
   position: fixed;
   top: 70px;
   border-right: 1px solid #e9e9ef;
+    background-image: linear-gradient( 109.6deg, rgb(156 252 248 / 22%) 11.2%, rgb(110 123 251 / 21%) 91.1% );
 }
 
 .main-content {
@@ -562,8 +563,10 @@ body[data-layout-mode=dark] .right-bar {
 #sidebar-menu ul li a svg {
   height: 16px;
   width: 16px;
-  color: #545a6d;
-  fill: rgba(84, 90, 109, 0.2);
+  /*color: #545a6d;*/
+  /*fill: rgba(84, 90, 109, 0.2);*/
+    color: #897200;
+    fill: #00ac02c9;
   margin-right: 10px;
   margin-top: -3px;
 }
@@ -1408,10 +1411,10 @@ body[data-layout-mode=dark][data-layout-size=boxed] #layout-wrapper {
 
 /*!
  * Waves v0.7.6
- * http://fian.my.id/Waves 
- * 
- * Copyright 2014-2018 Alfiana E. Sibuea and other contributors 
- * Released under the MIT license 
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014-2018 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE */
 .waves-effect {
   position: relative;
@@ -3571,7 +3574,7 @@ body[data-layout-mode=dark] .twitter-bs-wizard .twitter-bs-wizard-nav .nav-link:
   background-color: #3b403d;
 }
 
-/* 
+/*
 Datatable
 */
 div.dataTables_wrapper div.dataTables_filter {
