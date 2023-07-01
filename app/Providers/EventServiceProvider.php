@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\PurchaseOrder;
 use App\Models\SalesOrder;
 use App\Models\User;
 use App\Observers\CategoryObserver;
+use App\Observers\PurchaseOrderObserver;
 use App\Observers\SalesOrderObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
@@ -48,8 +50,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $observers = [
-        User::class       => [UserObserver::class],
-        Category::class   => [CategoryObserver::class],
-        SalesOrder::class => [SalesOrderObserver::class],
+        User::class           => [ UserObserver::class ],
+        Category::class       => [ CategoryObserver::class ],
+        SalesOrder::class     => [ SalesOrderObserver::class ],
+        PurchaseOrder::class  => [ PurchaseOrderObserver::class ],
     ];
 }

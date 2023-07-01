@@ -7,6 +7,10 @@ use App\Models\Transaction;
 
 trait StockAndTransaction
 {
+    public function createStock($stock_data)
+    {
+        return Stock::create($stock_data);
+    }
     public function stockIncrement($sku, $quantity)
     {
         return Stock::where('sku_id', $sku)->increment('quantity', $quantity);
@@ -24,11 +28,11 @@ trait StockAndTransaction
 
     public function createTransaction( $item, $type = 'out', $is_adjust = 0)
     {
-        $current_stock = $this->currentStock($item['sku']);
-        $transaction['outlet_id']               = auth()->user()->outlet_id;
+        $current_stock = $this->currentStock($item['sku_id']);
+        $transaction['outlet_id']               = $item['outlet_id'];
         $transaction['product_id']              = $item['product_id'];
         $transaction['variation_id']            = $item['variation_id'];
-        $transaction['sku_id']                  = $item['sku'];
+        $transaction['sku_id']                  = $item['sku_id'];
         $transaction['quantity']                = $item['quantity'];
         $transaction['stock_after_transaction'] = $current_stock ? $current_stock : 0;
         $transaction['type']                    = $type;

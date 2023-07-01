@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class StockManagementService
 {
     use StockAndTransaction;
-     public function findProductBySku($sku, $stock_type = 'add')
+     public function findProductBySku($barcode, $stock_type = 'add')
      {
          DB::beginTransaction();
         try
@@ -20,30 +20,35 @@ class StockManagementService
             $sku = Sku::query()
                 ->select('id','product_id','variation_id','purchase_order_id','quantity')
                 ->with(['stock:sku_id,product_id,variation_id,quantity'])
-                ->find($sku);
+                ->find($barcode);
             if(! $sku){
                 throw new Exception("Barcode not found!!");
             }
 
-            if($stock_type === 'add') {
-                $this->stockIncrement($sku->id, $sku->quantity);
-                $message = 'Product stock added.';
-            }
-            else if($stock_type === 'adjust_plus'){
-                $this->stockIncrement($sku->id, $sku->quantity);
-                $is_adjust = 1;
-                $message = 'Product adjust plus added.';
-            }
-            else if($stock_type === 'adjust_minus'){
-                $this->stockDecrement($sku->id, $sku->quantity);
-                $message = 'Product adjust minus added.';
-                $is_adjust = 1;
-            }
-
-            $item['sku']          = $sku->id;
+            $item['outlet_id']    = auth()->user()->outlet_id;
+            $item['sku_id']       = $sku->id;
             $item['product_id']   = $sku->product_id;
             $item['variation_id'] = $sku->variation_id;
             $item['quantity']     = $sku->quantity;
+
+            if($sku->stock == null){
+                $this->createStock($item);
+            }
+            else {
+
+                if ($stock_type === 'add') {
+                    $this->stockIncrement($sku->id, $sku->quantity);
+                    $message = 'Product stock added.';
+                } else if ($stock_type === 'adjust_plus') {
+                    $this->stockIncrement($sku->id, $sku->quantity);
+                    $is_adjust = 1;
+                    $message = 'Product adjust plus added.';
+                } else if ($stock_type === 'adjust_minus') {
+                    $this->stockDecrement($sku->id, $sku->quantity);
+                    $message = 'Product adjust minus added.';
+                    $is_adjust = 1;
+                }
+            }
 
             $this->createTransaction( $item, 'in', $is_adjust);
 

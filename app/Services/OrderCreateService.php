@@ -86,7 +86,7 @@ class OrderCreateService
         DB::beginTransaction();
         try {
             $sales_order                     = new SalesOrder();
-            $sales_order->outlet_id          = auth()->user()->outlet_id;
+            $sales_order->outlet_id          = $order_payload['outlet_id'];
             $sales_order->gross_amount       = $order_payload['order_summary']['sub_total'];
             $sales_order->discount_amount    = $order_payload['order_summary']['total_discount'];
             $sales_order->net_payment_amount = $order_payload['order_summary']['net_amount'];
@@ -116,11 +116,11 @@ class OrderCreateService
         try {
             foreach ($order_payload['items'] as $item){
                 $order_item = [];
-                $order_item['outlet_id']           = auth()->user()->outlet_id;
+                $order_item['outlet_id']           = $item['outlet_id'];
                 $order_item['sales_order_id']      = $sales_order_id;
                 $order_item['product_id']          = $item['product_id'];
                 $order_item['variation_id']        = $item['variation_id'];
-                $order_item['sku_id']              = $item['sku'];
+                $order_item['sku_id']              = $item['sku_id'];
                 $order_item['unit_sales_price']    = $item['unit_price'];
                 $order_item['quantity']            = $item['quantity'];
                 $order_item['gross_amount']        = $item['gross_amount'];
@@ -128,10 +128,10 @@ class OrderCreateService
                 $order_item['discount_amount']     = $item['discount'];
                 $order_item['tax_amount']          = 0;
                 $order_item['total_sales_price']   = $item['total_sales_price'];
-                $order_item['note']   = null;
+                $order_item['note']                = null;
 
                 SalesItem::create($order_item);
-                $this->stockDecrement($item['sku'], $item['quantity']);
+                $this->stockDecrement($item['sku_id'], $item['quantity']);
                 $this->createTransaction( $item );
 
             }

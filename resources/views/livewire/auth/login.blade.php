@@ -19,7 +19,7 @@
                     </div>
                     @if (session('error'))
                         <div class="alert alert-danger">
-                            {{ session('error') }}
+                            {{ __(session('error')) }}
                         </div>
                     @endif
                     <form class="mt-2 pt-2 needs-validation" wire:submit.prevent="doLogin">

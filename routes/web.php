@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Dashboard;
+use \App\Http\Livewire\Profile;
 use App\Http\Livewire\Users\ManageUser;
 use App\Http\Livewire\Category\ManageCategory;
 use App\Http\Livewire\Product\AddProduct;
@@ -32,7 +33,7 @@ Route::post('/reset-password', [ResetPasswordController::class, 'updatePassword'
 Route::group(['middleware'=> ['auth']], function () {
     Route::post('/logout', [HomeController::class, 'doLogout'])->name('logout');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::get('/profile', Dashboard::class)->name('profile');
+    Route::get('/profile', Profile::class)->name('profile');
     Route::get('/users', ManageUser::class)->name('user.manage');
     Route::get('/categories', ManageCategory::class)->name('manage.category');
 

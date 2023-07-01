@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
                 'email'             => 'shajib@gmail.com',
                 'password'          => bcrypt('123456'),
                 'role'              => 'admin',
+                'lang'              => 'en',
                 'outlet_id'         => 1
             ], [
                 'first_name'        => 'Farhan',
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
                 'email'             => 'farhan@gmail.com',
                 'password'          => bcrypt('123456'),
                 'role'              => 'admin',
+                'lang'              => 'en',
                 'outlet_id'         => 1
             ]
         ];

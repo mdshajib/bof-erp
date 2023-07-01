@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('quantity')->default(0);
             $table->float('price', 8, 2)->default(0);
             $table->tinyInteger('is_active')->default(1);
+            $table->timestamps();
+
             $table->softDeletes($column = 'deleted_at', $precision = 0);
 
             $table->foreign('sku_id')->references('id')->on('skus')->onDelete('Cascade');

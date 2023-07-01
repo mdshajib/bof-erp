@@ -13,7 +13,12 @@ class Sku extends Model
 {
     use HasFactory, SoftDeletes, LogsActivity;
 
-    protected $guarded = ['id'];
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    protected $fillable = ['id', 'product_id','variation_id', 'purchase_order_id','quantity',
+    'is_active','created_at', 'updated_at', 'deleted_at'];
 
     protected $dates = ['deleted_at'];
 

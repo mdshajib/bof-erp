@@ -1,22 +1,22 @@
 <div>
     @section('page-title')
-        Manage Users
+        {{ __('Manage Users') }}
     @endsection
 
 
     @section('header')
-        <x-common.header title="Manage Users">
+        <x-common.header title="{{ __('Manage Users') }}">
             <li class="breadcrumb-item">
-                <a href="javascript: void(0);">User Management</a>
+                <a href="javascript: void(0);">{{ __('User Management') }}</a>
             </li>
-            <li class="breadcrumb-item active">Users</li>
+            <li class="breadcrumb-item active">{{ __('Users') }}</li>
         </x-common.header>
     @endsection
 
     <x-action-box>
         <x-slot name="left">
             <button wire:click="openNewUserModal()" type="button" class="btn waves-effect btn-primary">
-                <i class="fa fa-plus me-2"></i> New User
+                <i class="fa fa-plus me-2"></i> {{ __('New User') }}
             </button>
             @include('livewire.users._add_update_user')
 
@@ -36,14 +36,14 @@
                         data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasFilter"
                         aria-controls="offcanvasFilter">
-                        <i class="fa fa-filter pe-2"></i> Search
+                        <i class="fa fa-filter pe-2"></i> {{ __('Search') }}
                     </button>
-                    <x-offcanvas id="offcanvasFilter" size="sm" title="Search">
+                    <x-offcanvas id="offcanvasFilter" size="sm" title="{{ __('Search') }}">
                         <form>
                             <x-form.input id="txt_name_filter" wire:model.defer="filter.name" placeholder="{{ __('Name') }}" />
                             <x-form.input id="txt_name_filter" wire:model.defer="filter.email" placeholder="{{ __('Email') }}" />
-                            <button type="submit" wire:click.prevent="search" class="btn btn-primary">Search</button>
-                            <button type="button" wire:click.prevent="resetSearch" class="btn btn-link">Reset</button>
+                            <button type="submit" wire:click.prevent="search" class="btn btn-primary">{{ __('Search') }}</button>
+                            <button type="button" wire:click.prevent="resetSearch" class="btn btn-link">{{ __('Reset') }}</button>
                         </form>
                     </x-offcanvas>
                 </div>

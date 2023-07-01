@@ -72,10 +72,11 @@ class CreateOrder extends BaseComponent
         if($key === FALSE){
             $row_section = [
                 'id'                  => 0,
+                'outlet_id'           => auth()->user()->outlet_id,
                 'product'             => $sku_with_item->variation->variation_name,
                 'product_id'          => $sku_with_item->product_id,
                 'variation_id'        => $sku_with_item->variation_id,
-                'sku'                 => $sku_with_item->id,
+                'sku_id'              => $sku_with_item->id,
                 'quantity'            => 1,
                 'stock'               => $sku_with_item->stock->quantity,
                 'unit_price'          => $sku_with_item->variation->selling_price,
@@ -199,6 +200,7 @@ class CreateOrder extends BaseComponent
     {
         try {
            $order_payload['items']             = $this->row_section;
+           $order_payload['outlet_id']         = auth()->user()->outlet_id;
            $order_payload['phone']             = $this->phone;
            $order_payload['customer_name']     = $this->customer_name;
            $order_payload['paid_amount']       = $this->paid_amount;
