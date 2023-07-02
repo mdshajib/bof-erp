@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Purchase;
 
 use App\Http\Livewire\BaseComponent;
+use App\Services\PurchaseManagementService;
 use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
 use App\Traits\WithPerPagePagination;
@@ -17,6 +18,7 @@ class ManagePurchase extends BaseComponent
     use WithBulkActions;
 
     public $purchase_id;
+    public $order_report_name;
     public $filter = [
         'purchase_number'    => null
     ];
@@ -55,5 +57,14 @@ class ManagePurchase extends BaseComponent
     {
         $this->reset('filter');
         $this->hideOffCanvas();
+    }
+
+    public function printBarcode($purchase_order_id)
+    {
+        $barcodes_url = (new PurchaseManagementService())->printPurchaseProductsBarcode($purchase_order_id);
+
+        dd($barcodes_url);
+        $this->order_report_name =url("/storage/barcodes/printMoneyReceipt.pdf");
+        $this->dispatchBrowserEvent('openOrderReportPreviewModal');
     }
 }

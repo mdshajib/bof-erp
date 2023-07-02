@@ -74,7 +74,11 @@
                     <td> {{ $order->order_date }} </td>
                     <td> {{ $order->gross_amount }} </td>
                     <td> {{ $order->user->first_name }} {{ $order->user->last_name }}</td>
-                    <td></td>
+                    <td>
+                        <div class="mb-2">
+                            <button class="btn btn-sm btn-primary mb-1" wire:click.prevent="printBarcode({{$order->id}})">Print Barcode</button>
+                        </div>
+                    </td>
                     <td></td>
                 </tr>
             @empty
@@ -89,6 +93,7 @@
         <div class="col-sm-12 col-md-7">{{ $orders->links() }}</div>
     </div>
 {{--    @include('livewire.order._order_details')--}}
-    @include('livewire.x-loading')
+{{--    @include('livewire.x-loading')--}}
+        @include('livewire.preview.preview')
     <x-notify/>
 </div>
