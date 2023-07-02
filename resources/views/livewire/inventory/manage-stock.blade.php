@@ -70,8 +70,12 @@
                     <td> {{ $stock->variation?->variation_name }} </td>
                     <td> {{ $stock->quantity }} </td>
                     <td>
-                        {!! DNS1D::getBarcodeHTML($stock->sku_id, 'C128',1,30,'black') !!}
-                        <span style="letter-spacing: 0.1rem;">{{ $stock->sku_id }}</span>
+                        <div class="ms-2">
+                            {!! DNS1D::getBarcodeHTML($stock->sku_id, 'C128',1,30,'black') !!}
+                        </div>
+                        <div>
+                            <span style="letter-spacing: 0.12rem;">{{ $stock->sku_id }}</span>
+                        </div>
                     </td>
                     <td>{{ $stock->product?->supplier?->name }}, {{ $stock->product?->supplier?->address }}</td>
                 </tr>

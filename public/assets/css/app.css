@@ -546,7 +546,7 @@ body[data-layout-mode=dark] .right-bar {
   padding: 0.62rem 1.5rem;
   color: #545a6d;
   position: relative;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   transition: all 0.4s;
   font-weight: 500;
 }
@@ -588,7 +588,7 @@ body[data-layout-mode=dark] .right-bar {
 }
 #sidebar-menu ul li ul.sub-menu li a {
   padding: 0.4rem 1.5rem 0.4rem 3.3rem;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: #545a6d;
 }
 #sidebar-menu ul li ul.sub-menu li a:hover {

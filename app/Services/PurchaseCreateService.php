@@ -82,7 +82,7 @@ class PurchaseCreateService
     private function generateSKU($purchase_order_id, $variation_id) : string
     {
 //        return (string) Str::uuid();
-        return 'PR'.$purchase_order_id.'00'.$variation_id.time();
+        return 'PR'.$purchase_order_id.$variation_id.time();
     }
 
     private function storeSKU($purchase_order_id, $sku, $item)

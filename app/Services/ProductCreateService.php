@@ -17,9 +17,7 @@ class ProductCreateService
      {
         try
         {
-
             DB::beginTransaction();
-
             try {
                 $product                     = new Product();
                 $product->title              = trim($product_info['title']);
@@ -49,7 +47,7 @@ class ProductCreateService
 
                 DB::commit();
                 return true;
-            } catch (\Exception $ex) {
+            } catch (Exception $ex) {
                 DB::rollBack();
                 throw $ex;
             }

@@ -17,20 +17,20 @@
                 <div class="card-body">
                     <ul class="nav nav-tabs nav-tabs-custom nav-justified1" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#profile" role="tab" aria-selected="true">
+                            <a class="nav-link  {{ $activeTab == 'profile' ? 'active' : '' }}" data-bs-toggle="tab" href="#profile" role="tab" aria-selected="true" wire:click="stepActive(1)">
                                 <span class="d-block d-sm-none"> <i class="mdi mdi-face-profile font-size-16 align-middle1 me-1"></i> </span>
                                 <span class="d-none d-sm-block">Profile Information</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " data-bs-toggle="tab" href="#update_password" role="tab" aria-selected="true">
+                            <a class="nav-link {{ $activeTab =='password' ? 'active' : '' }}" data-bs-toggle="tab" href="#update_password" role="tab" aria-selected="true" wire:click="stepActive(2)">
                                 <span class="d-block d-sm-none"></span>
                                 <span class="d-none d-sm-block">Update Password</span>
                             </a>
                         </li>
                     </ul>
                     <div class="tab-content p-3 text-muted">
-                        <div class="tab-pane active" id="profile">
+                        <div class="tab-pane {{ $activeTab =='profile' ? 'active' : '' }}" id="profile">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="mb-3">
                                     <label class="form-label " for="first_name">First Name</label>
@@ -54,15 +54,15 @@
                                         <option value="bn">বাংলা</option>
                                     </x-form.select>
                                   </div>
-                                <button wire:loading.attr="disabled" wire:target="photo" class="btn btn-secondary">Save</button>
+                                <button wire:loading.attr="disabled" class="btn btn-primary" wire:click.prevent="updateProfile">Update Profile</button>
                             </div>
 
                         </div>
-                        <div class="tab-pane" id="update_password">
+                        <div class="tab-pane {{ $activeTab =='password' ? 'active' : '' }}" id="update_password">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="mb-3">
                                     <label class="form-label" for="current_password">Current Password</label>
-                                    <input type="password" class="form-control" id="current_password" placeholder="Current Password" wire:model="current_password">
+                                    <input type="password" class="form-control" id="current_password" placeholder="Current Password" wire:model.defer="current_password">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="password">New Password</label>
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="col-12 pl-0">
                                     <div class="form-group pl-0">
-                                        <button type="submit" class="btn btn-secondary">Save</button>
+                                        <button type="submit" class="btn btn-primary" wire:click.prevent="updatePassword">Update Password</button>
                                     </div>
                                 </div>
                             </div>
@@ -84,4 +84,5 @@
             </div>
         </div>
     </div>
+    <x-notify/>
 </div>
