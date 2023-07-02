@@ -55,6 +55,14 @@ class AddProduct extends BaseComponent
             'id'            => 0,
             'path'          => null,
         ];
+        $this->product_info = [
+            'category'     => null,
+            'title'        => null,
+            'supplier'     => null,
+            'description'  => null,
+        ];
+        $this->price_section = [];
+
     }
 
     public function productInfoSubmit()
@@ -156,6 +164,12 @@ class AddProduct extends BaseComponent
 
             $this->validate($rules);
             $status = (new ProductCreateService())->createProduct($this->product_info, $this->variation_section, $this->price_section, $this->image_section);
+            if($status) {
+                $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Active', 'message' => 'Product create successfully']);
+            }
+            $this->initDefaults();
+            $this->currentStep = 1;
+            $this->progress = '25%';
         } catch (Exception $ex) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Product Price', 'message' => $ex->getMessage() ]);
         }
