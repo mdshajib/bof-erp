@@ -151,7 +151,7 @@ class AddProduct extends BaseComponent
     {
         try {
             $rules = [
-                'image_section.path' => 'sometimes|required|max:2048|dimensions:max_width=2000,max_height=2000,min_width=500,min_height=500',
+                'image_section.path' => 'sometimes|required|max:2048|dimensions:max_width=2000,max_height=2000,min_width=200,min_height=200',
             ];
 
             $this->validate($rules);
