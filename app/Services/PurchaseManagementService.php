@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ProductVariation;
 use App\Models\PurchaseItem;
 use Exception;
 use Illuminate\Support\Facades\Storage;
@@ -15,13 +16,18 @@ class PurchaseManagementService
         try
         {
             $purchase_items = PurchaseItem::query()
+                ->select('sku_id','price','quantity')
                 ->where('purchase_order_id', $purchase_order_id)
+                ->addSelect([
+                    'variation_name' => ProductVariation::select('variation_name')->whereColumn('purchase_items.variation_id','product_variations.id')
+                ])
                 ->get();
+
             $pdf_data  = view('livewire.purchase.barcode', compact('purchase_items'))
                 ->render();
             //return $pdf_data;
-            $file_dir = 'barcodes/'.$this->makePDF($pdf_data);
-            $url      = Storage::disk('public')->url($file_dir);
+            $file_dir = 'barcodes/'.$this->makePDF($pdf_data,$purchase_order_id);
+            $url      = Storage::disk('local')->url($file_dir);
 
             return $url;
         }
@@ -40,9 +46,9 @@ class PurchaseManagementService
      * @param string $dest          View/download file
      * @return pdf output
      */
-    private function makePDF( $pdf_data, $header = null, $footer = null)
+    private function makePDF( $pdf_data, $purchase_order_id,$header = null, $footer = null)
     {
-        $file_name         = 'barcodes.pdf';
+        $file_name         = 'barcodes-'.$purchase_order_id.'.pdf';
         $defaultConfig     = (new \Mpdf\Config\ConfigVariables())->getDefaults();
         $fontDirs          = $defaultConfig['fontDir'];
         $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
@@ -50,12 +56,12 @@ class PurchaseManagementService
         $font_dir          = 'public'.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'fonts';
         $config = [
             'mode'          => '',
-            'format'        => [157, 222],
-            'margin_left'   => 0,
-            'margin_right'  => 0,
-            'margin_top'    => 16,
-            'margin_bottom' => 12,
-            'margin_footer' => 9,
+            'format'        => [210,297],
+            'margin_left'   => 5,
+            'margin_right'  => 5,
+            'margin_top'    => 5,
+            'margin_bottom' => 10,
+            'margin_footer' => 5,
             'fontDir'       => array_merge($fontDirs, [
                 base_path($font_dir),
             ]),
@@ -83,17 +89,17 @@ class PurchaseManagementService
 
         $file_dir = 'public'.DIRECTORY_SEPARATOR.'barcodes'.DIRECTORY_SEPARATOR;
 
-        $files     =  Storage::disk('public')->allFiles($file_dir);
+        $files     =  Storage::disk('local')->allFiles($file_dir);
         // Delete Files
-        Storage::disk('public')->delete($files);
+        Storage::disk('local')->delete($files);
         $file_dir .= $file_name;
         ob_start();
         $mpdf->Output($file_name, 'I');
         $content = ob_get_contents();
         ob_end_clean();
-        Storage::disk('public')->put($file_dir, $content);
+        Storage::disk('local')->put($file_dir, $content);
 
         return $file_name;
-//        return $mpdf->Output($file_name, $dest);
+
     }
 }

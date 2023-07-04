@@ -59,4 +59,4 @@ Route::group(['middleware'=> ['auth']], function () {
 
 });
 
-Route::get('/bar', \App\Http\Livewire\BarCode\Scabber::class);
+Route::get('/bar', [\App\Http\Controllers\HomeController::class, 'barcode']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PurchaseItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,5 +25,14 @@ class HomeController extends Controller
 
         return redirect()->to('/login');
 
+    }
+
+    public function barcode()
+    {
+        $purchase_items = PurchaseItem::query()
+            ->select('sku_id','price','quantity')
+            ->where('purchase_order_id', 2)
+            ->get();
+        return view('livewire.purchase.barcode', compact('purchase_items'));
     }
 }

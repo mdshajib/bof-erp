@@ -62,9 +62,7 @@ class ManagePurchase extends BaseComponent
     public function printBarcode($purchase_order_id)
     {
         $barcodes_url = (new PurchaseManagementService())->printPurchaseProductsBarcode($purchase_order_id);
-
-        dd($barcodes_url);
-        $this->order_report_name =url("/storage/barcodes/printMoneyReceipt.pdf");
+        $this->order_report_name = url($barcodes_url);
         $this->dispatchBrowserEvent('openOrderReportPreviewModal');
     }
 }

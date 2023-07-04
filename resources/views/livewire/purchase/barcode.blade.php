@@ -26,103 +26,74 @@
         width: 100%;
         margin-bottom: 5px;
     }
-    .info{
-        width: 40%;
-        padding-right: 30px;
+    .card{
+        width: 100%;
+    }
+    .bar-card{
+        width: auto;
+        height: 70px;
+        padding: 10px;
+        margin: 10px;
         float: left;
+        border-radius: 5px;
+        box-shadow: 0px 0px 1px #9a9a9a;
+        border:1px solid red;
     }
-    .col-3{
-        width: 20%;
-        padding-right: 20px;
-        float: left;
+    .barcode{
+        width: auto;
+        padding: 2px;
     }
-    .col-4{
-        width: 30%;
-        padding-right: 22px;
-        float: left;
-        padding-bottom: 20px;
-    }
-    .col-5{
-        width: 40%;
-        padding-right: 20px;
-        float: left;
-    }
-    .col-1{
-        width: 5%;
-        padding-right: 10px;
-        float: left;
-    }
-    .col-8{
-        width: 60%;
-        padding-right: 20px;
-        float: left;
-    }
-    .col-9{
-        width: 70%;
-        padding-right: 30px;
-        float: left;
-    }
-    h2{
-        font-size: 28px;
-        margin-bottom: 10px;
-    }
-    h3{
-        font-size: 22px;
-        margin-bottom: 10px;
-        margin-top: 15px;
-    }
-    h4{
-        font-size: 16px;
-        margin-bottom: 10px;
-        margin-top: 10px;
-    }
-    strong{
-        font-weight: bold !important;
-    }
-    p{
-        margin-top: 0px;
-        margin-bottom: 3px;
-        text-align: justify;
-    }
-    p.title{
-        width: 90%;
-        position: relative;
-    }
-    .text-sm{
-        font-size: 10px;
-    }
-    .text-xs{
-        font-size: 8px;
-    }
-    .text-center{
+    .amount{
+        height: 20px;
         text-align: center;
+        width: 100%;
+        padding: 5px;
+        font-weight: 500;
+        font-size: 13px;
     }
-    .top-area{
+    .me-2 {
+        margin-right: 0.6rem !important;
+    }
+    .ms-2 {
+        margin-left: 0.6rem !important;
+    }
+    hr{
         width: 100%;
         float: left;
-        margin-bottom: 20px;
-    }
-    .logo{
-        width: 100%;
-        float: left;
-        margin-bottom: 10px;
     }
     table{
         width: 100%;
-        text-align: left;
-    }
-    table tbody tr td{
-        background-color: #EAEAEA;
-        padding: 5px;
-        font-size: 9px;
-    }
-    .tr-bold td{
-        font-weight: bold;
     }
 </style>
     <body>
         <div class="block">
-
+            <div class="card">
+                @foreach($purchase_items as $key => $item)
+                    @php $loop = 1; @endphp
+                    <p style="font-size: 10px;">{{ $item->variation_name }}</p>
+                    @while($loop <= $item->quantity)
+                        <div style="width: 180px;padding: 10px 3px; float: left;border:1px solid #dedede;">
+                            <table border="0">
+                                <tr>
+                                    <td height="15" style="padding: 0 5px;text-align: center;">
+                                        <img style="width: auto;" src="{!! DNS1D::getBarcodePNGPath($item->sku_id, 'C128',1,40) !!}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="6" style="text-align: center;">
+                                        <span style="letter-spacing: 0.18rem;"> {{ $item->sku_id }} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="8" style="text-align: center;font-weight: bold;">{{ $item->price }} Tk</td>
+                                </tr>
+                            </table>
+                        </div>
+                        @php $loop ++; @endphp
+                    @endwhile
+                    <hr/>
+                @endforeach
+            </div>
         </div>
     </body>
 </html>
