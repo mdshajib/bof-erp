@@ -157,11 +157,14 @@
 {{--                            <div class="d-grid gap-2">--}}
 {{--                                <button type="button" wire:click="saveOrder"  class="btn btn-primary btn-light">Confirm Order</button>--}}
 {{--                            </div>--}}
-                            <button type="button" wire:click="saveOrder"  class="btn btn-primary btn-light btn-label w-50 me-2">
+                            <button type="button" wire:click="saveOrder"  class="btn btn-primary btn-light btn-label w-50 me-2" wire:loading.attr="disabled">
                                 <i class="fas fa-shopping-basket label-icon"></i>
                                 Confirm Order
+                                <div wire:loading>
+                                    <i class="fas fa-spin fa-spinner mr-2"></i>
+                                </div>
                             </button>
-                            <button type="button" wire:click="orderCancel"  class="btn btn-danger btn-label w-46">
+                            <button type="button" wire:click="orderCancel"  class="btn btn-danger btn-label w-46" >
                                 <i class="bx bx-block label-icon"></i>
                                 Cancel Order
                             </button>

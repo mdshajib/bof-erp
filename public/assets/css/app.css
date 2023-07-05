@@ -41,9 +41,9 @@ body[data-layout-mode=dark] h1, body[data-layout-mode=dark] h2, body[data-layout
 .navbar-brand-box {
   padding: 0 1.5rem;
   width: 250px;
-  background: #fbfaff;
-  border-right: 1px solid #e9e9ef;
-  box-shadow: 0px 2px 2px #fbfaff;
+  background: #002d21;
+  border-right: 1px solid #002d21;
+  box-shadow: 0px 2px 2px #002d21;
 }
 
 .logo {
@@ -628,8 +628,8 @@ body[data-layout-mode=dark] .right-bar {
   color: #3C1711 !important;
 }
 .mm-active .active svg {
-  color: #3C1711 !important;
-  fill: rgba(60, 23, 17, 0.2) !important;
+  color: #ff0000 !important;
+  fill: rgb(240 174 255) !important;
 }
 .mm-active > i {
   color: #3C1711 !important;

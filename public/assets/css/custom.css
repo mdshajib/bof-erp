@@ -48,7 +48,7 @@ body {
 }
 
 .mm-active .active {
-    color: #006A4E !important;
+    color: #ff0097 !important;
 }
 
 .mm-active>a svg {
@@ -781,4 +781,29 @@ input[switch]:checked+label:after {
 }
 .w-46 {
     width: 46% !important;
+}
+
+.text span {
+    text-transform: uppercase;
+    color: #fff;
+    animation: zoomup 2s linear infinite;
+    animation-delay: calc(200ms * var(--i));
+}
+
+@keyframes zoomup {
+    0%,
+    100% {
+        color: #00dffc;
+        filter: blur(1px);
+        text-shadow: 0 0 10px #00dffc, 0 0 20px #00dffc, 0 0 30px #00dffc,
+        0 0 40px #00dffc, 0 0 60px #00dffc, 0 0 80px #00dffc, 0 0 100px #00dffc,
+        0 0 120px #00dffc;
+    }
+
+    5%,
+    95% {
+        filter: blur(0);
+        color: #fff;
+        text-shadow: none;
+    }
 }

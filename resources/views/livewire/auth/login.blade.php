@@ -77,7 +77,12 @@
 
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary w-100 waves-effect waves-light">Log In</button>
+                            <button type="submit" class="btn btn-primary w-100 waves-effect waves-light" wire:loading.attr="disabled">
+                                <div wire:loading>
+                                    <i class="fas fa-spin fa-spinner mr-2"></i>
+                                </div>
+                                Log In
+                            </button>
                         </div>
                     </form>
                 </div>

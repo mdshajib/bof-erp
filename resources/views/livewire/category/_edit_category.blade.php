@@ -193,7 +193,12 @@
 			 </div>
 		  </div>
         <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Update Category</button>
+            <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
+                <div wire:loading>
+                    <i class="fas fa-spin fa-spinner mr-2"></i>
+                </div>
+                Update Category
+            </button>
         </div>
 </div>
     </x-modal>

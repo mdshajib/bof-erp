@@ -67,7 +67,12 @@
         <x-form.check wire:model.defer='active' id="txt_active" label="{{__('Active')}}"/>
         @endif
      <x-slot name="footer">
-         <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
+         <button type="submit" class="btn btn-primary"  wire:loading.attr="disabled">
+             <div wire:loading>
+                 <i class="fas fa-spin fa-spinner mr-2"></i>
+             </div>
+             {{ __('Save') }}
+         </button>
      </x-slot>
     </x-modal>
 </form>

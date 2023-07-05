@@ -8,7 +8,17 @@
                         <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42"> <span class="logo-txt">{{ config('app.name') }}</span>
+                        <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42">
+{{--                        <span class="logo-txt">{{ config('app.name') }}</span>--}}
+                        <span class="text logo-txt">
+                            <span style="--i:1">B</span>
+                            <span style="--i:2">O</span>
+                            <span style="--i:3">F</span>
+                            <span style="--i:4"> </span>
+                            <span style="--i:5">E</span>
+                            <span style="--i:6">R</span>
+                            <span style="--i:7">P</span>
+                      </span>
                     </span>
                 </a>
 
@@ -17,13 +27,23 @@
                         <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42"> <span class="logo-txt">{{ config('app.name') }}</span>
+                        <img src="{{url('/')}}/assets/images/bof.png" alt="" height="42">
+{{--                        <span class="logo-txt">{{ config('app.name') }} </span>--}}
+                        <div class="text logo-txt">
+                            <span style="--i:1">B</span>
+                            <span style="--i:2">O</span>
+                            <span style="--i:3">F</span>
+                            <span style="--i:4"> </span>
+                            <span style="--i:5">E</span>
+                            <span style="--i:6">R</span>
+                            <span style="--i:7">P</span>
+                      </div>
                     </span>
                 </a>
             </div>
 
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
-                <i class="fa fa-fw fa-bars"></i>
+                <i class="fa fa-fw fa-bars "></i>
             </button>
         </div>
 

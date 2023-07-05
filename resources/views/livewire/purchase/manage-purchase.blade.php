@@ -76,7 +76,12 @@
                     <td> {{ $order->user->first_name }} {{ $order->user->last_name }}</td>
                     <td>
                         <div class="mb-2">
-                            <button class="btn btn-sm btn-primary mb-1" wire:click.prevent="printBarcode({{$order->id}})">Print Barcode</button>
+                            <button class="btn btn-sm btn-primary mb-1" wire:click.prevent="printBarcode({{$order->id}})"  wire:loading.attr="disabled">
+                                <div wire:loading>
+                                    <i class="fas fa-spin fa-spinner mr-2"></i>
+                                </div>
+                                Print Barcode
+                            </button>
                         </div>
                     </td>
                     <td></td>

@@ -34,7 +34,12 @@
         />
         <x-form.check wire:model='supplier.active' id="txt_active" label="Active"/>
      <x-slot name="footer">
-         <button type="submit" class="btn btn-primary">Save</button>
+         <button type="submit" class="btn btn-primary" wire:loading.attr="disabled">
+             <div wire:loading>
+                 <i class="fas fa-spin fa-spinner mr-2"></i>
+             </div>
+             Save
+         </button>
      </x-slot>
     </x-modal>
 </form>
