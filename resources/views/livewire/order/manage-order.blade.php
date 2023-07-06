@@ -107,7 +107,7 @@
         </x-slot>
     </x-table.table>
         <div class="row">
-            <div class="col-sm-12 col-md-5"><?php echo pagination_stats_text($orders); ?></div>
+            <div class="col-sm-12 col-md-5">{{ pagination_stats_text($orders) }} </div>
             <div class="col-sm-12 col-md-7">{{ $orders->links() }}</div>
         </div>
         @include('livewire.order._order_details')

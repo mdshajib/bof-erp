@@ -46,4 +46,18 @@ class ManageStock extends BaseComponent
             return $this->applyPagination($this->rowsQuery);
         });
     }
+
+    public function search()
+    {
+        $this->hideOffCanvas();
+        $this->resetPage();
+
+        return $this->rows;
+    }
+
+    public function resetSearch()
+    {
+        $this->reset('filter');
+        $this->hideOffCanvas();
+    }
 }
