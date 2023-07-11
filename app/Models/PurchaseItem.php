@@ -24,4 +24,14 @@ class PurchaseItem extends Model
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
+
+    public function variation()
+    {
+        return $this->belongsTo(ProductVariation::class, 'variation_id', 'id');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
 }

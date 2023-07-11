@@ -24,4 +24,9 @@ class ProductVariation extends Model
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
     }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

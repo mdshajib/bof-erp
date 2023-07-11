@@ -19,6 +19,9 @@ use App\Http\Livewire\Inventory\ManageStock;
 use App\Http\Livewire\Supplier\ManageSupplier;
 use App\Http\Livewire\Purchase\CreatePurchaseOrder;
 use App\Http\Livewire\Purchase\ManagePurchase;
+use App\Http\Livewire\Purchase\OpenPurchaseOrders;
+use App\Http\Livewire\Purchase\ConfirmedPurchaseOrders;
+use App\Http\Livewire\Purchase\UpdatePurchaseOrder;
 use \App\Http\Livewire\Inventory\TransactionList;
 
 Route::get('/', [HomeController::class, 'home']);
@@ -50,6 +53,9 @@ Route::group(['middleware'=> ['auth']], function () {
 
     Route::get('purchases', ManagePurchase::class)->name('purchase.manage');
     Route::get('purchases/create', CreatePurchaseOrder::class)->name('purchase.create');
+    Route::get('purchases/open', OpenPurchaseOrders::class)->name('purchase.open');
+    Route::get('purchases/confirmed', ConfirmedPurchaseOrders::class)->name('purchase.confirmed');
+    Route::get('purchases/{purchase_id}/edit', UpdatePurchaseOrder::class)->name('purchase.edit');
 //    Inventory Routes
     Route::get('/inventory', ManageStock::class)->name('inventory.manage');
     Route::get('/inventory/stockin', Stockin::class)->name('inventory.stockin');

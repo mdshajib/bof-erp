@@ -17,15 +17,13 @@ return new class extends Migration
             $table->foreignId('purchase_order_id')->references('id')->on('purchase_orders')->onDelete('Cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('Cascade');
             $table->foreignId('variation_id')->nullable()->references('id')->on('product_variations')->onDelete('Cascade');
-            $table->string('sku_id')->nullable();
             $table->integer('quantity')->default(0);
-            $table->float('price', 8, 2)->default(0);
+            $table->float('selling_price', 8, 2)->default(0);
+            $table->float('cogs_price', 8, 2)->default(0);
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
 
             $table->softDeletes($column = 'deleted_at', $precision = 0);
-
-            $table->foreign('sku_id')->references('id')->on('skus')->onDelete('Cascade');
         });
     }
 

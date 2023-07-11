@@ -71,6 +71,11 @@ body {
     background-color: #006A4E;
     border-color: #006A4E;
 }
+.btn-check:focus + .btn-secondary, .btn-secondary:focus{
+    background-color: #e8c054;
+    border-color: #c1c70e;
+}
+
 
 .btn-check:focus+.btn-primary,
 .btn-primary:focus {
@@ -587,31 +592,6 @@ input[switch]:checked+label:after {
     padding: 3px 6px 3px 6px;
 }
 
-.checkbox_design_expresso {
-    color: #0F3460;
-    border-color: #0F3460;
-}
-
-.checkbox_design_b2b {
-    color: #B42B51;
-    border-color: #B42B51;
-}
-
-.checkbox_design_gastronomy {
-    color: #2130C9;
-    border-color: #2130C9;
-}
-
-.checkbox_design_online {
-    color: #D65A31;
-    border-color: #D65A31;
-}
-
-.checkbox_design_retail {
-    color: #219897;
-    border-color: #219897;
-}
-
 .flex-container {
     display: flex;
     flex-wrap: nowrap;
@@ -640,65 +620,6 @@ input[switch]:checked+label:after {
 
 }
 
-.top_ten_active {
-    background: rgba(15, 52, 96, 0.1) !important;
-}
-
-.top_ten_title {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 15px;
-    gap: 5px;
-    width: 213.14px;
-    height: 35px;
-    background: #0F3460;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.top_ten_title_text {
-    width: 115px;
-    height: 15px;
-    font-family: 'Futura PT';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    text-transform: uppercase;
-    color: black;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-}
-
-.top_ten_herder_border {
-    width: 191.14px;
-    height: 0px;
-    background: #0F3460;
-    border: 1px solid #0F3460;
-    flex: none;
-    order: 1;
-    align-self: stretch;
-    flex-grow: 0;
-}
-
-.customer {
-    width: 250px;
-    height: 18px;
-    font-family: 'Futura PT';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 18px;
-    color: #0F3460;
-    flex: none;
-    order: 2;
-    flex-grow: 0;
-    cursor: pointer;
-}
 
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;

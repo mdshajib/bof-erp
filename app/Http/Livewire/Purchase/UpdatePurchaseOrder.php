@@ -6,7 +6,7 @@ use App\Http\Livewire\BaseComponent;
 use App\Services\OrderCreateService;
 use App\Services\PurchaseCreateService;
 
-class CreatePurchaseOrder extends BaseComponent
+class UpdatePurchaseOrder extends BaseComponent
 {
     public $purchase_order_summary = [];
     public $product_name;
@@ -21,7 +21,7 @@ class CreatePurchaseOrder extends BaseComponent
 
     public function render()
     {
-        return $this->view('livewire.purchase.create-purchase-order');
+        return $this->view('livewire.purchase.update-purchase-order',[]);
     }
 
     private function initDefaultsSummary()

@@ -12,8 +12,8 @@
 
                 <x-menu.list text="Category Management" icon="list" class="{{ (request()->is('categor*')) ? 'mm-active' : '' }}">
                     <x-menu.item text="Manage Category" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
-                    <x-menu.item text="Manage Attribute" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
-                    <x-menu.item text="Manage Terms" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
+{{--                    <x-menu.item text="Manage Attribute" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>--}}
+{{--                    <x-menu.item text="Manage Terms" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>--}}
                 </x-menu.list>
 
                 <x-menu.item text="Supplier Management" link="{{ route('supplier.manage') }}" icon="cpu" class="{{ (request()->is('suppliers*')) ? 'active' : '' }} "/>
@@ -24,7 +24,9 @@
                 </x-menu.list>
 
                 <x-menu.list text="Purchase Management" icon="shopping-bag" class="{{ (request()->is('purchases*')) ? 'mm-active' : '' }}">
-                    <x-menu.item text="Purchase Order" link="{{ route('purchase.create') }}" class="{{ (request()->is('purchases/create')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Order Create" link="{{ route('purchase.create') }}" class="{{ (request()->is('purchases/create')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Open Order" link="{{ route('purchase.open') }}" class="{{ (request()->is('purchases/open')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Confirmed Order" link="{{ route('purchase.confirmed') }}" class="{{ (request()->is('purchases/confirmed')) ? 'active' : '' }}"/>
                     <x-menu.item text="All Purchase" link="{{ route('purchase.manage') }}" class="{{ (request()->is('purchases')) ? 'active' : '' }}"/>
                 </x-menu.list>
 

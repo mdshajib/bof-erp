@@ -48,7 +48,9 @@ class AddProduct extends BaseComponent
             'id'                  => 0,
             'variation_name'      => null,
             'low_quantity_alert'  => 5,
-            'path'                => null
+            'path'                => null,
+            'cogs_price'          => 0,
+            'selling_price'       => 0,
         ];
 
         $this->variation_section[] = $variation;
@@ -63,6 +65,7 @@ class AddProduct extends BaseComponent
             'supplier'     => null,
             'description'  => null,
             'path'         => null,
+            'type'         => null,
         ];
         $this->price_section = [];
 
@@ -83,6 +86,8 @@ class AddProduct extends BaseComponent
             ];
             $this->validate($rules, $messages);
 
+            $this->variation_section[0]['variation_name'] = $this->product_info['title'];
+
             $this->currentStep = 2;
             $this->progress    = '50%';
         } catch (Exception $ex) {
@@ -96,7 +101,7 @@ class AddProduct extends BaseComponent
     {
         $variation = [
                 'id'                  => 0,
-                'variation_name'      => null,
+                'variation_name'      => $this->product_info['title'],
                 'low_quantity_alert'  => 5,
                 'path'                => null
         ];
@@ -124,11 +129,12 @@ class AddProduct extends BaseComponent
     {
         $this->price_section = [];
         foreach ($this->variation_section as $key => $variation) {
-            $data['variation_id']                            = 0;
-            $data['variation_name']                          = $this->createVariationName($variation);
-            $this->variation_section[$key]['variation_name'] = $data['variation_name'];
-            $data['cogs_price']                              = 0;
-            $data['selling_price']                           = 0;
+            $data['variation_id']     = 0;
+//            $data['variation_name']                          = $this->createVariationName($variation);
+//            $this->variation_section[$key]['variation_name'] = $variation['variation_name'];
+            $data['variation_name']   = $variation['variation_name'];
+            $data['cogs_price']       = 0;
+            $data['selling_price']    = 0;
 
             $this->price_section[] = $data;
         }

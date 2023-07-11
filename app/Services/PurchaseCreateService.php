@@ -17,7 +17,13 @@ class PurchaseCreateService
     {
         try
         {
-            $variation = ProductVariation::query()->find($variation_id);
+            $variation = ProductVariation::query()
+                ->with([
+                    'product:id,supplier_id',
+                    'product.supplier:id,name'
+                ])
+                ->find($variation_id);
+
             if(! $variation){
                 throw new Exception('Product not found.');
             }
@@ -58,17 +64,16 @@ class PurchaseCreateService
         try {
             foreach ($order_payload['items'] as $item){
                 $order_item = [];
-                $sku = null;
-                $sku = $this->generateSKU($purchase_order_id, $item['variation_id']);
-                $this->storeSKU($purchase_order_id, $sku, $item);
+//                $sku = $this->generateSKU($purchase_order_id, $item['variation_id']);
+//                $this->storeSKU($purchase_order_id, $sku, $item);
 
                 $order_item['outlet_id']           = auth()->user()->outlet_id;
                 $order_item['purchase_order_id']   = $purchase_order_id;
                 $order_item['product_id']          = $item['product_id'];
                 $order_item['variation_id']        = $item['variation_id'];
                 $order_item['quantity']            = $item['quantity'];
-                $order_item['price']               = $item['cogs_price'];
-                $order_item['sku_id']              = $sku;
+                $order_item['cogs_price']          = $item['cogs_price'];
+                $order_item['selling_price']       = $item['selling_price'];
 
                 PurchaseItem::create($order_item);
             }

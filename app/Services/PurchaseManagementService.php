@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\ProductVariation;
 use App\Models\PurchaseItem;
+use App\Models\PurchaseOrder;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Mpdf\Mpdf;
@@ -101,5 +102,89 @@ class PurchaseManagementService
 
         return $file_name;
 
+    }
+
+    public function viewOrderDetails($purchase_order_id)
+    {
+        try{
+            $purchase_order    = PurchaseOrder::query()
+                ->select('id','purchase_number','internal_comments','order_date','gross_amount')
+                ->with([
+                    'purchase_items:purchase_order_id,product_id,variation_id,selling_price,quantity,cogs_price',
+                    'purchase_items.variation:id,variation_name',
+                    'purchase_items.product:id,supplier_id',
+                    'purchase_items.product.supplier:id,name'
+                ])
+                ->findOrFail($purchase_order_id);
+
+            if(!$purchase_order){
+                throw new Exception('Order data not found!!');
+            }
+            $order_info['purchase_number']   = $purchase_order->purchase_number;
+            $order_info['internal_comments'] = $purchase_order->internal_comments;
+            $order_info['order_date']        = $purchase_order->order_date;
+
+            $loop = 1;
+            $row_section = [];
+            $order_summary['sub_total']      = 0;
+
+            foreach ($purchase_order->purchase_items as $key => $item){
+
+                $item_row = [
+                    'id'                => $loop,
+                    'product'           => $item->variation?->variation_name,
+                    'quantity'          => $item->quantity,
+                    'cogs_price'        => $item->cogs_price,
+                    'selling_price'     => $item->selling_price,
+                    'supplier'          => $item->product?->supplier?->name,
+                    'gross_amount'      => $item->cogs_price * $item->quantity,
+                ];
+                $row_section[]      = $item_row;
+
+                $order_summary['sub_total']      += $item_row['gross_amount'];
+                $loop ++;
+                $item_row = [];
+            }
+
+
+            $order_data['order_info'] = $order_info;
+            $order_data['items']      = $row_section;
+            $order_data['summary']    = $order_summary;
+
+            return $order_data;
+
+        } catch(Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function purchaseConfirm($purchase_id)
+    {
+        try {
+            $status = PurchaseOrder::where([
+                'id' => $purchase_id, 'is_print' => 1, 'price_updated' => 1
+            ])->update(['is_confirmed' => 1]);
+            if(!$status){
+                throw new Exception('Might be purchase not printed and price updated.');
+            }
+            return true;
+        } catch(Exception $ex) {
+            throw $ex;
+        }
+    }
+
+    public function purchasePrint($purchase_id)
+    {
+        try {
+            $status = PurchaseOrder::where([
+                'id' => $purchase_id
+            ])->update(['is_print' => 1]);
+            if(!$status){
+                throw new Exception('Might be purchase not printed and price updated.');
+            }
+            return true;
+        } catch(Exception $ex) {
+            throw $ex;
+        }
     }
 }

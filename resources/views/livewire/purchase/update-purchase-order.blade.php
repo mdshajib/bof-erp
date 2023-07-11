@@ -1,14 +1,14 @@
 <div>
     @section('page-title')
-        Create Purchase Order
+        Edit Purchase Order
     @endsection
 
     @section('header')
-        <x-common.header title="Create Purchase Order">
+        <x-common.header title="Edit Purchase Order">
             <li class="breadcrumb-item">
                 <a href="javascript: void(0);">Purchase Order Management</a>
             </li>
-            <li class="breadcrumb-item active">Create Purchase Order</li>
+            <li class="breadcrumb-item active">Edit Purchase Order</li>
         </x-common.header>
     @endsection
     <div class="row">

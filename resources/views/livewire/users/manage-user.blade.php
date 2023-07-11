@@ -56,11 +56,11 @@
     <x-table.table>
         <x-slot name="head">
             <tr>
-                <x-table.th>Name</x-table.th>
-                <x-table.th>Email</x-table.th>
-                <x-table.th>Role</x-table.th>
-                <x-table.th style="width: 98px">Status</x-table.th>
-                <x-table.th style="width: 90px">Action</x-table.th>
+                <x-table.th>{{__('Name')}}</x-table.th>
+                <x-table.th>{{__('Email')}}</x-table.th>
+                <x-table.th>{{__('Role')}}</x-table.th>
+                <x-table.th style="width: 98px">{{__('Status')}}</x-table.th>
+                <x-table.th style="width: 90px">{{__('Action')}}</x-table.th>
             </tr>
         </x-slot>
         <x-slot name="body">

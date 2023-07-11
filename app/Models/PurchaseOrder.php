@@ -16,6 +16,7 @@ class PurchaseOrder extends Model
     protected $guarded = ['id'];
 
     protected $dates = ['deleted_at'];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'generated_by', 'id');
@@ -27,6 +28,11 @@ class PurchaseOrder extends Model
             ->logOnly(['*'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs();
+    }
+
+    public function purchase_items()
+    {
+        return $this->hasMany(PurchaseItem::class );
     }
 
 }

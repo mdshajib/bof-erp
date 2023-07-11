@@ -130,17 +130,6 @@
                                         <p class="card-title-desc">Fill in all information below</p>
                                     </div>
                                     <form>
-                                        <div class="row">
-                                            @if($product_id)
-                                                <div class="col-lg-12 d-none">
-                                                    <div class="mb-3">
-                                                        <label for="product_id" class="form-label">Product ID</label>
-                                                        <input type="text" class="form-control" id="product_id" name="product_id" value="{{$product_id}}" wire:model="product_id" placeholder="Enter your product product_id here" readonly>
-                                                        @error('product_id') <span class="text-danger">{{ $message }}</span> @enderror
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </div>
                                         @include('livewire.product._add_variation')
                                     </form>
                                     <ul class="pager wizard twitter-bs-wizard-pager-link">

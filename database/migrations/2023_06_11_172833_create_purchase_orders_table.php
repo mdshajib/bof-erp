@@ -21,6 +21,10 @@ return new class extends Migration
             $table->date('order_date')->nullable();
             $table->foreignId('generated_by')->references('id')->on('users')->onDelete('Cascade');
             $table->text('internal_comments')->nullable();
+            $table->tinyInteger('is_print')->default(0);
+            $table->tinyInteger('price_updated')->default(0);
+            $table->tinyInteger('is_confirmed')->default(0);
+            $table->tinyInteger('barcode_print')->default(0);
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
 
