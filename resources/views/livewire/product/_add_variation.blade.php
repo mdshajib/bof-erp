@@ -6,6 +6,14 @@
                 <div class="row mb-1">
                     <div class="col-md-3 col-lg-3">
                         <div class="mb-2">
+                            <label for="variation_name{{ $key }}" class="form-label required">{{ __('Variation Name') }}</label>
+                            <x-form.input  type="text" wire:model.defer="variation_section.{{ $key }}.variation_name" placeholder="{{ __('Enter Variation Name') }}" id="variation_name{{ $key }}" />
+                            @error('variation_section.'.$key.'.variation_name') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-lg-3">
+                        <div class="mb-2">
                             <label for="low_quantity_alert{{ $key }}" class="form-label required">{{ __('Low Quantity Alert') }}</label>
                             <x-form.input  type="number" wire:model.defer="variation_section.{{ $key }}.low_quantity_alert" placeholder="{{ __('Enter low quantity lert') }}" id="low_quantity_alert{{ $key }}" />
                             @error('variation_section.'.$key.'.low_quantity_alert') <span class="text-danger">{{ $message }}</span> @enderror

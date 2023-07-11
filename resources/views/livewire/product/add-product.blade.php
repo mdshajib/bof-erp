@@ -10,9 +10,6 @@
             <li class="breadcrumb-item active">Add Product</li>
         </x-common.header>
     @endsection
-<!-- <button  type="button" class="btn waves-effect btn-primary">
-		<i class="fa fa-plus me-2"></i> Quick Add Product
-	</button> -->
 
     <div class="row mt-4">
         <div class="col-lg-12">
@@ -106,13 +103,15 @@
 
                                                     <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                                                         <div class="mb-3">
-                                                            <label class="" for="Description">Description</label>
-                                                            <x-form.input  type="text" wire:model.defer="product_info.description" placeholder="{{ __('Description') }}" id="Description"></x-form.input>
-                                                            @error('product_info.description') <span class="text-danger">{{ $message }}</span> @enderror
+                                                            <label class="" for="type">Product Type</label>
+                                                            <x-form.select id="type" wire:model.defer="product_info.type" placeholder="{{ __('Product Type') }}">
+                                                                <option value="finished-product">Finished Product</option>
+                                                                <option value="raw-material">Raw Material</option>
+                                                            </x-form.select>
+                                                            @error('product_info.type') <span class="text-danger">{{ $message }}</span> @enderror
+
                                                         </div>
                                                     </div>
-
-
                                                 </div>
 
                                         </div>
@@ -198,6 +197,7 @@
             </div>
         </div>
     </div>
+{{--        @include('livewire.x-loading')--}}
     <x-notify/>
 </div>
 

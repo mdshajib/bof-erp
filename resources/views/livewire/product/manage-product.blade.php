@@ -66,7 +66,8 @@
                 <x-table.th sortable :direction="$sorts['title'] ?? null" wire:click="sortBy('title')">{{ __('Product Title') }}</x-table.th>
                 <x-table.th>{{ __('Category') }}</x-table.th>
                 <x-table.th>{{ __('Variants') }}</x-table.th>
-                <x-table.th>{{ __('Prices') }}</x-table.th>
+                <x-table.th>{{ __('Cost Prices') }}</x-table.th>
+                <x-table.th>{{ __('Selling Prices') }}</x-table.th>
                 <x-table.th>{{ __('Supplier') }}</x-table.th>
                 <x-table.th>{{ __('Featured Image') }}</x-table.th>
                 <x-table.th style="width: 98px">{{ __('Status') }}</x-table.th>
@@ -93,6 +94,13 @@
                     <td>
                         @if($product->variation)
                             @foreach($product->variation as $variation)
+                                <span class="badge badge-soft-primary">{{$variation->cogs_price}}</span>
+                            @endforeach
+                        @endif
+                    </td>
+                    <td>
+                        @if($product->variation)
+                            @foreach($product->variation as $variation)
                                 <span class="badge badge-soft-primary">{{$variation->selling_price}}</span>
                             @endforeach
                         @endif
@@ -106,7 +114,11 @@
                     <td>
                         @livewire('toggle-switch', ['model'=>$product, 'field'=>'is_active','name'=>$product->title], key($product->id))
                     </td>
-                    <td></td>
+                    <td>
+                        <a href='{{route("product.edit", ["product_id" => $product->id])}}' class="btn btn-secondary btn-sm">
+                            <i class="fa fa-edit fa-color-primary"></i>
+                        </a>
+                    </td>
 
                 </tr>
 

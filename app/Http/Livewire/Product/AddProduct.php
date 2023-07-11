@@ -27,6 +27,8 @@ class AddProduct extends BaseComponent
         'title'        => null,
         'supplier'     => null,
         'description'  => null,
+        'path'         => null,
+        'type'         => 'finished-product',
         ];
 
     public function mount()
@@ -60,6 +62,7 @@ class AddProduct extends BaseComponent
             'title'        => null,
             'supplier'     => null,
             'description'  => null,
+            'path'         => null,
         ];
         $this->price_section = [];
 
@@ -119,6 +122,7 @@ class AddProduct extends BaseComponent
 
     private function initPrices()
     {
+        $this->price_section = [];
         foreach ($this->variation_section as $key => $variation) {
             $data['variation_id']                            = 0;
             $data['variation_name']                          = $this->createVariationName($variation);

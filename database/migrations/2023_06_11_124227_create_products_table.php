@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('Cascade');
             $table->foreignId('supplier_id')->references('id')->on('suppliers')->onDelete('Cascade');
             $table->string('title')->nullable();
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
+            $table->string('type')->nullable();
             $table->string('image_path')->nullable();
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
