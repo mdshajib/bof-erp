@@ -11,7 +11,7 @@ use Spatie\Activitylog\LogOptions;
 
 class PurchaseItem extends Model
 {
-    use HasFactory, SoftDeletes, LogsActivity;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, LogsActivity;
 
     protected $guarded = ['id'];
 

@@ -5,18 +5,22 @@ namespace App\Http\Livewire\Purchase;
 use App\Http\Livewire\BaseComponent;
 use App\Services\OrderCreateService;
 use App\Services\PurchaseCreateService;
+use App\Services\PurchaseUpdateService;
 
 class UpdatePurchaseOrder extends BaseComponent
 {
     public $purchase_order_summary = [];
     public $product_name;
+    public $purchase_id;
+    public $confirmed = false;
     public $internal_comments;
     public $product_list   = [];
     public $row_section    = [];
 
-    public function mount()
+    public function mount($purchase_id)
     {
-        $this->initDefaultsSummary();
+        $this->purchase_id = $purchase_id;
+        $this->initDefaults($purchase_id);
     }
 
     public function render()
@@ -32,12 +36,15 @@ class UpdatePurchaseOrder extends BaseComponent
         ];
     }
 
-    private function initDefaults()
+    private function initDefaults($purchase_id)
     {
-        $this->row_section      = [];
-        $this->internal_comments = null;
-        $this->initDefaultsSummary();
-
+        $purchase_data = (new PurchaseUpdateService())->purchaseOrder($purchase_id);
+        $this->row_section       = $purchase_data['items'];
+        $this->internal_comments = $purchase_data['order_info']['internal_comments'];
+        $this->purchase_order_summary = [
+            'sub_total'          => $purchase_data['summary']['sub_total'],
+            'net_payment_amount' => 0,
+        ];
     }
 
     public function updated($name, $value)
@@ -168,12 +175,13 @@ class UpdatePurchaseOrder extends BaseComponent
         try {
             $order_payload['items']             = $this->row_section;
             $order_payload['internal_comments'] = $this->internal_comments;
+            $order_payload['amount_confirmed']  = $this->confirmed;
             $order_payload['order_summary']     = $this->purchase_order_summary;
 
-            $status = ( new PurchaseCreateService())->storePurchaseOrder($order_payload);
+            $status = ( new PurchaseUpdateService())->purchaseUpdate($this->purchase_id,$order_payload);
             if($status){
                 $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Order', 'message' => 'New order has been completed']);
-                $this->initDefaults();
+                return redirect()->route('purchase.open');
             }
 
         }catch(Exception $ex){

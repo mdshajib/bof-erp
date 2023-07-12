@@ -20,9 +20,9 @@ class OrderCreateService
         try
         {
             $sku_with_item = Sku::query()
-                ->select('id','variation_id','product_id')
+                ->select('id','variation_id','product_id','cogs_price','selling_price')
                 ->with([
-                    'variation:id,variation_name,cogs_price,selling_price,low_quantity_alert',
+                    'variation:id,variation_name,low_quantity_alert',
                     'stock:sku_id,quantity'
                 ])
                 ->find($barcode);
@@ -55,17 +55,19 @@ class OrderCreateService
         try
         {
             $sku_with_item = Sku::query()
-                ->select('id','variation_id','product_id')
+                ->select('id','variation_id','product_id','cogs_price','selling_price')
                 ->with([
-                    'variation:id,variation_name,cogs_price,selling_price,low_quantity_alert',
+                    'variation:id,variation_name,low_quantity_alert',
                     'stock:sku_id,quantity'
                 ])
                 ->WhereHas('variation', function ($q) use ($variation_id) {
                     return $q->where('product_variations.id', $variation_id);
                 })
-                ->whereHas('stock',function ($q) {
-                    return $q->where('stocks.quantity', '>', 0);
-                })->first();
+//                ->whereHas('stock',function ($q) {
+//                    return $q->where('stocks.quantity', '>', 0);
+//                })
+                ->first();
+
             if(! $sku_with_item){
                 throw new Exception('Product not found in SKU table. Might be need purchase!');
             }

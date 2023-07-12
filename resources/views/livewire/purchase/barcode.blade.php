@@ -76,16 +76,16 @@
                             <table border="0">
                                 <tr>
                                     <td height="15" style="padding: 0 5px;text-align: center;">
-                                        <img style="width: auto;" src="{!! DNS1D::getBarcodePNGPath($item->sku_id, 'C128',1,40) !!}">
+                                        <img style="width: auto;" src="{!! DNS1D::getBarcodePNGPath($item->id, 'C128',1,40) !!}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td height="6" style="text-align: center;">
-                                        <span style="letter-spacing: 0.18rem;"> {{ $item->sku_id }} </span>
+                                        <span style="letter-spacing: 0.18rem;"> {{ $item->id }} </span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td height="8" style="text-align: center;font-weight: bold;">{{ $item->price }} Tk</td>
+                                    <td height="8" style="text-align: center;font-weight: bold;">{{ $item->selling_price }} Tk</td>
                                 </tr>
                             </table>
                         </div>

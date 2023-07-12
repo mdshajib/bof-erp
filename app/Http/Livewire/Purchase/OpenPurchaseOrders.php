@@ -17,8 +17,11 @@ class OpenPurchaseOrders extends BaseComponent
     use WithSorting;
     use WithBulkActions;
 
+    protected $listeners = ['deleteConfirm' => 'deletePurchase', 'deleteCancel' => 'purchaseDeleteCancel'];
+
     public $purchase_id;
     public $purchase_number;
+    public $purchaseIdBeingRemoved = null;
     public $order_report_name;
     public $view_row_section = [];
     public $order_summary    = [];
@@ -98,6 +101,29 @@ class OpenPurchaseOrders extends BaseComponent
             $status = (new PurchaseManagementService())->purchasePrint($purchase_id);
             if($status){
                 $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Purchase Print', 'message' => 'Purchase order print successfully' ]);
+            }
+        } catch (\Exception $ex){
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Purchase Print', 'message' => $ex->getMessage() ]);
+        }
+    }
+
+    public function purchaseConfirmDelete($purchase_id)
+    {
+        $this->purchaseIdBeingRemoved = $purchase_id;
+        $this->dispatchBrowserEvent('show-delete-notification');
+    }
+
+    public function purchaseDeleteCancel()
+    {
+
+    }
+
+    public function deletePurchase()
+    {
+        try {
+            $status = (new PurchaseManagementService())->purchaseDelete($this->purchaseIdBeingRemoved);
+            if($status){
+                $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Purchase Delete', 'message' => 'Purchase order delete successfully' ]);
             }
         } catch (\Exception $ex){
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Purchase Print', 'message' => $ex->getMessage() ]);

@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-body p-3 order-create">
                     <div class="row">
-                        <div class="col-md-6 col-lg-6">
+                        <div class="col-md-4 col-lg-4">
                             <div class="mb-2">
                                 <label for="product_name" class="form-label">Product Name</label>
                                 <div class="form-group has-search">
@@ -35,12 +35,24 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-6">
+                        <div class="col-md-4 col-lg-4">
                             <div class="mb-2">
                                 <label for="internal_comments" class="form-label">Internal Comment</label>
                                 <div class="form-group ">
-                                    <input type="text" class="form-control" id="internal_comments" placeholder="internal_comments" wire:model.defer="internal_comments" autocomplete="off" />
+                                    <input type="text" class="form-control" id="internal_comments" placeholder="internal comments" wire:model.defer="internal_comments" autocomplete="off" />
                                     @error('internal_comments') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-lg-4">
+                            <div class="mb-2">
+                                <label for="internal_comments" class="form-label">Amount Edit</label>
+                                <div class="form-group ">
+                                    <label class="form-check-label" for="amount_check">
+                                        <input class="form-check-input channel" type="checkbox" id="amount_check" value='1' wire:model='confirmed'>
+                                        <span> Amount Confirmed</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>

@@ -5,7 +5,9 @@ namespace App\Services;
 use App\Models\ProductVariation;
 use App\Models\PurchaseItem;
 use App\Models\PurchaseOrder;
+use App\Models\Sku;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Mpdf\Mpdf;
 
@@ -16,12 +18,12 @@ class PurchaseManagementService
      {
         try
         {
-            $purchase_items = PurchaseItem::query()
-                ->select('sku_id','price','quantity')
-                ->where('purchase_order_id', $purchase_order_id)
+            $purchase_items = Sku::query()
+                ->select('id','variation_id','selling_price','quantity')
                 ->addSelect([
-                    'variation_name' => ProductVariation::select('variation_name')->whereColumn('purchase_items.variation_id','product_variations.id')
+                    'variation_name' => ProductVariation::select('variation_name')->whereColumn('skus.variation_id','product_variations.id')
                 ])
+                ->where('purchase_order_id', $purchase_order_id)
                 ->get();
 
             $pdf_data  = view('livewire.purchase.barcode', compact('purchase_items'))
@@ -173,6 +175,21 @@ class PurchaseManagementService
         }
     }
 
+    public function purchaseMarkAsOpen($purchase_id)
+    {
+        try {
+            $status = PurchaseOrder::where([
+                'id' => $purchase_id, 'is_print' => 1, 'price_updated' => 1
+            ])->update(['is_confirmed' => 0, 'is_print' => 0, 'price_updated' => 0]);
+            if(!$status){
+                throw new Exception('Might be purchase not printed and price updated.');
+            }
+            return true;
+        } catch(Exception $ex) {
+            throw $ex;
+        }
+    }
+
     public function purchasePrint($purchase_id)
     {
         try {
@@ -186,5 +203,62 @@ class PurchaseManagementService
         } catch(Exception $ex) {
             throw $ex;
         }
+    }
+
+    public function barcodeGenerate($purchase_id)
+    {
+
+        try {
+            DB::beginTransaction();
+            $purchase_items = PurchaseItem::query()
+                ->select('product_id','variation_id','quantity','cogs_price','selling_price')
+                ->where('purchase_order_id', $purchase_id)->get();
+            if(! count($purchase_items) >0){
+                throw new Exception('Purchase id not found.');
+            }
+            foreach ($purchase_items as $item){
+
+                $sku = $this->generateSKU($purchase_id, $item->variation_id);
+                $sku_item = [];
+                $sku_item['id']                  = $sku;
+                $sku_item['purchase_order_id']   = $purchase_id;
+                $sku_item['product_id']          = $item->product_id;
+                $sku_item['variation_id']        = $item->variation_id;
+                $sku_item['quantity']            = $item->quantity;
+                $sku_item['cogs_price']          = $item->cogs_price;
+                $sku_item['selling_price']       = $item->selling_price;
+
+                Sku::updateOrCreate(['id' => $sku], $sku_item);
+            }
+            PurchaseOrder::where('id', $purchase_id)->update(['barcode_print' => 1]);
+            DB::commit();
+            return true;
+
+        } catch(Exception $ex)
+        {
+            DB::rollBack();
+            throw $ex;
+        }
+    }
+
+    public function purchaseDelete($purchase_id)
+    {
+        try {
+            DB::beginTransaction();
+            $purchase = PurchaseOrder::find($purchase_id);
+            $purchase->delete();
+            DB::commit();
+            return true;
+        } catch(Exception $ex)
+        {
+            DB::rollBack();
+            throw $ex;
+        }
+    }
+
+    private function generateSKU($purchase_order_id, $variation_id) : string
+    {
+//        return (string) Str::uuid();
+        return 'PR'.$purchase_order_id.$variation_id.time();
     }
 }

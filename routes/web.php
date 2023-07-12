@@ -67,4 +67,3 @@ Route::group(['middleware'=> ['auth']], function () {
 
 });
 
-Route::get('/bar', [\App\Http\Controllers\HomeController::class, 'barcode']);

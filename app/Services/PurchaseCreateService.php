@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\ProductVariation;
 use App\Models\PurchaseItem;
 use App\Models\PurchaseOrder;
-use App\Models\Sku;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -64,9 +63,6 @@ class PurchaseCreateService
         try {
             foreach ($order_payload['items'] as $item){
                 $order_item = [];
-//                $sku = $this->generateSKU($purchase_order_id, $item['variation_id']);
-//                $this->storeSKU($purchase_order_id, $sku, $item);
-
                 $order_item['outlet_id']           = auth()->user()->outlet_id;
                 $order_item['purchase_order_id']   = $purchase_order_id;
                 $order_item['product_id']          = $item['product_id'];
@@ -82,21 +78,5 @@ class PurchaseCreateService
         {
             throw $ex;
         }
-    }
-
-    private function generateSKU($purchase_order_id, $variation_id) : string
-    {
-//        return (string) Str::uuid();
-        return 'PR'.$purchase_order_id.$variation_id.time();
-    }
-
-    private function storeSKU($purchase_order_id, $sku, $item)
-    {
-        $sku_data['id']                = $sku;
-        $sku_data['product_id']        = $item['product_id'];
-        $sku_data['variation_id']      = $item['variation_id'];
-        $sku_data['purchase_order_id'] = $purchase_order_id;
-        $sku_data['quantity']          = $item['quantity'];
-        return Sku::create($sku_data);
     }
 }

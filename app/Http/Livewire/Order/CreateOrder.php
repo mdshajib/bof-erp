@@ -62,13 +62,6 @@ class CreateOrder extends BaseComponent
     {
         $key = array_search($sku_with_item->variation->id, array_column($this->row_section, 'variation_id'));
 
-//        if (array_search($sku_with_item->variation->id, array_column($this->row_section, 'variation_id')) !== FALSE) {
-//            $this->dispatchBrowserEvent('notify', ['type' => 'warning', 'title' => 'Cart Warning', 'message' => 'This Product Already added in cart!!' ]);
-//
-//            $this->barcode      = null;
-//            $this->product_name = null;
-//        }
-
         if($key === FALSE){
             $row_section = [
                 'id'                  => 0,
@@ -79,12 +72,12 @@ class CreateOrder extends BaseComponent
                 'sku_id'              => $sku_with_item->id,
                 'quantity'            => 1,
                 'stock'               => $sku_with_item->stock->quantity,
-                'unit_price'          => $sku_with_item->variation->selling_price,
+                'unit_price'          => $sku_with_item->selling_price,
                 'discount'            => 0,
                 'applied_discount_id' => null,
                 'total_discount'      => 0,
-                'gross_amount'        => $sku_with_item->variation->selling_price,
-                'total_sales_price'   => $sku_with_item->variation->selling_price,
+                'gross_amount'        => $sku_with_item->selling_price,
+                'total_sales_price'   => $sku_with_item->selling_price,
             ];
             $this->row_section[]      = $row_section;
             $this->barcode            = null;

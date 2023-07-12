@@ -142,7 +142,7 @@ body[data-sidebar-size=sm] .navbar-brand-box {
 }
 
 .btn {
-    border-radius: 0rem !important;
+    /*border-radius: 0rem !important;*/
 }
 
 .btn-primary {

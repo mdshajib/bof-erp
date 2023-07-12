@@ -11,7 +11,9 @@ use Spatie\Activitylog\LogOptions;
 
 class PurchaseOrder extends Model
 {
-    use HasFactory, SoftDeletes, LogsActivity;
+    use HasFactory, SoftDeletes, CascadeSoftDeletes, LogsActivity;
+
+    protected $cascadeDeletes = ['purchase_items'];
 
     protected $guarded = ['id'];
 

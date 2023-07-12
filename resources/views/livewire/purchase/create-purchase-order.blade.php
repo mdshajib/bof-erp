@@ -39,7 +39,7 @@
                             <div class="mb-2">
                                 <label for="internal_comments" class="form-label">Internal Comment</label>
                                 <div class="form-group ">
-                                    <input type="text" class="form-control" id="internal_comments" placeholder="internal_comments" wire:model.defer="internal_comments" autocomplete="off" />
+                                    <input type="text" class="form-control" id="internal_comments" placeholder="internal comments" wire:model.defer="internal_comments" autocomplete="off" />
                                     @error('internal_comments') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
