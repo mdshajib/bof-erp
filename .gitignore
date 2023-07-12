@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/generated_barcode/*.*
 /storage/*.key
 /vendor
 .env

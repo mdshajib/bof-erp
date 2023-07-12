@@ -27,7 +27,7 @@
                     <x-menu.item text="Order Create" link="{{ route('purchase.create') }}" class="{{ (request()->is('purchases/create')) ? 'active' : '' }}"/>
                     <x-menu.item text="Open Order" link="{{ route('purchase.open') }}" class="{{ (request()->is('purchases/open')) ? 'active' : '' }}"/>
                     <x-menu.item text="Confirmed Order" link="{{ route('purchase.confirmed') }}" class="{{ (request()->is('purchases/confirmed')) ? 'active' : '' }}"/>
-                    <x-menu.item text="All Purchase" link="{{ route('purchase.manage') }}" class="{{ (request()->is('purchases')) ? 'active' : '' }}"/>
+{{--                    <x-menu.item text="All Purchase" link="{{ route('purchase.manage') }}" class="{{ (request()->is('purchases')) ? 'active' : '' }}"/>--}}
                 </x-menu.list>
 
                 <x-menu.list text="Order Management" icon="shopping-cart" class="{{ (request()->is('order*')) ? 'mm-active' : '' }}">
