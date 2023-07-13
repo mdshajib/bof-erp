@@ -1,5 +1,93 @@
+function monthlyBarChart(){
+    var options = {
+        series: [{
+            name: 'PRODUCT A',
+            data: [44, 55, 41, 67, 22, 43, 66, 66,77, 87, 99, 76]
+        }, {
+            name: 'PRODUCT B',
+            data: [44, 55, 41, 67, 22, 43, 66, 66,77, 87, 99, 76]
+        }, {
+            name: 'PRODUCT C',
+            data: [44, 55, 41, 67, 22, 43, 66, 66,77, 87, 99, 76]
+        }, {
+            name: 'PRODUCT D',
+            data: [44, 55, 41, 67, 22, 43, 66, 66,77, 87, 99, 76]
+        }],
+        title: {
+            text: 'This Year Sales'
+        },
+        chart: {
+            type: 'bar',
+            height: 350,
+            stacked: true,
+            toolbar: {
+                show: true
+            },
+            zoom: {
+                enabled: true
+            }
+        },
+        responsive: [{
+            // breakpoint: 480,
+            options: {
+                legend: {
+                    position: 'bottom',
+                    offsetX: -10,
+                    offsetY: 0
+                }
+            }
+        }],
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                borderRadius: 10,
+                dataLabels: {
+                    total: {
+                        enabled: true,
+                        style: {
+                            fontSize: '13px',
+                            fontWeight: 900
+                        }
+                    }
+                }
+            },
+        },
+        stroke: {
+            width: 0,
+            colors: ['red']
+        },
+        tooltip: {
+            showOnMarkerHover: true,
+            intersect: false,
+            shared: true,
+        },
+        xaxis: {
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            title: {
+                text: "Month"
+            }
+        },
+        legend: {
+            position: 'right',
+            offsetY: 40
+        },
+        fill: {
+            opacity: 1
+        },
+        states: {
+            hover: {
+                filter: {
+                    type: 'none'
+                }
+            }
+        }
+    };
 
-function initCounterNumber() 
+    var chart = new ApexCharts(document.querySelector("#monthly_sales"), options);
+    chart.render();
+}
+
+function initCounterNumber()
 {
     var counter = document.querySelectorAll('.counter-value');
     var speed = 250; // The lower the slower
@@ -25,7 +113,6 @@ function initCounterNumber()
         }
     }
 
-    ;
     updateCount();
     });
 }
