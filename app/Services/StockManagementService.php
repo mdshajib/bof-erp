@@ -37,6 +37,9 @@ class StockManagementService
             else {
 
                 if ($stock_type === 'add') {
+                    if($sku->stock?->sku_id == $barcode){
+                        throw new Exception("Already stock added with this barcode!!");
+                    }
                     $this->stockIncrement($sku->id, $sku->quantity);
                     $message = 'Product stock added.';
                 } else if ($stock_type === 'adjust_plus') {
