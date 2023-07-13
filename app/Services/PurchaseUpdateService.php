@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\PurchaseItem;
 use App\Models\PurchaseOrder;
 use Carbon\Carbon;
 use Exception;
@@ -32,7 +33,7 @@ class PurchaseUpdateService
             foreach ($purchase_order->purchase_items as $key => $item){
 
                 $item_row = [
-                    'id'                  => 0,
+                    'id'                  =>  $item->id,
                     'product'             => $item->variation?->variation_name,
                     'product_id'          => $item->product_id,
                     'supplier'            => $item->product?->supplier?->name,
@@ -70,13 +71,49 @@ class PurchaseUpdateService
             $purchase_order->internal_comments  = $order_payload['internal_comments'];
 
             $purchase_order->save();
-//            dd($order_payload, $purchase_order);
 
-//            $this->storePurchaseOrderItems($order_payload, $purchase_order->id);
+            $this->updatePurchaseItems($purchase_id, $order_payload);
             DB::commit();
             return true;
         } catch(Exception $ex) {
             DB::rollBack();
+            throw $ex;
+        }
+    }
+
+    private function updatePurchaseItems($purchase_id, $order_payload): bool
+    {
+        try {
+            foreach ($order_payload['items'] as $item){
+
+                $purchase_item['outlet_id']         = auth()->user()->outlet_id;
+                $purchase_item['purchase_order_id'] = $purchase_id;
+                $purchase_item['product_id']        = $item['product_id'];
+                $purchase_item['variation_id']      = $item['variation_id'];
+                $purchase_item['quantity']          = $item['quantity'];
+                $purchase_item['selling_price']     = $item['selling_price'];
+                $purchase_item['cogs_price']        = $item['cogs_price'];
+
+                PurchaseItem::updateOrCreate(['id' => $item['id']], $purchase_item);
+            }
+
+            $this->deletePurchaseItems($order_payload['delete_item_ids']);
+            return true;
+
+        } catch(Exception $ex) {
+            throw $ex;
+        }
+
+    }
+
+    private function deletePurchaseItems($delete_item_ids): bool
+    {
+        try {
+            if(count( $delete_item_ids) > 0) {
+                PurchaseItem::whereIn('id', $delete_item_ids)->delete();
+            }
+            return true;
+        } catch(Exception $ex) {
             throw $ex;
         }
     }

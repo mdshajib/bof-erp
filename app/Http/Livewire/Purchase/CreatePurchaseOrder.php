@@ -131,7 +131,7 @@ class CreatePurchaseOrder extends BaseComponent
         }
     }
 
-    public function removeRow($index)
+    public function removeRow($index, $id = null)
     {
         if (count($this->row_section) > 0) {
             unset($this->row_section[$index]);

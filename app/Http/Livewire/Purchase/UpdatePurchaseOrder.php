@@ -16,6 +16,7 @@ class UpdatePurchaseOrder extends BaseComponent
     public $internal_comments;
     public $product_list   = [];
     public $row_section    = [];
+    public $purchase_item_id_to_delete = [];
 
     public function mount($purchase_id)
     {
@@ -138,8 +139,12 @@ class UpdatePurchaseOrder extends BaseComponent
         }
     }
 
-    public function removeRow($index)
+    public function removeRow($index, $item_id = 0)
     {
+        if ($item_id > 0) {
+            $this->purchase_item_id_to_delete[] = $item_id;
+        }
+
         if (count($this->row_section) > 0) {
             unset($this->row_section[$index]);
             $this->row_section = array_values($this->row_section);
@@ -177,8 +182,9 @@ class UpdatePurchaseOrder extends BaseComponent
             $order_payload['internal_comments'] = $this->internal_comments;
             $order_payload['amount_confirmed']  = $this->confirmed;
             $order_payload['order_summary']     = $this->purchase_order_summary;
+            $order_payload['delete_item_ids']   = $this->purchase_item_id_to_delete;
 
-            $status = ( new PurchaseUpdateService())->purchaseUpdate($this->purchase_id,$order_payload);
+            $status = ( new PurchaseUpdateService())->purchaseUpdate($this->purchase_id, $order_payload);
             if($status){
                 $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Order', 'message' => 'New order has been completed']);
                 return redirect()->route('purchase.open');
