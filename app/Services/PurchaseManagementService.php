@@ -26,11 +26,12 @@ class PurchaseManagementService
                 ->where('purchase_order_id', $purchase_order_id)
                 ->get();
 
-            $pdf_data  = view('livewire.purchase.barcode', compact('purchase_items'))
-                ->render();
+            $pdf_data  = view('livewire.purchase.barcode', compact('purchase_items'))->render();
             //return $pdf_data;
-            $file_dir = 'barcodes/'.$this->makePDF($pdf_data,$purchase_order_id);
-            $url      = Storage::disk('local')->url($file_dir);
+            $file_dir   = 'public'.DIRECTORY_SEPARATOR.'barcodes'.DIRECTORY_SEPARATOR;
+            $file_name  = 'barcodes-'.$purchase_order_id.'.pdf';
+            $file_dir   = 'barcodes/'.$this->makePDF($pdf_data, $file_name, $file_dir);
+            $url        = Storage::disk('local')->url($file_dir);
 
             return $url;
         }
@@ -49,9 +50,9 @@ class PurchaseManagementService
      * @param string $dest          View/download file
      * @return pdf output
      */
-    private function makePDF( $pdf_data, $purchase_order_id,$header = null, $footer = null)
+    private function makePDF( $pdf_data, $file_name, $file_dir, $header = null, $footer = null)
     {
-        $file_name         = 'barcodes-'.$purchase_order_id.'.pdf';
+
         $defaultConfig     = (new \Mpdf\Config\ConfigVariables())->getDefaults();
         $fontDirs          = $defaultConfig['fontDir'];
         $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
@@ -89,8 +90,6 @@ class PurchaseManagementService
             $mpdf->setFooter('{PAGENO} / {nb}');
         }
         $mpdf->WriteHTML($pdf_data);
-
-        $file_dir = 'public'.DIRECTORY_SEPARATOR.'barcodes'.DIRECTORY_SEPARATOR;
 
         $files     =  Storage::disk('local')->allFiles($file_dir);
         // Delete Files
@@ -193,13 +192,29 @@ class PurchaseManagementService
     public function purchasePrint($purchase_id)
     {
         try {
-            $status = PurchaseOrder::where([
-                'id' => $purchase_id
-            ])->update(['is_print' => 1]);
-            if(!$status){
+            $purchase_order = PurchaseOrder::query()->with([
+                'purchase_items:purchase_order_id,product_id,variation_id,quantity',
+                'purchase_items.variation:id,variation_name',
+                'purchase_items.product:id,supplier_id',
+                'purchase_items.product.supplier:id,name'
+            ])->find($purchase_id);
+
+            if(!$purchase_order){
                 throw new Exception('Might be purchase not printed and price updated.');
             }
-            return true;
+
+            $purchase_order->is_print = 1;
+            $purchase_order->save();
+
+            $pdf_data  = view('livewire.purchase.print-purchase', compact('purchase_order'))->render();
+            //return $pdf_data;
+            $file_dir   = 'public'.DIRECTORY_SEPARATOR.'purchases'.DIRECTORY_SEPARATOR;
+            $file_name  = 'print-'.$purchase_id.'.pdf';
+            $file_dir   = 'purchases/'.$this->makePDF($pdf_data, $file_name, $file_dir);
+            $url        = Storage::disk('local')->url($file_dir);
+
+            return $url;
+
         } catch(Exception $ex) {
             throw $ex;
         }

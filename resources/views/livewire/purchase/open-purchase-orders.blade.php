@@ -100,7 +100,7 @@
         <div class="col-sm-12 col-md-7">{{ $orders->links() }}</div>
     </div>
         @include('livewire.purchase._order_details')
+        @include('livewire.preview.preview')
     {{--    @include('livewire.x-loading')--}}
-{{--    @include('livewire.preview.preview')--}}
     <x-notify/>
 </div>

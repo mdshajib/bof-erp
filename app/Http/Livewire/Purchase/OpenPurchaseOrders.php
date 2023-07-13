@@ -98,10 +98,9 @@ class OpenPurchaseOrders extends BaseComponent
     public function printPurchase($purchase_id)
     {
         try {
-            $status = (new PurchaseManagementService())->purchasePrint($purchase_id);
-            if($status){
-                $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Purchase Print', 'message' => 'Purchase order print successfully' ]);
-            }
+            $barcodes_url = (new PurchaseManagementService())->purchasePrint($purchase_id);
+            $this->order_report_name = url($barcodes_url);
+            $this->dispatchBrowserEvent('openOrderReportPreviewModal');
         } catch (\Exception $ex){
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Purchase Print', 'message' => $ex->getMessage() ]);
         }
