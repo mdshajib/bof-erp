@@ -9,6 +9,9 @@ use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
 use App\Traits\WithPerPagePagination;
 use App\Traits\WithSorting;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
 
 class ManageOrder extends BaseComponent
 {
@@ -77,5 +80,31 @@ class ManageOrder extends BaseComponent
         $this->dispatchBrowserEvent('openOrderViewModal');
     }
 
+    public function printOrder($order_id)
+    {
+//        $connector = new FilePrintConnector("php://stdout");
+//        $printer = new Printer($connector);
+//        $printer -> text("Hello World!\n");
+//        $printer -> cut();
+//        $printer -> close();
+        try {
+//            $connector = new WindowsPrintConnector('Rongta RP327');
+//            $impresora = new Printer($connector);
+//            $impresora->setJustification(Printer::JUSTIFY_CENTER);
+//            $impresora->setTextSize(2, 2);
+//            $impresora->text("Imprimiendo\n");
+                    $connector = new FilePrintConnector("php://stdout");
+        $printer = new Printer($connector);
+        $printer -> text("Hello World!\n");
+        $printer -> cut();
+        $printer -> close();
+//            $impresora-> close();
 
+        }
+        catch(\Exception $ex) {
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
+        }
+
+
+    }
 }
