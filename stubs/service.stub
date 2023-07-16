@@ -6,14 +6,12 @@ use Exception;
 
 class DummyClass
 {
-    /**
-     * Function details
-     */
      public function customFunction()
      {
         try
         {
             // ToDo
+            return '';
         }
         catch(Exception $ex)
         {

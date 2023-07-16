@@ -23,6 +23,10 @@ use App\Http\Livewire\Purchase\OpenPurchaseOrders;
 use App\Http\Livewire\Purchase\ConfirmedPurchaseOrders;
 use App\Http\Livewire\Purchase\UpdatePurchaseOrder;
 use \App\Http\Livewire\Inventory\TransactionList;
+use \App\Http\Livewire\Reports\DailyReport;
+use \App\Http\Livewire\Reports\WeeklyReport;
+use \App\Http\Livewire\Reports\MonthlyReport;
+use \App\Http\Livewire\Reports\YearlyReport;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -63,6 +67,12 @@ Route::group(['middleware'=> ['auth']], function () {
 
     // Supplier Routes
     Route::get('/suppliers', ManageSupplier::class)->name('supplier.manage');
+
+    // reports Routes
+    Route::get('/reports/daily', DailyReport::class)->name('reports.daily');
+    Route::get('/reports/weekly', WeeklyReport::class)->name('reports.weekly');
+    Route::get('/reports/monthly', MonthlyReport::class)->name('reports.monthly');
+    Route::get('/reports/yearly', YearlyReport::class)->name('reports.yearly');
 
 
 });
