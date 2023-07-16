@@ -130,7 +130,7 @@ class CreateOrder extends BaseComponent
         }
         $this->row_section[$key]['gross_amount']      = $this->row_section[$key]['quantity'] * $this->row_section[$key]['unit_price'];
         $this->row_section[$key]['total_discount']    = $this->row_section[$key]['quantity'] * $this->row_section[$key]['discount'];
-        $this->row_section[$key]['total_sales_price'] = $this->row_section[$key]['gross_amount'] * $this->row_section[$key]['total_discount'];
+        $this->row_section[$key]['total_sales_price'] = $this->row_section[$key]['gross_amount'] - $this->row_section[$key]['total_discount'];
         $this->summaryTable();
     }
 
