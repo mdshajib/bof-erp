@@ -93,14 +93,14 @@ class ManageOrder extends BaseComponent
             $leftCol = 'Item';
             $centerCol = 'Quantity x Price';
             $rightCol = 'Total';
-            $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 22, 16, 8, 4));
+            $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 15, 10, 5, 4));
             $printer->text("\n");
             $leftCol = 'Black Coffee';
             $centerCol = '5 x 10.0';
             $rightCol = '50.0';
+            $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 15, 10, 5, 4));
             $printer->text("\n");
-            $printer->text("-----------------------------------\n");
-            $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 22, 16, 8, 4));
+            $printer->text(str_pad("-", 48, "-") . "\n");
 
             $printer->cut();
             $printer->close();
