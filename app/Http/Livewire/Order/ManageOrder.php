@@ -90,9 +90,9 @@ class ManageOrder extends BaseComponent
             $printer->text("Bangladesh Ordnance Factories\n");
             $printer->setTextSize(1, 1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Order: 22121");
-            $printer->setJustification(Printer::JUSTIFY_RIGHT);
-            $printer->text("16/07/23\n");
+            $leftCol = 'Order: 2122121';
+            $rightCol = '17/07/23';
+            $printer->text($this->columnify($leftCol, $rightCol, 22, 22, 4));
             $printer->cut();
             $printer->close();
 
@@ -100,7 +100,21 @@ class ManageOrder extends BaseComponent
         catch(\Exception $ex) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
         }
+    }
 
+    private function columnify($leftCol, $rightCol, $leftWidth, $rightWidth, $space = 4)
+    {
+        $leftWrapped = wordwrap($leftCol, $leftWidth, "\n", true);
+        $rightWrapped = wordwrap($rightCol, $rightWidth, "\n", true);
 
+        $leftLines = explode("\n", $leftWrapped);
+        $rightLines = explode("\n", $rightWrapped);
+        $allLines = array();
+        for ($i = 0; $i < max(count($leftLines), count($rightLines)); $i ++) {
+            $leftPart = str_pad(isset($leftLines[$i]) ? $leftLines[$i] : "", $leftWidth, " ");
+            $rightPart = str_pad(isset($rightLines[$i]) ? $rightLines[$i] : "", $rightWidth, " ");
+            $allLines[] = $leftPart . str_repeat(" ", $space) . $rightPart;
+        }
+        return implode("\n", $allLines) . "\n";
     }
 }
