@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariation;
 use App\Models\SalesItem;
@@ -12,23 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class SalesReportService
 {
-     public function getCategories()
+     public function getProducts()
      {
         try
         {
-            return Category::select('id', 'name')->get()->toArray();
-        }
-        catch(Exception $ex)
-        {
-            throw $ex;
-        }
-     }
-     public function getProducts($get_category_id = null)
-     {
-        try
-        {
-            return Product::select('id', 'name')
-                ->when($get_category_id, fn ($q, $category_id) => $q->where('category_id', $category_id))
+            return Product::select('id', 'title')
                 ->get()
                 ->toArray();
         }
@@ -38,7 +25,22 @@ class SalesReportService
         }
      }
 
-    public function getSalesData($start, $end, $category_id = null, $product_id = null)
+    public function getVariations($product_id = null)
+    {
+        try
+        {
+            return ProductVariation::select('id', 'variation_name')
+                ->when($product_id, fn ($q) => $q->where('product_id', $product_id))
+                ->get()
+                ->toArray();
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
+    }
+
+    public function getSalesData($start, $end, $product_id = null, $variation_id = null)
     {
         try {
             return SalesItem::query()

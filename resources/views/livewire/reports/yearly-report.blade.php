@@ -40,7 +40,7 @@
             </div>
 
         </div>
-        <div class="col-xl-12 mt-1">
+        <div class="col-xl-12 mt-1" >
             <div class="card">
                 <div class="row mt-0">
                     <div class="table-responsive last-row-bold">
@@ -58,12 +58,12 @@
                             <tbody>
                             @forelse ($orders as $item)
                                 <tr>
-                                    <td>{{ $item->sku_id }}</td>
-                                    <td>{{ $item->variation_name }}</td>
-                                    <td>{{ $item->quantity }}</td>
-                                    <td>{{ $item->cogs_price }}</td>
-                                    <td>{{ $item->selling_price }}</td>
-                                    <td>{{ $item->total_sales_price }}</td>
+                                    <td>{{ $item['sku_id'] }}</td>
+                                    <td>{{ $item['variation_name'] }}</td>
+                                    <td>{{ $item['quantity'] }}</td>
+                                    <td>{{ $item['cogs_price'] }}</td>
+                                    <td>{{ $item['selling_price'] }}</td>
+                                    <td>{{ $item['total_sales_price'] }}</td>
                                 </tr>
                             @empty
                                 <tr>

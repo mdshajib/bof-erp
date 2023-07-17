@@ -1,0 +1,18 @@
+p{
+    margin: 0px;
+    margin-bottom: 0;
+}
+.product-image{
+    text-align: center;
+}
+
+.product-image img{
+    max-height: 65px;
+
+}
+.sale-box{
+    height:450px; max-height:450px;overflow-y: scroll;
+}
+.product-name{
+    text-align: center;
+}

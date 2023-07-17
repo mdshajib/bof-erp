@@ -19,7 +19,7 @@ class YearlyReport extends BaseComponent
         $this->get_selected_date = date('Y');
         $this->selectedDateRange();
         $this->intFilterOptionsData();
-        $this->processingData = $this->getSalesData();
+        $this->processingData = $this->getSalesData()->toArray();
     }
 
 
@@ -29,9 +29,9 @@ class YearlyReport extends BaseComponent
         return $this->view('livewire.reports.yearly-report', $data);
     }
 
-    public function updatedGetCategoryId()
+    public function updatedGetProductId()
     {
-        $this->productList();
+        $this->variationList();
     }
 
     public function addedMinus()
@@ -60,7 +60,7 @@ class YearlyReport extends BaseComponent
     public function generatePosReport()
     {
         $this->selectedDateRange();
-        $this->category_id    = $this->get_category_id;
+        $this->variation_id   = $this->get_variation_id;
         $this->product_id     = $this->get_product_id;
         $this->selected_date  = $this->get_selected_date;
         $this->processingData = $this->getSalesData();
@@ -69,14 +69,14 @@ class YearlyReport extends BaseComponent
 
     public function resetFilter()
     {
-        $this->reset('selected_date', 'get_category_id', 'get_product_id');
+        $this->reset('selected_date', 'get_variation_id', 'get_product_id');
         $this->get_selected_date = date('Y');
         $this->disabled          = true;
     }
 
     public function updated($name, $value)
     {
-        if ($name == 'get_category_id' || $name == 'get_product_id' || $name == 'get_branch_ids' || $name == 'get_selected_date') {
+        if ($name == 'get_variation_id' || $name == 'get_product_id' || $name == 'get_selected_date') {
             $this->disabled = true;
         }
     }

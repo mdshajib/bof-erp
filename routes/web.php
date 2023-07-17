@@ -27,6 +27,7 @@ use \App\Http\Livewire\Reports\DailyReport;
 use \App\Http\Livewire\Reports\WeeklyReport;
 use \App\Http\Livewire\Reports\MonthlyReport;
 use \App\Http\Livewire\Reports\YearlyReport;
+use \App\Http\Livewire\NewPos\Pos;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -73,6 +74,9 @@ Route::group(['middleware'=> ['auth']], function () {
     Route::get('/reports/weekly', WeeklyReport::class)->name('reports.weekly');
     Route::get('/reports/monthly', MonthlyReport::class)->name('reports.monthly');
     Route::get('/reports/yearly', YearlyReport::class)->name('reports.yearly');
+
+    // New Pos
+    Route::get('/pos', Pos::class)->name('pos');
 
 
 });

@@ -1,26 +1,26 @@
 
-<div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-    <div class="mb-1">
-        <label for="category_id">Category</label>
-        <select class="form-control" name="category_id" id="category_id" wire:model="get_category_id">
-            <option value="">Choose a category</option>
-            @foreach($category_list as $category)
-                <option value="{{$category['id']}}" >{{$category['name']}}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
-
 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="mb-1">
         <label for="product_id">Product</label>
-        <select class="form-select" id="product_id" wire:model.defer="get_product_id">
+        <select class="form-select" id="product_id" wire:model="get_product_id">
             <option value="">Choose a product</option>
             @foreach ($product_list as $product)
-                <option value="{{ $product['id'] }}">{{ $product['name'] }}</option>
+                <option value="{{ $product['id'] }}"> {{ $product['title'] }} </option>
             @endforeach
         </select>
         @error('product_id') <span class="text-danger">{{ $message }}</span> @enderror
+    </div>
+</div>
+
+<div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+    <div class="mb-1">
+        <label for="variation_id">Variation</label>
+        <select class="form-control" name="variation_id" id="variation_id" wire:model.defer="get_variation_id">
+            <option value="">Choose a Variation</option>
+            @foreach($variation_list as $variation)
+                <option value="{{$variation['id']}}" >{{ $variation['variation_name'] }}</option>
+            @endforeach
+        </select>
     </div>
 </div>
 
@@ -44,25 +44,39 @@
     <script>
         $(document).ready(function(){
 
-            $('#category_id').select2({
-                placeholder: "Choose a category",
-                theme: 'bootstrap-5',
-            });
             $('#product_id').select2({
                 placeholder: "Choose a product",
                 theme: 'bootstrap-5',
             });
 
-            $('#category_id').on("select2:select select2:unselect", function () {
-                let dataContact = $(this).val();
-            @this.set('get_category_id', dataContact);
+            $('#variation_id').select2({
+                placeholder: "Choose a variation",
+                theme: 'bootstrap-5',
             });
 
             $('#product_id').on("select2:select select2:unselect", function () {
-                let dataContact = $(this).val();
-            @this.set('get_product_id', dataContact);
+                let data = $(this).val();
+                @this.set('get_product_id', data);
             });
 
+            $('#variation_id').on("select2:select select2:unselect", function () {
+                let data = $(this).val();
+                @this.set('get_variation_id', data);
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            Livewire.hook('message.processed', (message, component) => {
+                $('#product_id').select2({
+                    placeholder: "Choose a Product",
+                    theme: 'bootstrap-5'
+                });
+
+                $('#variation_id').select2({
+                    placeholder: "Choose a variation",
+                    theme: 'bootstrap-5'
+                });
+            })
         });
 
     </script>
