@@ -83,16 +83,16 @@ class ManageOrder extends BaseComponent
     public function printOrder($order_id)
     {
         try {
-            $connector = new WindowsPrintConnector('Rongta RP327');
+            $connector = new WindowsPrintConnector('RONGTA 80mm Series Printer');
             $printer = new Printer($connector);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
-            $printer->setTextSize(4, 4);
+            $printer->setTextSize(1, 1);
             $printer->text("Bangladesh Ordnance Factories\n");
-            $printer->setTextSize(2, 2);
+            $printer->setTextSize(1, 1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             $printer->text("Order: 22121");
             $printer->setJustification(Printer::JUSTIFY_RIGHT);
-            $printer->text("Order: 22121 \n");
+            $printer->text("16/07/23\n");
             $printer->cut();
             $printer->close();
 
