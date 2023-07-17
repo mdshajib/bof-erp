@@ -90,9 +90,18 @@ class ManageOrder extends BaseComponent
             $printer->text("Bangladesh Ordnance Factories\n");
             $printer->setTextSize(1, 1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $leftCol = 'Order: 2122121';
-            $rightCol = '17/07/23';
-            $printer->text($this->columnify($leftCol, $rightCol, 22, 22, 4));
+            $leftCol = 'Item';
+            $centerCol = 'Quantity x Price';
+            $rightCol = 'Total';
+            $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 30, 10, 10, 4));
+            $printer->text("\n");
+            $leftCol = 'Black Coffee';
+            $centerCol = '5 x 10.0';
+            $rightCol = '50.0';
+            $printer->text("\n");
+            $printer->text("--------------------------\n");
+            $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 30, 10, 10, 4));
+
             $printer->cut();
             $printer->close();
 
@@ -102,18 +111,21 @@ class ManageOrder extends BaseComponent
         }
     }
 
-    private function columnify($leftCol, $rightCol, $leftWidth, $rightWidth, $space = 4)
+    private function columnify($leftCol, $centerCol, $rightCol, $leftWidth, $centerWidth, $rightWidth, $space = 4)
     {
-        $leftWrapped = wordwrap($leftCol, $leftWidth, "\n", true);
-        $rightWrapped = wordwrap($rightCol, $rightWidth, "\n", true);
+        $leftWrapped   = wordwrap($leftCol, $leftWidth, "\n", true);
+        $centerWrapped = wordwrap($centerCol, $centerWidth, "\n", true);
+        $rightWrapped  = wordwrap($rightCol, $rightWidth, "\n", true);
 
-        $leftLines = explode("\n", $leftWrapped);
-        $rightLines = explode("\n", $rightWrapped);
+        $leftLines   = explode("\n", $leftWrapped);
+        $centerLines = explode("\n", $centerWrapped);
+        $rightLines  = explode("\n", $rightWrapped);
         $allLines = array();
-        for ($i = 0; $i < max(count($leftLines), count($rightLines)); $i ++) {
-            $leftPart = str_pad(isset($leftLines[$i]) ? $leftLines[$i] : "", $leftWidth, " ");
-            $rightPart = str_pad(isset($rightLines[$i]) ? $rightLines[$i] : "", $rightWidth, " ");
-            $allLines[] = $leftPart . str_repeat(" ", $space) . $rightPart;
+        for ($i = 0; $i < max(count($leftLines),count($centerLines), count($rightLines)); $i ++) {
+            $leftPart   = str_pad($leftLines[$i] ?? "", $leftWidth, " ");
+            $centerPart = str_pad($centerLines[$i] ?? "", $centerWidth, " ");
+            $rightPart  = str_pad($rightLines[$i] ?? "", $rightWidth, " ");
+            $allLines[] = $leftPart . str_repeat(" ", $space) . $centerPart . str_repeat(" ", $space). $rightPart;
         }
         return implode("\n", $allLines) . "\n";
     }
