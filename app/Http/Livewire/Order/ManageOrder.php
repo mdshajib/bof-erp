@@ -82,23 +82,19 @@ class ManageOrder extends BaseComponent
 
     public function printOrder($order_id)
     {
-//        $connector = new FilePrintConnector("php://stdout");
-//        $printer = new Printer($connector);
-//        $printer -> text("Hello World!\n");
-//        $printer -> cut();
-//        $printer -> close();
         try {
-//            $connector = new WindowsPrintConnector('Rongta RP327');
-//            $impresora = new Printer($connector);
-//            $impresora->setJustification(Printer::JUSTIFY_CENTER);
-//            $impresora->setTextSize(2, 2);
-//            $impresora->text("Imprimiendo\n");
-                    $connector = new FilePrintConnector("php://stdout");
-        $printer = new Printer($connector);
-        $printer -> text("Hello World!\n");
-        $printer -> cut();
-        $printer -> close();
-//            $impresora-> close();
+            $connector = new WindowsPrintConnector('Rongta RP327');
+            $printer = new Printer($connector);
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->setTextSize(4, 4);
+            $printer->text("Bangladesh Ordnance Factories\n");
+            $printer->setTextSize(2, 2);
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text("Order: 22121");
+            $printer->setJustification(Printer::JUSTIFY_RIGHT);
+            $printer->text("Order: 22121 \n");
+            $printer->cut();
+            $printer->close();
 
         }
         catch(\Exception $ex) {
