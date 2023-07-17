@@ -99,7 +99,7 @@ class ManageOrder extends BaseComponent
             $centerCol = '5 x 10.0';
             $rightCol = '50.0';
             $printer->text("\n");
-            $printer->text("--------------------------\n");
+            $printer->text("-----------------------------------\n");
             $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 22, 16, 8, 4));
 
             $printer->cut();
