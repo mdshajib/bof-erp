@@ -22,7 +22,7 @@ class ThermalPrintService
             $printer->setTextSize(1, 1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             $order_no = 'Order: ' . $order_data['order_info']['order_number'];
-            $order_no   = str_pad($order_no , 33, " ");
+            $order_no   = str_pad($order_no , 35, " ");
             $date     = date('d/m/y', strtotime($order_data['order_info']['order_date']));
             $printer->text($order_no . $date);
             $printer->text("\n \n");
@@ -31,7 +31,7 @@ class ThermalPrintService
             $rightCol = 'Total';
             $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 22, 10, 5, 4));
             $printer->text(str_pad("-", 47, "-"));
-            $printer->text("\n \n");
+            $printer->text("\n");
             foreach ($order_data['items'] as $item) {
                 $leftCol   = $item['product'];
                 $centerCol = $item['quantity'] .'x'. $item['unit_price'];
