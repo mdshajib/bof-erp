@@ -59,4 +59,23 @@ class ThermalPrintService
             throw $ex;
         }
      }
+
+    private function columnify($leftCol, $centerCol, $rightCol, $leftWidth, $centerWidth, $rightWidth, $space = 4)
+    {
+        $leftWrapped   = wordwrap($leftCol, $leftWidth, "\n", true);
+        $centerWrapped = wordwrap($centerCol, $centerWidth, "\n", true);
+        $rightWrapped  = wordwrap($rightCol, $rightWidth, "\n", true);
+
+        $leftLines   = explode("\n", $leftWrapped);
+        $centerLines = explode("\n", $centerWrapped);
+        $rightLines  = explode("\n", $rightWrapped);
+        $allLines = array();
+        for ($i = 0; $i < max(count($leftLines),count($centerLines), count($rightLines)); $i ++) {
+            $leftPart   = str_pad($leftLines[$i] ?? "", $leftWidth, " ");
+            $centerPart = str_pad($centerLines[$i] ?? "", $centerWidth, " ");
+            $rightPart  = str_pad($rightLines[$i] ?? "", $rightWidth, " ");
+            $allLines[] = $leftPart . str_repeat(" ", $space) . $centerPart . str_repeat(" ", $space). $rightPart;
+        }
+        return implode("\n", $allLines) . "\n";
+    }
 }
