@@ -22,7 +22,7 @@ class ThermalPrintService
             $printer->setTextSize(1, 1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             $order_no = 'Order: ' . $order_data['order_info']['order_number'];
-            $order_no   = str_pad($order_no , 35, " ");
+            $order_no   = str_pad($order_no , 37, " ");
             $date     = date('d/m/y', strtotime($order_data['order_info']['order_date']));
             $printer->text($order_no . $date);
             $printer->text("\n \n");
