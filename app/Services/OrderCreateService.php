@@ -106,7 +106,7 @@ class OrderCreateService
 
             $this->storeOrderItems($order_payload, $sales_order->id);
             DB::commit();
-            return true;
+            return $sales_order->id;
         } catch(Exception $ex) {
             DB::rollBack();
             throw $ex;

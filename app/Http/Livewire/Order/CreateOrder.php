@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Order;
 
 use App\Http\Livewire\BaseComponent;
 use App\Services\OrderCreateService;
+use App\Services\ThermalPrintService;
 use Exception;
 
 class CreateOrder extends BaseComponent
@@ -204,6 +205,7 @@ class CreateOrder extends BaseComponent
 
             $status = ( new OrderCreateService())->storeOrder($order_payload);
             if($status){
+                (new ThermalPrintService())->print($status);
                 $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Order', 'message' => 'New order has been completed']);
                 $this->initDefaults();
             }
