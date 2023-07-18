@@ -84,7 +84,7 @@ class ManageOrder extends BaseComponent
     {
         try {
             $order_data = (new OrderManagementService())->viewOrderDetails($order_id);
-            dd($order_data);
+
             $connector = new WindowsPrintConnector('RONGTA 80mm Series Printer');
             $printer = new Printer($connector);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
