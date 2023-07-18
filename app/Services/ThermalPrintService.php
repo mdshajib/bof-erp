@@ -25,11 +25,12 @@ class ThermalPrintService
             $order_no   = str_pad($order_no , 28, " ");
             $date     = date('d/m/y', strtotime($order_data['order_info']['order_date']));
             $printer->text($order_no . $date);
-            $printer->text("\n");
+            $printer->text("\n \n");
             $leftCol = 'Item';
             $centerCol = 'Qt x Price';
             $rightCol = 'Total';
             $printer->text($this->columnify($leftCol, $centerCol, $rightCol, 22, 10, 5, 4));
+            $printer->text(str_pad("-", 47, "-") . "\n");
             foreach ($order_data['items'] as $item) {
                 $leftCol   = $item['product'];
                 $centerCol = $item['quantity'] .'x'. $item['unit_price'];
