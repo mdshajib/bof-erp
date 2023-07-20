@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
+            $table->string('batch_no')->nullable();
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->tinyInteger('special')->default(0);
             $table->string('address')->nullable();
             $table->integer('points')->default(0);
             $table->tinyInteger('is_active')->default(1);

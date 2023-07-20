@@ -10,6 +10,10 @@
                 <x-menu.item text="{{ __('Dashboard') }}" link="{{ route('dashboard') }}" icon="home" class="{{ (request()->is('dashboard*')) ? 'active' : '' }} "/>
                 <x-menu.item text="{{ __('Manage Users') }}" link="{{ route('user.manage') }}" icon="users" class="{{ (request()->is('users')) ? 'active' : '' }}"/>
 
+                <x-menu.list text="CRM" icon="user" class="{{ (request()->is('crm*')) ? 'mm-active' : '' }}">
+                    <x-menu.item text="Special Contact" link="{{  route('crm.special') }}" class="{{ (request()->is('crm/special-contact')) ? 'active' : '' }}"/>
+                </x-menu.list>
+
                 <x-menu.list text="Category Management" icon="list" class="{{ (request()->is('categor*')) ? 'mm-active' : '' }}">
                     <x-menu.item text="Manage Category" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>
 {{--                    <x-menu.item text="Manage Attribute" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>--}}

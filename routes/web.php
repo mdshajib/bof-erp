@@ -28,6 +28,8 @@ use \App\Http\Livewire\Reports\WeeklyReport;
 use \App\Http\Livewire\Reports\MonthlyReport;
 use \App\Http\Livewire\Reports\YearlyReport;
 use \App\Http\Livewire\NewPos\Pos;
+use \App\Http\Livewire\CRM\SpecialContact;
+use \App\Http\Livewire\CRM\Contact;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -46,6 +48,9 @@ Route::group(['middleware'=> ['auth']], function () {
     Route::get('/users', ManageUser::class)->name('user.manage');
     Route::get('/categories', ManageCategory::class)->name('manage.category');
 
+    // Contact routes
+    Route::get('crm/special-contact', SpecialContact::class)->name('crm.special');
+    Route::get('crm/contact', Contact::class)->name('crm.contact');
 //    Products Routes
     Route::get('products/create', AddProduct::class)->name('product.create');
     Route::get('products', ManageProduct::class)->name('product.manage');
