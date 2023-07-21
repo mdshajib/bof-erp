@@ -9,8 +9,6 @@ trait SalesReportQuery
 {
     public $variation_id    = null;
     public $product_id      = null;
-    public $start           = null;
-    public $end             = null;
     public $processingData  = [];
     public $variation_list  = [];
     public $product_list    = [];
@@ -50,7 +48,7 @@ trait SalesReportQuery
     private function getSalesData()
     {
         try {
-            return (new SalesReportService())->getSalesData($this->start , $this->end, $this->product_id, $this->variation_id);
+            return (new SalesReportService())->getSalesData($this->dates, $this->product_id, $this->variation_id);
         }catch ( Exception $ex){
             return $ex->getMessage();
         }

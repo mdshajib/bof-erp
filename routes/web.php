@@ -23,10 +23,7 @@ use App\Http\Livewire\Purchase\OpenPurchaseOrders;
 use App\Http\Livewire\Purchase\ConfirmedPurchaseOrders;
 use App\Http\Livewire\Purchase\UpdatePurchaseOrder;
 use \App\Http\Livewire\Inventory\TransactionList;
-use \App\Http\Livewire\Reports\DailyReport;
-use \App\Http\Livewire\Reports\WeeklyReport;
-use \App\Http\Livewire\Reports\MonthlyReport;
-use \App\Http\Livewire\Reports\YearlyReport;
+use \App\Http\Livewire\Reports\SalesReport;
 use \App\Http\Livewire\NewPos\Pos;
 use \App\Http\Livewire\CRM\SpecialContact;
 use \App\Http\Livewire\CRM\NormalContact;
@@ -75,10 +72,7 @@ Route::group(['middleware'=> ['auth']], function () {
     Route::get('/suppliers', ManageSupplier::class)->name('supplier.manage');
 
     // reports Routes
-    Route::get('/reports/daily', DailyReport::class)->name('reports.daily');
-    Route::get('/reports/weekly', WeeklyReport::class)->name('reports.weekly');
-    Route::get('/reports/monthly', MonthlyReport::class)->name('reports.monthly');
-    Route::get('/reports/yearly', YearlyReport::class)->name('reports.yearly');
+    Route::get('/reports/sales', SalesReport::class)->name('reports.sales');
 
     // New Pos
     Route::get('/pos', Pos::class)->name('pos');

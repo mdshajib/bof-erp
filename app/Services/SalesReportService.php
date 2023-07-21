@@ -40,12 +40,15 @@ class SalesReportService
         }
     }
 
-    public function getSalesData($start, $end, $product_id = null, $variation_id = null)
+    public function getSalesData($dates, $product_id = null, $variation_id = null)
     {
         try {
+            $date   = explode(' to ', $dates);
+            $start  = date('Y-m-d', strtotime($date[0])).' 00:00:00';
+            $end    = date('Y-m-d', strtotime(end($date))).' 23:59:59';
             return SalesItem::query()
                 ->selectRaw('sku_id,SUM(quantity) as quantity,SUM(total_sales_price) as total_sales_price')
-                ->whereBetween('created_at', [$start.' 00:00:00', $end.' 23:59:59'])
+                ->whereBetween('created_at', [$start, $end])
 //                ->when($category_id, fn ($q) => $q->where('category_id', $category_id))
                 ->when($product_id, fn ($q) => $q->where('product_id', $product_id))
                 ->orderBy('total_sales_price', 'DESC')

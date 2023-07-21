@@ -1,14 +1,14 @@
 <div>
     @section('page-title')
-        Reports Yearly
+        Sales Report
     @endsection
 
     @section('header')
-        <x-common.header title="Report Yearly">
+        <x-common.header title="Sales Report">
             <li class="breadcrumb-item">
-                <a href="javascript: void(0);">Sales Reports</a>
+                <a href="javascript: void(0);">Reports</a>
             </li>
-            <li class="breadcrumb-item active">Yearly</li>
+            <li class="breadcrumb-item active">Sales</li>
         </x-common.header>
     @endsection
     <div class="row mt-3">
@@ -19,18 +19,7 @@
                         <div class="row">
                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                                 <div class="mb-1">
-                                    <label for="get_selected_date">Year</label>
-                                    <div class="input-group mb-1">
-                                        <div class="input-group-prepend pointer">
-                                            <span style="border-radius: 0px; cursor: pointer;" class="input-group-text"  wire:click.prevent="addedMinus"> <i class="mdi mdi-chevron-left align-middle font-size-14"></i> </span>
-                                        </div>
-                                        <select class="form-control" id="get_selected_date" wire:model="get_selected_date">
-                                            <option value="2023">2023</option>
-                                        </select>
-                                        <div class="input-group-append pointer">
-                                            <span style="border-radius: 0px; cursor: pointer;" class="input-group-text" wire:click.prevent="addedPlus"><i class="mdi mdi-chevron-right align-middle font-size-14"></i></span>
-                                        </div>
-                                    </div>
+                                    <x-form.input required="required" id="datepicker-range" wire:model.defer="dates" class="form-control flatpickr-input active" label="{{ __('Dates') }}" :error="$errors->first('dates')" placeholder="Date" autocomplete="off"/>
                                 </div>
                             </div>
                             @include('livewire.reports._default_filter')
@@ -52,18 +41,31 @@
                                 <th>Quantity</th>
                                 <th>COGS Price</th>
                                 <th>Selling Price</th>
-                                <th>Total</th>
+                                <th>Profit</th>
+                                <th>Lose</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse ($orders as $item)
                                 <tr>
+                                    @php
+                                        $profit = 0; $lose  = 0;
+                                        $total_cogs        = $item['cogs_price'] * $item['quantity'];
+                                        $total_sales_price = $item['total_sales_price'];
+                                        if($total_cogs > $total_sales_price){
+                                            $lose = $total_cogs - $total_sales_price;
+                                        }else{
+                                            $profit = $total_sales_price - $total_cogs;
+                                        }
+
+                                    @endphp
                                     <td>{{ $item['sku_id'] }}</td>
                                     <td>{{ $item['variation_name'] }}</td>
                                     <td>{{ $item['quantity'] }}</td>
-                                    <td>{{ $item['cogs_price'] }}</td>
-                                    <td>{{ $item['selling_price'] }}</td>
+                                    <td>{{ $item['cogs_price'] * $item['quantity'] }}</td>
                                     <td>{{ $item['total_sales_price'] }}</td>
+                                    <td>{{ $profit }}</td>
+                                    <td>{{ $lose }}</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -79,6 +81,12 @@
         <x-notify/>
     </div>
 @push('footer')
-
+     <script>
+         $("#datepicker-range").flatpickr({
+            mode: "range",
+            maxDate: "today",
+            dateFormat: "Y-m-d"
+         });
+     </script>
 @endpush
 

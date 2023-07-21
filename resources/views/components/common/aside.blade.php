@@ -47,11 +47,8 @@
                     <x-menu.item text="Transactions" link="{{ route('inventory.transactions') }}" class="{{ (request()->is('/inventory/transactions')) ? 'active' : '' }}"/>
                 </x-menu.list>
 
-                <x-menu.list text="Sales Report" icon="activity" class="{{ (request()->is('reports*')) ? 'mm-active' : '' }}">
-                    <x-menu.item text="Daily" link="{{ route('reports.daily') }}" class="{{ (request()->is('/reports/daily')) ? 'active' : '' }}"/>
-                    <x-menu.item text="Weekly" link="{{ route('reports.weekly') }}" class="{{ (request()->is('/reports/weekly')) ? 'active' : '' }}"/>
-                    <x-menu.item text="Monthly" link="{{ route('reports.monthly') }}" class="{{ (request()->is('/reports/monthly')) ? 'active' : '' }}"/>
-                    <x-menu.item text="Yearly" link="{{ route('reports.yearly') }}" class="{{ (request()->is('/reports/yearly')) ? 'active' : '' }}"/>
+                <x-menu.list text="Report" icon="activity" class="{{ (request()->is('reports*')) ? 'mm-active' : '' }}">
+                    <x-menu.item text="Sales" link="{{ route('reports.sales') }}" class="{{ (request()->is('/reports/sales')) ? 'active' : '' }}"/>
                 </x-menu.list>
 
             </ul>
