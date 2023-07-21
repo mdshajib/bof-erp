@@ -29,7 +29,7 @@ use \App\Http\Livewire\Reports\MonthlyReport;
 use \App\Http\Livewire\Reports\YearlyReport;
 use \App\Http\Livewire\NewPos\Pos;
 use \App\Http\Livewire\CRM\SpecialContact;
-use \App\Http\Livewire\CRM\Contact;
+use \App\Http\Livewire\CRM\NormalContact;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -50,7 +50,7 @@ Route::group(['middleware'=> ['auth']], function () {
 
     // Contact routes
     Route::get('crm/special-contact', SpecialContact::class)->name('crm.special');
-    Route::get('crm/contact', Contact::class)->name('crm.contact');
+    Route::get('crm/contact', NormalContact::class)->name('crm.contact');
 //    Products Routes
     Route::get('products/create', AddProduct::class)->name('product.create');
     Route::get('products', ManageProduct::class)->name('product.manage');

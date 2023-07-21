@@ -65,6 +65,17 @@ class ContactService
         }
     }
 
+    public function updateOrCreateContact($contact)
+    {
+        try {
+            $data ['name']     = $contact['name'];
+            $data ['phone']    = $contact['phone'];
+            return Contact::updateOrCreate(['phone' => $contact['phone']], $data);
+        } catch ( Exception $ex) {
+            throw $ex;
+        }
+    }
+
     public function deleteContact($contactIdBeingRemoved)
     {
         try {

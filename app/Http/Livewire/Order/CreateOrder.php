@@ -18,7 +18,7 @@ class CreateOrder extends BaseComponent
     public $is_special = false;
     public $product_name;
     public $internal_comments;
-    public $customer_name;
+    public $name = null;
     public $product_list   = [];
     public $payment_method = 'cash';
     public $paid_amount    = 0;
@@ -199,7 +199,7 @@ class CreateOrder extends BaseComponent
            $order_payload['items']             = $this->row_section;
            $order_payload['outlet_id']         = auth()->user()->outlet_id;
            $order_payload['phone']             = $this->phone;
-           $order_payload['customer_name']     = $this->customer_name;
+           $order_payload['name']              = $this->name;
            $order_payload['paid_amount']       = $this->paid_amount;
            $order_payload['payment_method']    = $this->payment_method;
            $order_payload['order_note']        = $this->order_note;
@@ -268,7 +268,7 @@ class CreateOrder extends BaseComponent
         $this->is_special = false;
         $contact = (new ContactService())->contactFindByPhone($phone);
         if($contact){
-            $this->customer_name = $contact->name;
+            $this->name = $contact->name;
             if($contact->special){
                 $this->is_special = true;
                 $this->reCalculateForSpecialContact();

@@ -12,6 +12,7 @@
 
                 <x-menu.list text="CRM" icon="user" class="{{ (request()->is('crm*')) ? 'mm-active' : '' }}">
                     <x-menu.item text="Special Contact" link="{{  route('crm.special') }}" class="{{ (request()->is('crm/special-contact')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Contact" link="{{  route('crm.contact') }}" class="{{ (request()->is('crm/contact')) ? 'active' : '' }}"/>
                 </x-menu.list>
 
                 <x-menu.list text="Category Management" icon="list" class="{{ (request()->is('categor*')) ? 'mm-active' : '' }}">

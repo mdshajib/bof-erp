@@ -4,13 +4,14 @@ namespace App\Http\Livewire\CRM;
 
 use App\Http\Livewire\BaseComponent;
 use App\Services\ContactService;
+use App\Models\Contact;
 use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
 use App\Traits\WithPerPagePagination;
 use App\Traits\WithSorting;
-use App\Models\Contact;
+use Illuminate\Validation\Rule;
 
-class SpecialContact extends BaseComponent
+class NormalContact extends BaseComponent
 {
     use WithPerPagePagination;
     use WithCachedRows;
@@ -31,21 +32,20 @@ class SpecialContact extends BaseComponent
         'name'     => null,
         'phone'    => null,
         'email'    => null,
-        'batch_no' => null,
         'address'  => null,
-        'special'  => 1,
+        'special'  => 0,
     ];
 
     public function render()
     {
         $data['contacts'] = $this->rows;
-        return $this->view('livewire.c-r-m.special-contact', $data);
+        return $this->view('livewire.c-r-m.contact', $data);
     }
 
     public function getRowsQueryProperty()
     {
         $query = Contact::query()
-            ->where('special' , 1)
+            ->where('special' , 0)
             ->when($this->filter['name'], fn ($q, $name) => $q->where('name', 'like', "%{$name}%"))
             ->when($this->filter['phone'], fn ($q, $phone) => $q->where('phone', 'like', "%{$phone}%"));
 
@@ -76,7 +76,6 @@ class SpecialContact extends BaseComponent
             'name'     => $contact_data->name,
             'phone'    => $contact_data->phone,
             'email'    => $contact_data->email,
-            'batch_no' => $contact_data->batch_no,
             'address'  => $contact_data->address,
         ];
         $this->dispatchBrowserEvent('openNewContactModal');

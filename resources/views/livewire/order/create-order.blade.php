@@ -66,8 +66,8 @@
                         <div class="mb-2">
                             <label for="customer_name" class="form-label">Customer Name</label>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="customer_name" placeholder="Customer Name" wire:model.defer="customer_name" autocomplete="off" />
-                                @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
+                                <input type="text" class="form-control" id="customer_name" placeholder="Customer Name" wire:model.defer="name" autocomplete="off" />
+                                @error('name') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>

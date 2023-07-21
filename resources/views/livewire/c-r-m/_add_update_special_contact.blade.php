@@ -31,25 +31,15 @@
             placeholder="{{__('Batch No')}}"
             :error="$errors->first('contact.batch_no')"
         />
-            @if (!$contact_id)
-            <x-form.input
-                        type="email"
-                        wire:model.defer='contact.email'
-                        id="txt_email"
-                        label="{{__('Email')}}"
-                        placeholder="{{__('Email')}}"
-                        :error="$errors->first('contact.email')"
-                    />
-            @else
-            <x-form.input
-                        type="email"
-                        wire:model.defer='contact.email'
-                        id="txt_email"
-                        label="{{__('Email')}}"
-                        placeholder="{{__('Email')}}"
-                        :error="$errors->first('contact.email')" readonly
-                    />
-            @endif
+
+        <x-form.input
+            type="email"
+            wire:model.defer='contact.email'
+            id="txt_email"
+            label="{{__('Email')}}"
+            placeholder="{{__('Email')}}"
+            :error="$errors->first('contact.email')"
+        />
         <x-form.input
             type="text"
             wire:model.defer='contact.address'

@@ -105,6 +105,11 @@ class OrderCreateService
             $sales_order->save();
 
             $this->storeOrderItems($order_payload, $sales_order->id);
+
+            $contact['name']  = $order_payload['name'];
+            $contact['phone'] = $order_payload['phone'];
+
+            (new ContactService())->updateOrCreateContact($contact);
             DB::commit();
             return $sales_order->id;
         } catch(Exception $ex) {
