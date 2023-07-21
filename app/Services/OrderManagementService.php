@@ -11,11 +11,11 @@ class OrderManagementService
     {
         try{
             $sales_order    = SalesOrder::query()
-                ->select('id','order_number','internal_comments','order_notes','order_date','is_paid','paid_amount')
+                ->select('id','order_number','internal_comments','contact_id','order_notes','order_date','is_paid','paid_amount')
                 ->with([
-                    'sales_items:sales_order_id,variation_id,unit_sales_price,quantity,gross_amount,discount_amount,total_discount_amount,total_sales_price',
+                    'sales_items:sales_order_id,variation_id,unit_sales_price,cogs_price,quantity,gross_amount,discount_amount,total_discount_amount,total_sales_price',
                     'sales_items.variation:id,variation_name',
-                    'customer:id, name, phone'
+                    'customer:id,name,phone'
                 ])
                 ->findOrFail($order_id);
             if(!$sales_order){
@@ -41,6 +41,7 @@ class OrderManagementService
                     'id'                  => $loop,
                     'product'             => $item->variation?->variation_name,
                     'quantity'            => $item->quantity,
+                    'cogs_price'          => $item->cogs_price,
                     'unit_price'          => $item->unit_sales_price,
                     'discount'            => $item->discount_amount,
                     'total_discount'      => $item->total_discount_amount,

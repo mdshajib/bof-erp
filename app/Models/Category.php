@@ -17,8 +17,6 @@ class Category extends Model
 
     protected $guarded = ['id'];
 
-    protected $fillable = ['name', 'slug', 'is_active', 'deleted_by'];
-
     protected $dates = ['deleted_at'];
 
     public function getActivitylogOptions(): LogOptions

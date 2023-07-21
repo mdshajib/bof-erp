@@ -87,7 +87,16 @@ class OrderCreateService
     {
         DB::beginTransaction();
         try {
+
+            $contact['name']  = $order_payload['name'];
+            $contact['phone'] = $order_payload['phone'];
+
+            $contact_info = (new ContactService())->updateOrCreateContact($contact);
+
             $sales_order                     = new SalesOrder();
+            if($contact_info){
+                $sales_order->contact_id  =$contact_info->id;
+            }
             $sales_order->outlet_id          = $order_payload['outlet_id'];
             $sales_order->gross_amount       = $order_payload['order_summary']['sub_total'];
             $sales_order->discount_amount    = $order_payload['order_summary']['total_discount'];
@@ -106,10 +115,6 @@ class OrderCreateService
 
             $this->storeOrderItems($order_payload, $sales_order->id);
 
-            $contact['name']  = $order_payload['name'];
-            $contact['phone'] = $order_payload['phone'];
-
-            (new ContactService())->updateOrCreateContact($contact);
             DB::commit();
             return $sales_order->id;
         } catch(Exception $ex) {
@@ -128,6 +133,7 @@ class OrderCreateService
                 $order_item['product_id']          = $item['product_id'];
                 $order_item['variation_id']        = $item['variation_id'];
                 $order_item['sku_id']              = $item['sku_id'];
+                $order_item['cogs_price']          = $item['cogs_price'];
                 $order_item['unit_sales_price']    = $item['unit_price'];
                 $order_item['quantity']            = $item['quantity'];
                 $order_item['gross_amount']        = $item['gross_amount'];

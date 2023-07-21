@@ -62,6 +62,7 @@ class ManageCategory extends BaseComponent
         $rules = [
             'name'            => 'required|unique:categories,name',
             'slug'            => 'required|unique:categories,slug',
+            'type'            => 'required',
         ];
 
         $messages = [

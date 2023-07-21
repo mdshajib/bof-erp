@@ -44,6 +44,7 @@ class AddProduct extends BaseComponent
 
     private function initDefaults()
     {
+        $this->variation_section = [];
         $variation = [
             'id'                  => 0,
             'variation_name'      => null,

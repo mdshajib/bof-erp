@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('variation_id')->nullable()->references('id')->on('product_variations')->onDelete('Cascade');
             $table->string('sku_id')->nullable();
             $table->float('unit_sales_price', 8, 2);
+            $table->float('cogs_price', 8, 2);
             $table->float('quantity', 8, 2);
             $table->float('gross_amount', 8, 2);
             $table->foreignId('applied_discount_id')->nullable()->references('id')->on('discounts')->onDelete('Cascade');

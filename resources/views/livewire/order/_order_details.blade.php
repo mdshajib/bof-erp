@@ -43,6 +43,7 @@
                             <th style="width: 70px;">No.</th>
                             <th>Item</th>
                             <th>Quantity</th>
+                            <th>COGS Price</th>
                             <th>Unit Price</th>
                             <th>Discount</th>
                             <th>Total Discount</th>
@@ -58,6 +59,7 @@
                                 <h5 class="font-size-15 mb-1"> {{ $product['product'] }} </h5>
                             </td>
                             <td> {{ $product['quantity'] }} </td>
+                            <td>  {{ $product['cogs_price'] }} Tk</td>
                             <td>  {{ $product['unit_price'] }} Tk</td>
                             <td>  {{ $product['discount'] }} Tk</td>
                             <td>  {{ $product['total_discount'] }} Tk</td>
