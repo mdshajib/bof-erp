@@ -57,7 +57,7 @@
                             <label for="phone" class="form-label">Customer Phone</label>
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" id="phone" placeholder="Customer Phone" wire:model.defer="phone" autocomplete="off" />
+                                <input type="text" class="form-control" maxlength="11" id="phone" placeholder="Customer Phone" wire:model.lazy="phone" autocomplete="off" />
                                 @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -124,9 +124,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{--                            <div class="mt-4">--}}
-                        {{--                                <button class="btn btn-primary" wire:click.prevent="addRow"><i class="fa fa-plus-square"></i> &nbsp;Add Item</button>--}}
-                        {{--                            </div>--}}
                     </div>
                     <div class="d-flex justify-content-end">
                         <div class="col-md-4 mt-4 order-summary_table">

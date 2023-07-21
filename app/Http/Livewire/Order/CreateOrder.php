@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Order;
 
 use App\Http\Livewire\BaseComponent;
+use App\Services\ContactService;
 use App\Services\OrderCreateService;
 use App\Services\ThermalPrintService;
 use Exception;
@@ -14,6 +15,7 @@ class CreateOrder extends BaseComponent
     public $order_note;
 
     public $barcode;
+    public $is_special = false;
     public $product_name;
     public $internal_comments;
     public $customer_name;
@@ -73,12 +75,13 @@ class CreateOrder extends BaseComponent
                 'sku_id'              => $sku_with_item->id,
                 'quantity'            => 1,
                 'stock'               => $sku_with_item->stock->quantity,
-                'unit_price'          => $sku_with_item->selling_price,
+                'cogs_price'          => $sku_with_item->cogs_price,
+                'unit_price'          => $this->is_special ? $sku_with_item->cogs_price : $sku_with_item->selling_price,
                 'discount'            => 0,
                 'applied_discount_id' => null,
                 'total_discount'      => 0,
-                'gross_amount'        => $sku_with_item->selling_price,
-                'total_sales_price'   => $sku_with_item->selling_price,
+                'gross_amount'        => $this->is_special ? $sku_with_item->cogs_price : $sku_with_item->selling_price,
+                'total_sales_price'   => $this->is_special ? $sku_with_item->cogs_price : $sku_with_item->selling_price,
             ];
             $this->row_section[]      = $row_section;
             $this->barcode            = null;
@@ -257,6 +260,34 @@ class CreateOrder extends BaseComponent
             unset($this->row_section[$index]);
             $this->row_section = array_values($this->row_section);
             $this->summaryTable();
+        }
+    }
+
+    public function updatedPhone($phone)
+    {
+        $this->is_special = false;
+        $contact = (new ContactService())->contactFindByPhone($phone);
+        if($contact){
+            $this->customer_name = $contact->name;
+            if($contact->special){
+                $this->is_special = true;
+                $this->reCalculateForSpecialContact();
+            }
+        }
+    }
+
+    private function reCalculateForSpecialContact()
+    {
+        try {
+            foreach ($this->row_section as $key => $row_section){
+                $this->row_section[$key]['unit_price']        = $row_section['cogs_price'];
+                $this->row_section[$key]['gross_amount']      = $row_section['quantity'] * $row_section['cogs_price'];
+                $this->row_section[$key]['total_discount']    = $row_section['quantity'] * $row_section['discount'];
+                $this->row_section[$key]['total_sales_price'] = $this->row_section[$key]['gross_amount'] - $this->row_section[$key]['total_discount'];
+            }
+            $this->summaryTable();
+        } catch (Exception $ex){
+            return $ex;
         }
     }
 }

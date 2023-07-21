@@ -76,4 +76,15 @@ class ContactService
         }
     }
 
+    public function contactFindByPhone($phone)
+    {
+        try {
+            return Contact::query()
+                ->select('id','name','special')
+                ->where('phone', $phone)->first();
+        } catch ( Exception $ex) {
+            throw $ex;
+        }
+    }
+
 }
