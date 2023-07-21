@@ -94,7 +94,11 @@
                         @endif
                     </td>
                     <td> {{ $order->user->first_name }} {{ $order->user->last_name }}</td>
-                    <td></td>
+                    <td>
+                        <button wire:click.prevent = "printOrder({{ $order->id }})" class="btn btn-sm btn-primary me-2 px-3">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </td>
                     <td>
                         <button wire:click="OrderView({{ $order->id }})" class="btn btn-secondary btn-sm"><i class="fa fa-eye fa-color-primary"></i></button>
                     </td>

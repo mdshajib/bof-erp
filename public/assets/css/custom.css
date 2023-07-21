@@ -713,6 +713,10 @@ input[switch]:checked+label:after {
     animation: zoomup 2s linear infinite;
     animation-delay: calc(200ms * var(--i));
 }
+.red-bg{
+    color: #fff;
+    background-color: #d65350 !important;
+}
 
 @keyframes zoomup {
     0%,

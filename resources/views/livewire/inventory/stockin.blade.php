@@ -15,55 +15,95 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                    <form wire:submit.prevent="AddStock" name="stock_form">
-                        <div class="mb-3">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div>
-                                        <h5 class="font-size-14 mb-3"><i class="mdi mdi-arrow-right text-primary me-1"></i>Stock Type</h5>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="radio" name="stock_type" value="add" id="formRadios1" wire:model="stock_type" checked="">
-                                            <label class="form-check-label" for="formRadios1">
-                                                Add Stock
-                                            </label>
-                                        </div>
+                    <ul class="nav nav-tabs nav-tabs-custom nav-justified mb-2" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'addStock' ? 'active' : ''}}" data-bs-toggle="tab" href="#addStock" role="tab" wire:click="stepActive(1)">
+                                <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                <span class="d-none d-sm-block">Add Stock</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'adjustPlus' ? 'active' : ''}}" data-bs-toggle="tab" href="#adjustPlus" role="tab" wire:click="stepActive(2)">
+                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                <span class="d-none d-sm-block">Adjust Stock(+)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ $activeTab == 'adjustMinus' ? 'active red-bg' : ''}}" data-bs-toggle="tab" href="#adjustMinus" role="tab" wire:click="stepActive(3)">
+                                <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                <span class="d-none d-sm-block {{ $activeTab == 'adjustMinus' ? 'text-white' : ''}}">Adjust Stock(-)</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content text-muted">
+                        <div class="tab-pane {{ $activeTab == 'addStock' ? 'active' : ''}}" id="addStock" role="tabpanel">
+                            <form wire:submit.prevent="AddStock" name="stock_form">
+                                <div class="mb-3">
+                                    <h5 for="sku" class="form-label font-size-14">Enter Barcode</h5>
+                                    <div class="form-group has-search">
+                                        <span class="fa fa-search form-control-feedback"></span>
+                                        <input type="text" class="form-control" id="sku" name="sku" placeholder="Barcode" wire:model.defer="sku" autocomplete="off" autofocus onblur="focus();"/>
+                                        @error('variant_id') <span class="invalid-feedback d-block text-danger mb-3">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div>
-                                        <h5 class="font-size-14 mb-3">&nbsp;</h5>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="stock_type" value="adjust_plus" id="formRadios2" wire:model="stock_type">
-                                            <label class="form-check-label" for="formRadios2">
-                                                Adjust(+) Stock
-                                            </label>
+                            </form>
+                        </div>
+                        <div class="tab-pane {{ $activeTab == 'adjustPlus' ? 'active' : ''}}" id="adjustPlus" role="tabpanel">
+                            <div class="mb-3">
+                                <form class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="sku" class="form-label font-size-14">Enter Barcode</label>
+                                            <div class="form-group has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control" id="sku" name="sku" placeholder="Barcode" wire:model.defer="sku" autocomplete="off" autofocus />
+                                                @error('variant_id') <span class="invalid-feedback d-block text-danger mb-3">{{ $message }}</span> @enderror
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div>
-                                        <h5 class="font-size-14 mb-3">&nbsp;</h5>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="stock_type" value="adjust_minus" id="formRadios3" wire:model="stock_type">
-                                            <label class="form-check-label" for="formRadios3">
-                                                Adjust(-) Stock
-                                            </label>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="quantity">Quantity</label>
+                                            <input type="number" class="form-control" id="quantity" wire:model.defer="quantity" placeholder="Qt">
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3 pt-4">
+                                            <button class="btn btn-primary mt-1" wire:click.prevent="adjustPlus"> Adjust <i class="fa fa-plus ms-2"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                        <!-- variant search box -->
-                        <div class="mb-3">
-                            <h5 for="searchVariant" class="form-label font-size-14">Enter Barcode</h5>
-                            <div class="form-group has-search">
-                                <span class="fa fa-search form-control-feedback"></span>
-                                <input type="text" class="form-control" id="sku" name="sku" placeholder="Barcode" wire:model.defer="sku" autocomplete="off" autofocus onblur="focus();"/>
-                                @error('variant_id') <span class="invalid-feedback d-block text-danger mb-3">{{ $message }}</span> @enderror
+                        <div class="tab-pane {{ $activeTab == 'adjustMinus' ? 'active' : ''}}" id="adjustMinus" role="tabpanel">
+                            <div class="mb-3">
+                                <form class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="sku" class="form-label font-size-14">Enter Barcode</label>
+                                            <div class="form-group has-search">
+                                                <span class="fa fa-search form-control-feedback"></span>
+                                                <input type="text" class="form-control" id="sku" name="sku" placeholder="Barcode" wire:model.defer="sku" autocomplete="off" autofocus />
+                                                @error('variant_id') <span class="invalid-feedback d-block text-danger mb-3">{{ $message }}</span> @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="quantity">Quantity</label>
+                                            <input type="number" class="form-control" id="quantity" wire:model.defer="quantity" placeholder="Qt">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3 pt-4">
+                                            <button class="btn btn-danger mt-1" wire:click.prevent="adjustMinus"> Adjust <i class="fa fa-minus ms-2"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <!-- end variant search list -->
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,25 +149,25 @@
 
 @push('footer')
     <script>
-        function setupScanner() {
-            alert('loaded..');
-            let interval: any, barcode = '';
-            document.onkeydown = (e) => {
-                if(interval) {
-                    clearInterval(interval)
-                }
-                if(e.code === 'Enter') {
-                    if(barcode) {
-                    }
-                    barcode = '';
-                    return;
-                }
-                if(e.key !== 'Shift') {
-                    barcode += e.key;
-                }
-                interval = setInterval(() => barcode = '', 20);
-            };
-        }
+        // function setupScanner() {
+        //     alert('loaded..');
+        //     let interval: any, barcode = '';
+        //     document.onkeydown = (e) => {
+        //         if(interval) {
+        //             clearInterval(interval)
+        //         }
+        //         if(e.code === 'Enter') {
+        //             if(barcode) {
+        //             }
+        //             barcode = '';
+        //             return;
+        //         }
+        //         if(e.key !== 'Shift') {
+        //             barcode += e.key;
+        //         }
+        //         interval = setInterval(() => barcode = '', 20);
+        //     };
+        // }
 
         function focus(){
             document.stock_form.sku.focus();

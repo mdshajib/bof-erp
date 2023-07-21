@@ -32,7 +32,8 @@ class ManageStock extends BaseComponent
             ->with([
                 'variation:id,variation_name',
                 'product:id,supplier_id',
-                'product.supplier:id,name,address'
+                'product.supplier:id,name,address',
+                'sku:id,selling_price,cogs_price'
             ])
             ->groupBy('sku_id')
             ->groupBy('outlet_id');

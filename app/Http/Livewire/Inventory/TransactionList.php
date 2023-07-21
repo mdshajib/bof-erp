@@ -31,7 +31,11 @@ class TransactionList extends BaseComponent
     {
         $query = Transaction::query()
             ->select('id','variation_id','sku_id','quantity','type','is_adjust','created_by','created_at')
-            ->with(['user:id,first_name,last_name','variation:id,variation_name'])
+            ->with([
+                'user:id,first_name,last_name',
+                'variation:id,variation_name',
+                'sku:id,selling_price,cogs_price'
+            ])
             ->addSelect([
                 'variation_name' => ProductVariation::select('variation_name')->whereColumn('transactions.variation_id','product_variations.id')
             ])

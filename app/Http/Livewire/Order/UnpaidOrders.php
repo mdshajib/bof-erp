@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Order;
 use App\Http\Livewire\BaseComponent;
 use App\Models\SalesOrder;
 use App\Services\OrderManagementService;
+use App\Services\ThermalPrintService;
 use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
 use App\Traits\WithPerPagePagination;
@@ -76,5 +77,15 @@ class UnpaidOrders extends BaseComponent
             $this->order_number = $this->order_info['order_number'];
         }
         $this->dispatchBrowserEvent('openOrderViewModal');
+    }
+
+    public function printOrder($order_id)
+    {
+        try {
+            return (new ThermalPrintService())->print($order_id);
+        }
+        catch(\Exception $ex) {
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
+        }
     }
 }
