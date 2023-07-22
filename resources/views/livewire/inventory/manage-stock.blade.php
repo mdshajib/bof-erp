@@ -58,6 +58,7 @@
         <x-slot name="head">
             <tr>
                 <x-table.th>{{ __('Product') }}</x-table.th>
+                <x-table.th>{{ __('Purchase Order') }}</x-table.th>
                 <x-table.th>{{ __('Stock Quantity') }}</x-table.th>
                 <x-table.th>{{ __('COGS Price') }}</x-table.th>
                 <x-table.th>{{ __('Selling Price') }}</x-table.th>
@@ -70,6 +71,7 @@
             @forelse ($stocks as $stock)
                 <tr>
                     <td> {{ $stock->variation?->variation_name }} </td>
+                    <td> PR#{{ str_pad($stock->sku?->purchase_order_id, 6, '0', STR_PAD_LEFT) }}</td>
                     <td> {{ $stock->quantity }} </td>
                     <td> {{ $stock->quantity * $stock->sku?->cogs_price }} </td>
                     <td> {{ $stock->quantity * $stock->sku?->selling_price }} </td>

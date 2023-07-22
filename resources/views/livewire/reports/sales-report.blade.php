@@ -37,6 +37,7 @@
                             <thead>
                             <tr>
                                 <th>SKU</th>
+                                <th>Purchase Order</th>
                                 <th>Product</th>
                                 <th>Quantity</th>
                                 <th>COGS Price</th>
@@ -60,6 +61,7 @@
 
                                     @endphp
                                     <td>{{ $item['sku_id'] }}</td>
+                                    <td>PR#{{ str_pad($item['purchase_order_id'], 6, '0', STR_PAD_LEFT) }}</td>
                                     <td>{{ $item['variation_name'] }}</td>
                                     <td>{{ $item['quantity'] }}</td>
                                     <td>{{ $item['cogs_price'] * $item['quantity'] }}</td>

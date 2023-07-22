@@ -50,6 +50,7 @@
             <tr>
                 <x-table.th sortable :direction="$sorts['variation_name'] ?? null" wire:click="sortBy('variation_name')">{{ __('Variation Name') }}</x-table.th>
                 <x-table.th>{{ __('SKU') }}</x-table.th>
+                <x-table.th>{{ __('Purchase Order') }}</x-table.th>
                 <x-table.th>{{ __('Quantity') }}</x-table.th>
                 <x-table.th>{{ __('COGS Price') }}</x-table.th>
                 <x-table.th>{{ __('Selling Price') }}</x-table.th>
@@ -68,6 +69,7 @@
                         {{ $transaction->variation_name }}
                     </td>
                     <td> {{ $transaction->sku_id }} </td>
+                    <td> PR#{{ str_pad($transaction->sku?->purchase_order_id, 6, '0', STR_PAD_LEFT) }}</td>
                     <td> {{ $transaction->quantity }} </td>
                     <td> {{ $transaction->quantity * $transaction->sku?->cogs_price }} </td>
                     <td> {{ $transaction->quantity * $transaction->sku?->selling_price }} </td>

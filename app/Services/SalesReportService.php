@@ -59,7 +59,8 @@ class SalesReportService
                 ->addSelect([
                     'variation_name' => ProductVariation::select('variation_name')->whereColumn('product_variations.id','sales_items.variation_id'),
                     'cogs_price' => Sku::select('cogs_price')->whereColumn('skus.id', 'sales_items.sku_id'),
-                    'selling_price' => Sku::select('selling_price')->whereColumn('skus.id', 'sales_items.sku_id')
+                    'selling_price' => Sku::select('selling_price')->whereColumn('skus.id', 'sales_items.sku_id'),
+                    'purchase_order_id' => Sku::select('purchase_order_id')->whereColumn('skus.id', 'sales_items.sku_id')
                 ])
                 ->get();
 

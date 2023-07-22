@@ -43,7 +43,7 @@
 
                 <x-menu.list text="Inventory Management" icon="book" class="{{ (request()->is('inventory*')) ? 'mm-active' : '' }}">
                     <x-menu.item text="Inventory" link="{{ route('inventory.manage') }}" class="{{ (request()->is('inventory')) ? 'active' : '' }}"/>
-                    <x-menu.item text="Stock IN" link="{{ route('inventory.stockin') }}" class="{{ (request()->is('/inventory/stockin')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Stock" link="{{ route('inventory.stockin') }}" class="{{ (request()->is('/inventory/stockin')) ? 'active' : '' }}"/>
                     <x-menu.item text="Transactions" link="{{ route('inventory.transactions') }}" class="{{ (request()->is('/inventory/transactions')) ? 'active' : '' }}"/>
                 </x-menu.list>
 
