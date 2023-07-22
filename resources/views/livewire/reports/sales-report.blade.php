@@ -42,18 +42,18 @@
                                 <th>COGS Price</th>
                                 <th>Selling Price</th>
                                 <th>Profit</th>
-                                <th>Lose</th>
+                                <th>Loss</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse ($orders as $item)
                                 <tr>
                                     @php
-                                        $profit = 0; $lose  = 0;
+                                        $profit = 0; $loss  = 0;
                                         $total_cogs        = $item['cogs_price'] * $item['quantity'];
                                         $total_sales_price = $item['total_sales_price'];
                                         if($total_cogs > $total_sales_price){
-                                            $lose = $total_cogs - $total_sales_price;
+                                            $loss = $total_cogs - $total_sales_price;
                                         }else{
                                             $profit = $total_sales_price - $total_cogs;
                                         }
@@ -65,7 +65,7 @@
                                     <td>{{ $item['cogs_price'] * $item['quantity'] }}</td>
                                     <td>{{ $item['total_sales_price'] }}</td>
                                     <td>{{ $profit }}</td>
-                                    <td>{{ $lose }}</td>
+                                    <td>{{ $loss }}</td>
                                 </tr>
                             @empty
                                 <tr>

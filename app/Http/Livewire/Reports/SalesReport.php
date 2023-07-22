@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Reports;
 
 use App\Http\Livewire\BaseComponent;
+use App\Services\SalesReportService;
 use App\Traits\SalesReportQuery;
 
 class SalesReport extends BaseComponent
@@ -52,6 +53,10 @@ class SalesReport extends BaseComponent
 
     public function downloadExcel()
     {
-
+        try {
+            return (new SalesReportService())->excelDownload($this->dates, $this->product_id, $this->variation_id);
+        } catch (\Exception $ex){
+            return $ex->getMessage();
+        }
     }
 }
