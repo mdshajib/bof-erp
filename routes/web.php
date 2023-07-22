@@ -27,6 +27,7 @@ use \App\Http\Livewire\Reports\SalesReport;
 use \App\Http\Livewire\NewPos\Pos;
 use \App\Http\Livewire\CRM\SpecialContact;
 use \App\Http\Livewire\CRM\NormalContact;
+use \App\Http\Livewire\Supplier\LoanProducts;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -70,6 +71,7 @@ Route::group(['middleware'=> ['auth']], function () {
 
     // Supplier Routes
     Route::get('/suppliers', ManageSupplier::class)->name('supplier.manage');
+    Route::get('/loan-products', LoanProducts::class)->name('loan.products');
 
     // reports Routes
     Route::get('/reports/sales', SalesReport::class)->name('reports.sales');

@@ -21,7 +21,10 @@
 {{--                    <x-menu.item text="Manage Terms" link="{{  route('manage.category') }}" class="{{ (request()->is('categories')) ? 'active' : '' }}"/>--}}
                 </x-menu.list>
 
-                <x-menu.item text="Supplier Management" link="{{ route('supplier.manage') }}" icon="cpu" class="{{ (request()->is('suppliers*')) ? 'active' : '' }} "/>
+                <x-menu.list text="Supplier Management" icon="cpu" class="{{ (request()->is('suppliers*')) ? 'mm-active' : '' }}">
+                    <x-menu.item text="Suppliers" link="{{ route('supplier.manage') }}" class="{{ (request()->is('suppliers')) ? 'active' : '' }}"/>
+                    <x-menu.item text="Loan Products" link="{{ route('loan.products') }}" class="{{ (request()->is('loan-products')) ? 'active' : '' }} "/>
+                </x-menu.list>
 
                 <x-menu.list text="Product Management" icon="package" class="{{ (request()->is('product*')) ? 'mm-active' : '' }}">
                     <x-menu.item text="Add Product" link="{{ route('product.create') }}" class="{{ (request()->is('products/create')) ? 'active' : '' }}"/>

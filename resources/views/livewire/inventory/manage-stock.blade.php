@@ -59,6 +59,7 @@
             <tr>
                 <x-table.th>{{ __('Product') }}</x-table.th>
                 <x-table.th>{{ __('Purchase Order') }}</x-table.th>
+                <x-table.th>{{ __('Loan') }}</x-table.th>
                 <x-table.th>{{ __('Stock Quantity') }}</x-table.th>
                 <x-table.th>{{ __('COGS Price') }}</x-table.th>
                 <x-table.th>{{ __('Selling Price') }}</x-table.th>
@@ -72,6 +73,13 @@
                 <tr>
                     <td> {{ $stock->variation?->variation_name }} </td>
                     <td> PR#{{ str_pad($stock->sku?->purchase_order_id, 6, '0', STR_PAD_LEFT) }}</td>
+                    <td>
+                        @if($stock->sku->loan)
+                            Yes
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td> {{ $stock->quantity }} </td>
                     <td> {{ $stock->quantity * $stock->sku?->cogs_price }} </td>
                     <td> {{ $stock->quantity * $stock->sku?->selling_price }} </td>
@@ -83,7 +91,7 @@
                             <span style="letter-spacing: 0.12rem;">{{ $stock->sku_id }}</span>
                         </div>
                     </td>
-                    <td>{{ $stock->product?->supplier?->name }}, {{ $stock->product?->supplier?->address }}</td>
+                    <td>{{ $stock?->supplier?->name }}, {{ $stock?->supplier?->address }}</td>
                 </tr>
             @empty
                 <tr>

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Livewire\Inventory;
+namespace App\Http\Livewire\Supplier;
 
 use App\Http\Livewire\BaseComponent;
-use App\Models\Stock;
+use App\Models\Sku;
 use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
 use App\Traits\WithPerPagePagination;
 use App\Traits\WithSorting;
 
-class ManageStock extends BaseComponent
+class LoanProducts extends BaseComponent
 {
     use WithPerPagePagination;
     use WithCachedRows;
@@ -17,25 +17,24 @@ class ManageStock extends BaseComponent
     use WithBulkActions;
 
     public $filter = [
-        'product'    => ''
+        'purchase_id'     => null,
     ];
+
     public function render()
     {
-        $data['stocks'] = $this->rows;
-        return $this->view('livewire.inventory.manage-stock', $data);
+        $data['products'] = $this->rows;
+        return $this->view('livewire.supplier.loan-products', $data);
     }
 
     public function getRowsQueryProperty()
     {
-        $query = Stock::query()
-            ->select('outlet_id','product_id','variation_id','sku_id','quantity','supplier_id')
+        $query = Sku::query()
             ->with([
                 'variation:id,variation_name',
-                'supplier:id,name,address',
-                'sku:id,selling_price,cogs_price,purchase_order_id,loan'
+                'supplier:id,name'
             ])
-            ->groupBy('sku_id')
-            ->groupBy('outlet_id');
+            ->where('loan', 1)
+            ->when($this->filter['purchase_id'], fn ($q, $purchase_id)  => $q->where('purchase_order_id', 'like', "%{$purchase_id}%"));
 
         return $this->applySorting($query);
     }
