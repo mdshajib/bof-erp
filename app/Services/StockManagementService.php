@@ -16,7 +16,7 @@ class StockManagementService
          DB::beginTransaction();
         try
         {
-            $is_adjust = 0;  $item = []; $message = null;
+            $is_adjust = 0;  $item = []; $message = null;$type = 'in';
             $sku = Sku::query()
                 ->select('id','product_id','variation_id','purchase_order_id','quantity')
                 ->with(['stock:sku_id,product_id,variation_id,quantity'])
@@ -35,7 +35,7 @@ class StockManagementService
                 $this->createStock($item);
             }
             else {
-                $type = 'in';
+
                 if ($stock_type === 'add') {
                     if($sku->stock?->sku_id == $barcode){
                         throw new Exception("Already stock added with this barcode!!");
