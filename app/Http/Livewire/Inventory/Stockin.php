@@ -36,20 +36,32 @@ class Stockin extends BaseComponent
     public function adjustPlus()
     {
         try {
-            dd('plus');
+            $status = (new StockManagementService())->stockPlus($this->sku, $this->quantity);
+            if($status != null) {
+                $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Stock Operation', 'message' => $status]);
+                $this->sku      = null;
+                $this->quantity = 0;
+            }
         } catch (Exception $ex) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Stock Error', 'message' => $ex->getMessage()]);
             $this->sku = '';
+            $this->quantity = 0;
         }
     }
 
     public function adjustMinus()
     {
         try {
-            dd('minus');
+            $status = (new StockManagementService())->stockMinus($this->sku, $this->quantity);
+            if($status != null) {
+                $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Stock Operation', 'message' => $status]);
+                $this->sku      = null;
+                $this->quantity = 0;
+            }
         } catch (Exception $ex) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Stock Error', 'message' => $ex->getMessage()]);
             $this->sku = '';
+            $this->quantity = 0;
         }
     }
 
