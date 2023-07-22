@@ -18,7 +18,7 @@ class StockManagementService
         {
             $is_adjust = 0;  $item = []; $message = null;$type = 'in';
             $sku = Sku::query()
-                ->select('id','product_id','variation_id','purchase_order_id','quantity')
+                ->select('id','product_id','variation_id','purchase_order_id','quantity','supplier_id')
                 ->with(['stock:sku_id,product_id,variation_id,quantity'])
                 ->find($barcode);
             if(! $sku){
@@ -29,6 +29,7 @@ class StockManagementService
             $item['sku_id']       = $sku->id;
             $item['product_id']   = $sku->product_id;
             $item['variation_id'] = $sku->variation_id;
+            $item['supplier_id']  = $sku->supplier_id;
             $item['quantity']     = $sku->quantity;
 
             if($sku->stock == null){
@@ -77,7 +78,7 @@ class StockManagementService
         DB::beginTransaction();
         try{
             $sku = Sku::query()
-                ->select('id','product_id','variation_id','purchase_order_id','quantity')
+                ->select('id','product_id','variation_id','purchase_order_id','quantity','supplier_id')
                 ->with(['stock:sku_id,product_id,variation_id,quantity'])
                 ->find($barcode);
             if(! $sku){
@@ -87,6 +88,7 @@ class StockManagementService
             $item['sku_id']       = $sku->id;
             $item['product_id']   = $sku->product_id;
             $item['variation_id'] = $sku->variation_id;
+            $item['supplier_id']  = $sku->supplier_id;
             $item['quantity']     = $quantity;
 
             if($sku->stock == null){
@@ -111,7 +113,7 @@ class StockManagementService
         DB::beginTransaction();
         try{
             $sku = Sku::query()
-                ->select('id','product_id','variation_id','purchase_order_id','quantity')
+                ->select('id','product_id','variation_id','purchase_order_id','quantity','supplier_id')
                 ->with(['stock:sku_id,product_id,variation_id,quantity'])
                 ->find($barcode);
             if(! $sku){
@@ -127,6 +129,7 @@ class StockManagementService
             $item['sku_id']       = $sku->id;
             $item['product_id']   = $sku->product_id;
             $item['variation_id'] = $sku->variation_id;
+            $item['supplier_id']  = $sku->supplier_id;
             $item['quantity']     = $quantity;
 
             $this->stockDecrement($sku->id, $quantity);

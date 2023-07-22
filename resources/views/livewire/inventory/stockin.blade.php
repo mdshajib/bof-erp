@@ -43,7 +43,7 @@
                                     <h5 for="sku" class="form-label font-size-14">Enter Barcode</h5>
                                     <div class="form-group has-search">
                                         <span class="fa fa-search form-control-feedback"></span>
-                                        <input type="text" class="form-control" id="sku" name="sku" placeholder="Barcode" wire:model.defer="sku" autocomplete="off" autofocus onblur="focus();"/>
+                                        <input type="text" class="form-control" id="sku" name="sku" placeholder="Barcode" wire:model.lazy="sku" autocomplete="off" autofocus onblur="focus();"/>
                                         @error('variant_id') <span class="invalid-feedback d-block text-danger mb-3">{{ $message }}</span> @enderror
                                     </div>
                                 </div>

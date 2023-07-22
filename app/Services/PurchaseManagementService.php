@@ -111,10 +111,9 @@ class PurchaseManagementService
             $purchase_order    = PurchaseOrder::query()
                 ->select('id','purchase_number','internal_comments','order_date','gross_amount')
                 ->with([
-                    'purchase_items:purchase_order_id,product_id,variation_id,selling_price,quantity,cogs_price',
+                    'purchase_items:purchase_order_id,product_id,variation_id,supplier_id,selling_price,quantity,loan,cogs_price',
                     'purchase_items.variation:id,variation_name',
-                    'purchase_items.product:id,supplier_id',
-                    'purchase_items.product.supplier:id,name'
+                    'purchase_items.supplier:id,name'
                 ])
                 ->findOrFail($purchase_order_id);
 
@@ -135,9 +134,11 @@ class PurchaseManagementService
                     'id'                => $loop,
                     'product'           => $item->variation?->variation_name,
                     'quantity'          => $item->quantity,
+                    'loan'              => $item->loan,
                     'cogs_price'        => $item->cogs_price,
                     'selling_price'     => $item->selling_price,
-                    'supplier'          => $item->product?->supplier?->name,
+                    'supplier'          => $item?->supplier?->name,
+                    'supplier_id'       => $item?->supplier?->id,
                     'gross_amount'      => $item->cogs_price * $item->quantity,
                 ];
                 $row_section[]      = $item_row;
@@ -193,10 +194,9 @@ class PurchaseManagementService
     {
         try {
             $purchase_order = PurchaseOrder::query()->with([
-                'purchase_items:purchase_order_id,product_id,variation_id,quantity',
+                'purchase_items:purchase_order_id,product_id,variation_id,supplier_id,loan,quantity',
                 'purchase_items.variation:id,variation_name',
-                'purchase_items.product:id,supplier_id',
-                'purchase_items.product.supplier:id,name'
+                'purchase_items.supplier:id,name'
             ])->find($purchase_id);
 
             if(!$purchase_order){
@@ -226,7 +226,7 @@ class PurchaseManagementService
         try {
             DB::beginTransaction();
             $purchase_items = PurchaseItem::query()
-                ->select('product_id','variation_id','quantity','cogs_price','selling_price')
+                ->select('product_id','variation_id','quantity','cogs_price','supplier_id','loan','selling_price')
                 ->where('purchase_order_id', $purchase_id)->get();
             if(! count($purchase_items) >0){
                 throw new Exception('Purchase id not found.');
@@ -239,7 +239,9 @@ class PurchaseManagementService
                 $sku_item['purchase_order_id']   = $purchase_id;
                 $sku_item['product_id']          = $item->product_id;
                 $sku_item['variation_id']        = $item->variation_id;
+                $sku_item['supplier_id']         = $item->supplier_id;
                 $sku_item['quantity']            = $item->quantity;
+                $sku_item['loan']                = $item->loan;
                 $sku_item['cogs_price']          = $item->cogs_price;
                 $sku_item['selling_price']       = $item->selling_price;
 

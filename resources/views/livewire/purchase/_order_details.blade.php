@@ -31,6 +31,7 @@
                             <th style="width: 70px;">No.</th>
                             <th width="27%">Product Name</th>
                             <th width="25%">Supplier</th>
+                            <th width="8%">Loan</th>
                             <th width="10%">Quantity</th>
                             <th width="10%">COGS Price</th>
                             <th width="11%">Selling Price</th>
@@ -46,6 +47,13 @@
                                 <h5 class="font-size-15 mb-1"> {{ $product['product'] }} </h5>
                             </td>
                             <td> {{ $product['supplier'] }} </td>
+                            <td>
+                                @if($product['loan'])
+                                    Yes
+                                @else
+                                    -
+                                @endif
+                            </td>
                             <td> {{ $product['quantity'] }} </td>
                             <td>  {{ $product['cogs_price'] }} Tk</td>
                             <td>  {{ $product['selling_price'] }} Tk</td>

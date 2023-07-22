@@ -66,6 +66,9 @@
                         <th width="150" style="border-bottom: 1px solid #000000; height: 30px; text-align: left">
                             <div style="font-weight: bold;font-size: 13px;letter-spacing: 0.02em;text-transform: uppercase;color: #000000; margin-bottom: 12px ;">Supplier</div>
                         </th>
+                        <th width="80" style="border-bottom: 1px solid #000000; height: 30px; text-align: left">
+                            <div style="font-weight: bold;font-size: 13px;letter-spacing: 0.02em;text-transform: uppercase;color: #000000; margin-bottom: 12px ;">Loan</div>
+                        </th>
                         <th width="60" style="border-bottom: 1px solid #000000; height: 30px; text-align: right;">
                             <div style="font-weight: bold;font-size: 13px;letter-spacing: 0.02em;text-transform: uppercase;color: #000000; margin-bottom: 12px ; text-align: right;">Quantity</div>
                         </th>
@@ -83,7 +86,16 @@
                         </td>
                         <td style="border-bottom: 1px solid #000000; height: 30px;text-align: left;padding-left: 10px;padding-right: 10px;">
                             <div style="font-weight: 400;font-size: 12px;letter-spacing: 0.02em;color: #000000; padding-left: 10px;padding-top: 8px; margin-bottom: 8px ;margin-right: 5px;">
-                                {{ $purchase_item?->product?->supplier?->name }}
+                                {{ $purchase_item?->supplier?->name }}
+                            </div>
+                        </td>
+                        <td style="border-bottom: 1px solid #000000; height: 30px;text-align: left;padding-left: 10px;padding-right: 10px;">
+                            <div style="font-weight: 400;font-size: 12px;letter-spacing: 0.02em;color: #000000; padding-left: 10px;padding-top: 8px; margin-bottom: 8px ;margin-right: 5px;">
+                                @if($purchase_item->loan)
+                                    Yes
+                                @else
+                                    -
+                                @endif
                             </div>
                         </td>
                         <td style="border-bottom: 1px solid #000000; height: 30px;text-align: right;padding-left: 10px;padding-right: 10px;">

@@ -67,7 +67,9 @@ class PurchaseCreateService
                 $order_item['purchase_order_id']   = $purchase_order_id;
                 $order_item['product_id']          = $item['product_id'];
                 $order_item['variation_id']        = $item['variation_id'];
+                $order_item['supplier_id']         = $item['supplier_id'];
                 $order_item['quantity']            = $item['quantity'];
+                $order_item['loan']                = $item['loan'] ?? 0;
                 $order_item['cogs_price']          = $item['cogs_price'];
                 $order_item['selling_price']       = $item['selling_price'];
 

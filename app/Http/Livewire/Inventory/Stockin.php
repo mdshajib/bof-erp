@@ -26,11 +26,11 @@ class Stockin extends BaseComponent
             $status = (new StockManagementService())->findProductBySku($this->sku, $this->stock_type);
             if($status != null) {
                 $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Stock Operation', 'message' => $status]);
-                $this->sku = '';
             }
+            $this->sku = null;
         } catch(Exception $ex){
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Stock Error',  'message' => $ex->getMessage() ]);
-            $this->sku = '';
+            $this->sku = null;
         }
     }
     public function adjustPlus()

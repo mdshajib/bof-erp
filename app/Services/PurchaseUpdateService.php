@@ -19,8 +19,7 @@ class PurchaseUpdateService
                 ->with([
                     'purchase_items',
                     'purchase_items.variation:id,variation_name',
-                    'purchase_items.product:id,supplier_id',
-                    'purchase_items.product.supplier:id,name',
+                    'purchase_items.supplier:id,name',
                 ])
                 ->find($purchase_id);
             if(!$purchase_order){
@@ -36,9 +35,11 @@ class PurchaseUpdateService
                     'id'                  =>  $item->id,
                     'product'             => $item->variation?->variation_name,
                     'product_id'          => $item->product_id,
-                    'supplier'            => $item->product?->supplier?->name,
+                    'supplier'            => $item?->supplier?->name,
+                    'supplier_id'         => $item?->supplier?->id,
                     'variation_id'        => $item->variation_id,
                     'quantity'            => $item->quantity,
+                    'loan'                => $item->loan,
                     'selling_price'       => $item->selling_price,
                     'cogs_price'          => $item->cogs_price,
                     'gross_amount'        => $item->cogs_price *  $item->quantity,
@@ -90,7 +91,9 @@ class PurchaseUpdateService
                 $purchase_item['purchase_order_id'] = $purchase_id;
                 $purchase_item['product_id']        = $item['product_id'];
                 $purchase_item['variation_id']      = $item['variation_id'];
+                $purchase_item['supplier_id']       = $item['supplier_id'];
                 $purchase_item['quantity']          = $item['quantity'];
+                $purchase_item['loan']              = $item['loan'];
                 $purchase_item['selling_price']     = $item['selling_price'];
                 $purchase_item['cogs_price']        = $item['cogs_price'];
 

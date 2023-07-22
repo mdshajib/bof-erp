@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('outlet_id')->references('id')->on('outlets')->onDelete('Cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('Cascade');
             $table->foreignId('variation_id')->references('id')->on('product_variations')->onDelete('Cascade');
+            $table->foreignId('supplier_id')->references('id')->on('suppliers')->onDelete('Cascade');
             $table->string('sku_id')->nullable();
             $table->integer('quantity');
             $table->integer('stock_after_transaction')->default(0);

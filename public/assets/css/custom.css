@@ -718,6 +718,10 @@ input[switch]:checked+label:after {
     background-color: #d65350 !important;
 }
 
+.mt-2-7 {
+    margin-top: 0.7rem !important;
+}
+
 @keyframes zoomup {
     0%,
     100% {

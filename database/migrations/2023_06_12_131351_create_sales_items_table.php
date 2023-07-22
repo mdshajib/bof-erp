@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('sales_order_id')->references('id')->on('sales_orders')->onDelete('Cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('Cascade');
             $table->foreignId('variation_id')->nullable()->references('id')->on('product_variations')->onDelete('Cascade');
+            $table->foreignId('supplier_id')->nullable()->references('id')->on('suppliers')->onDelete('Cascade');
             $table->string('sku_id')->nullable();
             $table->float('unit_sales_price', 8, 2);
             $table->float('cogs_price', 8, 2);

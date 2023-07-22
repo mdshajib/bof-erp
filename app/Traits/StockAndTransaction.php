@@ -32,6 +32,7 @@ trait StockAndTransaction
         $transaction['outlet_id']               = $item['outlet_id'];
         $transaction['product_id']              = $item['product_id'];
         $transaction['variation_id']            = $item['variation_id'];
+        $transaction['supplier_id']             = $item['supplier_id'];
         $transaction['sku_id']                  = $item['sku_id'];
         $transaction['quantity']                = $item['quantity'];
         $transaction['stock_after_transaction'] = $current_stock ? $current_stock : 0;

@@ -72,7 +72,13 @@
                     <td> PR#{{ str_pad($transaction->sku?->purchase_order_id, 6, '0', STR_PAD_LEFT) }}</td>
                     <td> {{ $transaction->quantity }} </td>
                     <td> {{ $transaction->quantity * $transaction->sku?->cogs_price }} </td>
-                    <td> {{ $transaction->quantity * $transaction->sku?->selling_price }} </td>
+                    <td>
+                        @if($transaction->type == 'out' && $transaction->is_adjust)
+                            -
+                        @else
+                            {{ $transaction->quantity * $transaction->sku?->selling_price }}
+                        @endif
+                    </td>
                     <td>
                         @if($transaction->type == 'in')
                             <span class="badge bg-success text-white"> {{ ucwords($transaction->type) }}</span>

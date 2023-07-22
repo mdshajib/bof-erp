@@ -17,8 +17,8 @@ class Sku extends Model
 
     protected $keyType = 'string';
 
-    protected $fillable = ['id', 'product_id','variation_id', 'purchase_order_id','quantity',
-    'is_active','cogs_price','selling_price','created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['id', 'product_id','variation_id', 'purchase_order_id','supplier_id','quantity',
+    'is_active','loan','cogs_price','selling_price','created_at', 'updated_at', 'deleted_at'];
 
     protected $dates = ['deleted_at'];
 
