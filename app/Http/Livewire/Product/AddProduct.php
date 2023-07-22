@@ -6,6 +6,7 @@ use App\Http\Livewire\BaseComponent;
 use App\Models\Category;
 use App\Models\Supplier;
 use App\Services\ProductCreateService;
+use App\Services\ProductPriceCalculation;
 use Exception;
 use Livewire\WithFileUploads;
 
@@ -146,6 +147,19 @@ class AddProduct extends BaseComponent
         $variant_name = $this->product_info['title'];
 
         return $variant_name;
+    }
+
+    public function updated($name, $value)
+    {
+        $fields = explode('.', $name);
+
+        if(count($fields) > 2) {
+            $key          = $fields[1];
+            if ($fields[2] == 'cogs_price') {
+                $selling_price = (new ProductPriceCalculation())->makePrice($value);
+                $this->price_section[$key]['selling_price'] = $selling_price;
+            }
+        }
     }
 
     public function productPriceSubmit()

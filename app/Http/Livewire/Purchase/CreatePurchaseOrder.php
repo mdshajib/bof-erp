@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Purchase;
 
 use App\Http\Livewire\BaseComponent;
 use App\Services\OrderCreateService;
+use App\Services\ProductPriceCalculation;
 use App\Services\PurchaseCreateService;
 
 class CreatePurchaseOrder extends BaseComponent
@@ -77,6 +78,8 @@ class CreatePurchaseOrder extends BaseComponent
 
     private function calculatePrice($value, $key)
     {
+        $selling_price = (new ProductPriceCalculation())->makePrice($value);
+        $this->row_section[$key]['selling_price'] = $selling_price;
         $this->row_section[$key]['gross_amount'] = $this->row_section[$key]['quantity'] * $this->row_section[$key]['cogs_price'];
         $this->summaryTable();
     }

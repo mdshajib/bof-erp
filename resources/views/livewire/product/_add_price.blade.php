@@ -16,7 +16,7 @@
                     <div class="col-md-4 col-lg-4">
                         <div class="mb-2">
                             <label for="cogs_price{{ $key }}" class="form-label required">{{ __('COGS Price') }}</label>
-                            <x-form.input  type="number" wire:model.defer="price_section.{{ $key }}.cogs_price" placeholder="{{ __('Enter COGS Price') }}" id="cogs_price{{ $key }}" />
+                            <x-form.input  type="number" wire:model.lazy="price_section.{{ $key }}.cogs_price" placeholder="{{ __('Enter COGS Price') }}" id="cogs_price{{ $key }}" />
                             @error('price_section.'.$key.'.cogs_price') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>

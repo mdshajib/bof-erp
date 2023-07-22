@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Services\ProductManagementService;
+use App\Services\ProductPriceCalculation;
 use Livewire\WithFileUploads;
 use Exception;
 
@@ -160,6 +161,19 @@ class UpdateProduct extends BaseComponent
         }
         catch (Exception $ex){
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Product', 'message' => $ex->getMessage() ]);
+        }
+    }
+
+    public function updated($name, $value)
+    {
+        $fields = explode('.', $name);
+
+        if(count($fields) > 2) {
+            $key          = $fields[1];
+            if ($fields[2] == 'cogs_price') {
+                $selling_price = (new ProductPriceCalculation())->makePrice($value);
+                $this->price_section[$key]['selling_price'] = $selling_price;
+            }
         }
     }
 
