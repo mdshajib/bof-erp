@@ -16,13 +16,13 @@ class ProductPriceCalculation
             }
 
             if($cogs_price <= 1000){
-                $percentage = ($cogs_price * 25) / 100;
+                $percentage = ($cogs_price * 30) / 100;
             }
             else if($cogs_price <= 2000){
-                $percentage = ($cogs_price * 20) / 100;
+                $percentage = ($cogs_price * 25) / 100;
             }
             else if($cogs_price > 2000 ){
-                $percentage = ($cogs_price * 15) / 100;
+                $percentage = ($cogs_price * 20) / 100;
             }
             return ($cogs_price + $percentage);
         }
