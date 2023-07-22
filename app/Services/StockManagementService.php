@@ -87,7 +87,7 @@ class StockManagementService
             $item['sku_id']       = $sku->id;
             $item['product_id']   = $sku->product_id;
             $item['variation_id'] = $sku->variation_id;
-            $item['quantity']     = $sku->quantity;
+            $item['quantity']     = $quantity;
 
             if($sku->stock == null){
                 $this->createStock($item);
@@ -127,7 +127,7 @@ class StockManagementService
             $item['sku_id']       = $sku->id;
             $item['product_id']   = $sku->product_id;
             $item['variation_id'] = $sku->variation_id;
-            $item['quantity']     = $sku->quantity;
+            $item['quantity']     = $quantity;
 
             $this->stockDecrement($sku->id, $quantity);
             $this->createTransaction( $item, 'out', 1);
