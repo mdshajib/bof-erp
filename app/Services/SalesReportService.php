@@ -97,20 +97,20 @@ class SalesReportService
             $sheet->getColumnDimension('A')->setWidth(20);
             $sheet->getColumnDimension('B')->setWidth(30);
             $sheet->getColumnDimension('C')->setWidth(25);
-            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('D')->setWidth(18);
             $sheet->getColumnDimension('E')->setWidth(18);
             $sheet->getColumnDimension('F')->setWidth(18);
             $sheet->getColumnDimension('G')->setWidth(16);
-//            $sheet->getColumnDimension('H')->setWidth(16);
+            $sheet->getColumnDimension('H')->setWidth(16);
 
             $sheet->setCellValue('A1', 'Sku');
             $sheet->setCellValue('B1', 'Product');
-//            $sheet->setCellValue('C1', 'Supplier');
-            $sheet->setCellValue('C1', 'Quantity');
-            $sheet->setCellValue('D1', 'COGS Price');
-            $sheet->setCellValue('E1', 'Selling Price');
-            $sheet->setCellValue('F1', 'Profit');
-            $sheet->setCellValue('G1', 'Loss');
+            $sheet->setCellValue('C1', 'Purchase Order');
+            $sheet->setCellValue('D1', 'Quantity');
+            $sheet->setCellValue('E1', 'COGS Price');
+            $sheet->setCellValue('F1', 'Selling Price');
+            $sheet->setCellValue('G1', 'Profit');
+            $sheet->setCellValue('H1', 'Loss');
 
             $sheet->getStyle('A')->getNumberFormat()
                 ->setFormatCode('#');
@@ -144,23 +144,24 @@ class SalesReportService
 
                 $sheet->setCellValue('A'. $row, $item->sku_id );
                 $sheet->setCellValue('B'. $row, $item->variation_name);
-                $sheet->setCellValue('C'. $row, $item->quantity );
-                $sheet->setCellValue('D'. $row, $item->cogs_price * $item->quantity );
-                $sheet->setCellValue('E'. $row, $item->total_sales_price );
-                $sheet->setCellValue('F'. $row, $profit);
-                $sheet->setCellValue('G'. $row, $loss) ;
+                $sheet->setCellValue('C'. $row, 'PR#'. str_pad($item->purchase_order_id, 6, '0', STR_PAD_LEFT) );
+                $sheet->setCellValue('D'. $row, $item->quantity );
+                $sheet->setCellValue('E'. $row, $item->cogs_price * $item->quantity );
+                $sheet->setCellValue('F'. $row, $item->total_sales_price );
+                $sheet->setCellValue('G'. $row, $profit);
+                $sheet->setCellValue('H'. $row, $loss) ;
 
                 $row ++;
             }
 
             $row ++;
             $sheet->getStyle('A'. $row .':H' . $row)->applyFromArray($styleGlobal);
-            $sheet->setCellValue('B'. $row, 'Total');
-            $sheet->setCellValue('C'. $row, $total_quantity );
-            $sheet->setCellValue('D'. $row, $total_cogs_price );
-            $sheet->setCellValue('E'. $row, $total_selling_price );
-            $sheet->setCellValue('F'. $row,  $total_profit);
-            $sheet->setCellValue('G'. $row, $total_loss) ;
+            $sheet->setCellValue('C'. $row, 'Total');
+            $sheet->setCellValue('D'. $row, $total_quantity );
+            $sheet->setCellValue('E'. $row, $total_cogs_price );
+            $sheet->setCellValue('F'. $row, $total_selling_price );
+            $sheet->setCellValue('G'. $row,  $total_profit);
+            $sheet->setCellValue('H'. $row, $total_loss) ;
 
             $fileName = date('Y_m_d').'_sales_report.xlsx';
             $file_dir = 'public'.DIRECTORY_SEPARATOR.'excels'.DIRECTORY_SEPARATOR.$fileName;
