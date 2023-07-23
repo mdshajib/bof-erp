@@ -17,7 +17,9 @@ class ManageStock extends BaseComponent
     use WithBulkActions;
 
     public $filter = [
-        'product'    => ''
+        'variation_name' => null,
+        'sku'            => null,
+        'purchase_id'    => null
     ];
     public function render()
     {
@@ -34,6 +36,17 @@ class ManageStock extends BaseComponent
                 'supplier:id,name,address',
                 'sku:id,selling_price,cogs_price,purchase_order_id,loan'
             ])
+            ->when($this->filter['variation_name'], function ($q) {
+                return $q->WhereHas('variation', function ($q) {
+                    return $q->Where('variation_name', 'like', "%{$this->filter['variation_name']}%");
+                });
+            })
+            ->when($this->filter['purchase_id'], function ($q) {
+                return $q->WhereHas('sku', function ($q) {
+                    return $q->Where('purchase_order_id', 'like', "%{$this->filter['purchase_id']}%");
+                });
+            })
+            ->when($this->filter['sku'], fn ($q, $sku) => $q->where('sku_id', 'like', "%{$sku}%"))
             ->groupBy('sku_id')
             ->groupBy('outlet_id')->latest();
 

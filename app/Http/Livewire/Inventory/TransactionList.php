@@ -18,7 +18,9 @@ class TransactionList extends BaseComponent
     use WithBulkActions;
 
     public $filter = [
-        'variation_name'    => null
+        'variation_name' => null,
+        'sku'            => null,
+        'purchase_id'    => null
     ];
 
     public function render()
@@ -43,7 +45,14 @@ class TransactionList extends BaseComponent
                 return $q->WhereHas('variation', function ($q) {
                     return $q->Where('variation_name', 'like', "%{$this->filter['variation_name']}%");
                 });
-            } )->latest();
+            } )
+            ->when($this->filter['sku'], fn ($q, $sku) => $q->where('sku_id', 'like', "%{$sku}%"))
+            ->when($this->filter['purchase_id'], function ($q) {
+                return $q->WhereHas('sku', function ($q) {
+                    return $q->Where('purchase_order_id', 'like', "%{$this->filter['purchase_id']}%");
+                });
+            } )
+            ->latest();
 
         return $this->applySorting($query);
     }

@@ -42,8 +42,9 @@
 
                     <x-offcanvas id="offcanvasFilter" size="sm" title="Search">
 
-                        <x-form.input id="txt_title_filter" wire:model.defer="filter.product" placeholder="{{ __('Product') }}" />
-
+                        <x-form.input id="txt_title_filter" wire:model.defer="filter.variation_name" placeholder="{{ __('Product') }}" />
+                        <x-form.input id="txt_title_filter" wire:model.defer="filter.sku" placeholder="{{ __('SKU') }}" />
+                        <x-form.input id="txt_title_filter" wire:model.defer="filter.purchase_id" placeholder="{{ __('Purchase No') }}" />
                         <button type="button" wire:click.prevent="search" class="btn btn-primary">Search</button>
                         <button type="button" wire:click.prevent="resetSearch" class="btn btn-link">Reset</button>
 
