@@ -47,7 +47,8 @@ class SpecialContact extends BaseComponent
         $query = Contact::query()
             ->where('special' , 1)
             ->when($this->filter['name'], fn ($q, $name) => $q->where('name', 'like', "%{$name}%"))
-            ->when($this->filter['phone'], fn ($q, $phone) => $q->where('phone', 'like', "%{$phone}%"));
+            ->when($this->filter['phone'], fn ($q, $phone) => $q->where('phone', 'like', "%{$phone}%"))
+            ->latest();
 
         return $this->applySorting($query);
     }

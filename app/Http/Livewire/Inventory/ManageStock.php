@@ -35,7 +35,7 @@ class ManageStock extends BaseComponent
                 'sku:id,selling_price,cogs_price,purchase_order_id,loan'
             ])
             ->groupBy('sku_id')
-            ->groupBy('outlet_id');
+            ->groupBy('outlet_id')->latest();
 
         return $this->applySorting($query);
     }

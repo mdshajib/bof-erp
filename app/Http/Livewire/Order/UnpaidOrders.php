@@ -39,7 +39,7 @@ class UnpaidOrders extends BaseComponent
             ->with(['user:id,first_name,last_name'])
             ->select('id','order_number','order_date','paid_amount','due_amount','gross_amount','net_payment_amount','generated_by','is_paid')
             ->when($this->filter['order_number'], fn ($q, $order_number) => $q->where('order_number', 'like', "%{$order_number}%"))
-            ->where('is_paid', 0);
+            ->where('is_paid', 0)->latest();
 
         return $this->applySorting($query);
     }

@@ -22,6 +22,7 @@ use App\Http\Livewire\Purchase\ManagePurchase;
 use App\Http\Livewire\Purchase\OpenPurchaseOrders;
 use App\Http\Livewire\Purchase\ConfirmedPurchaseOrders;
 use App\Http\Livewire\Purchase\UpdatePurchaseOrder;
+use App\Http\Livewire\Purchase\PurchaseOrderView;
 use \App\Http\Livewire\Inventory\TransactionList;
 use \App\Http\Livewire\Reports\SalesReport;
 use \App\Http\Livewire\NewPos\Pos;
@@ -63,6 +64,7 @@ Route::group(['middleware'=> ['auth']], function () {
     Route::get('purchases/create', CreatePurchaseOrder::class)->name('purchase.create');
     Route::get('purchases/open', OpenPurchaseOrders::class)->name('purchase.open');
     Route::get('purchases/confirmed', ConfirmedPurchaseOrders::class)->name('purchase.confirmed');
+    Route::get('purchases/{purchase_id}', PurchaseOrderView::class)->name('purchase.view');
     Route::get('purchases/{purchase_id}/edit', UpdatePurchaseOrder::class)->name('purchase.edit');
 //    Inventory Routes
     Route::get('/inventory', ManageStock::class)->name('inventory.manage');

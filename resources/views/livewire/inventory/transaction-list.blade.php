@@ -69,7 +69,11 @@
                         {{ $transaction->variation_name }}
                     </td>
                     <td> {{ $transaction->sku_id }} </td>
-                    <td> PR#{{ str_pad($transaction->sku?->purchase_order_id, 6, '0', STR_PAD_LEFT) }}</td>
+                    <td>
+                        <a href="{{ route('purchase.view', ['purchase_id' => $transaction->sku?->purchase_order_id]) }}">
+                            PR#{{ str_pad($transaction->sku?->purchase_order_id, 6, '0', STR_PAD_LEFT) }}
+                        </a>
+                    </td>
                     <td> {{ $transaction->quantity }} </td>
                     <td> {{ $transaction->quantity * $transaction->sku?->cogs_price }} </td>
                     <td>

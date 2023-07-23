@@ -40,7 +40,7 @@ class ConfirmedPurchaseOrders extends BaseComponent
             ->when($this->filter['purchase_number'], fn ($q, $purchase_number) => $q->where('purchase_number', 'like', "%{$purchase_number}%"))
             ->where([
                 'is_print' => 1,'is_confirmed' => 1, 'price_updated' => 1
-            ]);
+            ])->latest();
 
         return $this->applySorting($query);
     }

@@ -34,7 +34,8 @@ class LoanProducts extends BaseComponent
                 'supplier:id,name'
             ])
             ->where('loan', 1)
-            ->when($this->filter['purchase_id'], fn ($q, $purchase_id)  => $q->where('purchase_order_id', 'like', "%{$purchase_id}%"));
+            ->when($this->filter['purchase_id'], fn ($q, $purchase_id)  => $q->where('purchase_order_id', 'like', "%{$purchase_id}%"))
+            ->latest();
 
         return $this->applySorting($query);
     }

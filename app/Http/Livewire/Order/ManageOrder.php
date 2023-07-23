@@ -38,7 +38,8 @@ class ManageOrder extends BaseComponent
         $query = SalesOrder::query()
             ->with(['user:id,first_name,last_name'])
             ->select('id','order_number','order_date','paid_amount','due_amount','gross_amount','net_payment_amount','generated_by','is_paid')
-            ->when($this->filter['order_number'], fn ($q, $order_number) => $q->where('order_number', 'like', "%{$order_number}%"));
+            ->when($this->filter['order_number'], fn ($q, $order_number) => $q->where('order_number', 'like', "%{$order_number}%"))
+            ->latest();
 
         return $this->applySorting($query);
     }

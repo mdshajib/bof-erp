@@ -49,6 +49,7 @@
         <x-slot name="head">
             <tr>
                 <x-table.th>Product</x-table.th>
+                <x-table.th>PO</x-table.th>
                 <x-table.th>SKU</x-table.th>
                 <x-table.th>Supplier</x-table.th>
                 <x-table.th>Quantity</x-table.th>
@@ -60,6 +61,11 @@
             @forelse($products as $product)
                 <tr>
                     <td>{{ $product?->variation->variation_name }}</td>
+                    <td>
+                        <a href="{{ route('purchase.view', ['purchase_id' => $product->purchase_order_id]) }}">
+                            PR#{{ str_pad($product->purchase_order_id, 6, '0', STR_PAD_LEFT) }}
+                        </a>
+                    </td>
                     <td>{{ $product->id }}</td>
                     <td>{{ $product?->supplier?->name }}</td>
                     <td>{{ $product->quantity }}</td>

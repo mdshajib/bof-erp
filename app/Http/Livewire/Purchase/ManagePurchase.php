@@ -32,7 +32,8 @@ class ManagePurchase extends BaseComponent
     {
         $query = PurchaseOrder::query()
             ->with(['user:id,first_name,last_name'])
-            ->when($this->filter['purchase_number'], fn ($q, $purchase_number) => $q->where('purchase_number', 'like', "%{$purchase_number}%"));
+            ->when($this->filter['purchase_number'], fn ($q, $purchase_number) => $q->where('purchase_number', 'like', "%{$purchase_number}%"))
+            ->latest();
 
         return $this->applySorting($query);
     }

@@ -72,6 +72,7 @@ class CreateOrder extends BaseComponent
                 'product'             => $sku_with_item->variation->variation_name,
                 'product_id'          => $sku_with_item->product_id,
                 'variation_id'        => $sku_with_item->variation_id,
+                'supplier_id'         => $sku_with_item->supplier_id,
                 'sku_id'              => $sku_with_item->id,
                 'quantity'            => 1,
                 'stock'               => $sku_with_item->stock->quantity,

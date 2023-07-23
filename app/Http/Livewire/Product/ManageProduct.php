@@ -45,7 +45,8 @@ class ManageProduct extends BaseComponent
                 'category:id,name'
             ])
             ->when($this->filter['product'], fn ($q, $product)  => $q->where('title', 'like', "%{$product}%"))
-            ->when($this->filter['category'], fn ($q,$category) => $q->where('category_id', '=', $this->filter['category']));
+            ->when($this->filter['category'], fn ($q,$category) => $q->where('category_id', '=', $this->filter['category']))
+            ->latest();
 
         return $this->applySorting($query);
     }

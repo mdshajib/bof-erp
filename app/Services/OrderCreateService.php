@@ -20,7 +20,7 @@ class OrderCreateService
         try
         {
             $sku_with_item = Sku::query()
-                ->select('id','variation_id','product_id','cogs_price','selling_price')
+                ->select('id','variation_id','product_id','cogs_price','selling_price','supplier_id')
                 ->with([
                     'variation:id,variation_name,low_quantity_alert',
                     'stock:sku_id,quantity'
@@ -55,7 +55,7 @@ class OrderCreateService
         try
         {
             $sku_with_item = Sku::query()
-                ->select('id','variation_id','product_id','cogs_price','selling_price')
+                ->select('id','variation_id','product_id','cogs_price','selling_price','supplier_id')
                 ->with([
                     'variation:id,variation_name,low_quantity_alert',
                     'stock:sku_id,quantity'

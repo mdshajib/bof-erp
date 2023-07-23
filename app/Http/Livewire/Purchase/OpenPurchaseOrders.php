@@ -43,7 +43,7 @@ class OpenPurchaseOrders extends BaseComponent
             ->when($this->filter['purchase_number'], fn ($q, $purchase_number) => $q->where('purchase_number', 'like', "%{$purchase_number}%"))
             ->where([
                 'is_confirmed' => 0,
-            ]);
+            ])->latest();
 
         return $this->applySorting($query);
     }

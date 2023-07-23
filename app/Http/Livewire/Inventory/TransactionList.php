@@ -43,7 +43,7 @@ class TransactionList extends BaseComponent
                 return $q->WhereHas('variation', function ($q) {
                     return $q->Where('variation_name', 'like', "%{$this->filter['variation_name']}%");
                 });
-            } );
+            } )->latest();
 
         return $this->applySorting($query);
     }
