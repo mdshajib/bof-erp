@@ -112,6 +112,7 @@ class ManageSupplier extends BaseComponent
         $rules = [
             'supplier.name'    => 'required',
             'supplier.address' => 'required',
+            'supplier.phone'   => 'nullable|numeric',
         ];
 
         $messages = [

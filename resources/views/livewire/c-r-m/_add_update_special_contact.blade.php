@@ -7,6 +7,7 @@
      >
 
          <x-form.input
+             required="required"
             type="text"
             wire:model.defer='contact.name'
             id="name"
@@ -16,6 +17,7 @@
         />
 
         <x-form.input
+            required="required"
             type="text"
             wire:model.defer='contact.phone'
             id="txt_phone"

@@ -87,11 +87,13 @@ class OrderCreateService
     {
         DB::beginTransaction();
         try {
+            $contact_info = null;
+            if($order_payload['phone'] != null) {
+                $contact['name']  = $order_payload['name'] ?? null;
+                $contact['phone'] = $order_payload['phone'] ?? null;
 
-            $contact['name']  = $order_payload['name'];
-            $contact['phone'] = $order_payload['phone'];
-
-            $contact_info = (new ContactService())->updateOrCreateContact($contact);
+                $contact_info = (new ContactService())->updateOrCreateContact($contact);
+            }
 
             $sales_order                     = new SalesOrder();
             if($contact_info){

@@ -58,8 +58,8 @@
             <td>
                 <table width="100%" cellpadding="0" cellspacing="0" border="0">
                     <tr> <td>Bill To </td> <td> </td> <td></td></tr>
-                    <tr> <td>Customer Name</td> <td> : </td> <td> {{ $sales_order?->customer->name }} </td></tr>
-                    <tr> <td>Phone To </td> <td> : </td> <td>  {{ $sales_order?->customer->phone }} </td></tr>
+                    <tr> <td>Customer Name</td> <td> : </td> <td> {{ $sales_order?->customer?->name }} </td></tr>
+                    <tr> <td>Phone To </td> <td> : </td> <td>  {{ $sales_order?->customer?->phone }} </td></tr>
                 </table>
             </td>
             <td width="200"></td>

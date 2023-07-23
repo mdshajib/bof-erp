@@ -7,6 +7,7 @@
      >
 
          <x-form.input
+            required="required"
             type="text"
             wire:model.defer='first_name'
             id="txt_first_name"
@@ -16,6 +17,7 @@
         />
 
         <x-form.input
+            required="required"
             type="text"
             wire:model.defer='last_name'
             id="txt_last_name"
@@ -24,28 +26,31 @@
             :error="$errors->first('last_name')"
         />
             @if (!$user_id)
-            <x-form.input
-                        type="email"
-                        wire:model.defer='email'
-                        id="txt_email"
-                        label="{{__('Email')}}"
-                        placeholder="{{__('Email')}}"
-                        :error="$errors->first('email')"
-                    />
+                <x-form.input
+                    required="required"
+                    type="email"
+                    wire:model.defer='email'
+                    id="txt_email"
+                    label="{{__('Email')}}"
+                    placeholder="{{__('Email')}}"
+                    :error="$errors->first('email')"
+                />
             @else
-            <x-form.input
-                        type="email"
-                        wire:model.defer='email'
-                        id="txt_email"
-                        label="{{__('Email')}}"
-                        placeholder="{{__('Email')}}"
-                        :error="$errors->first('email')" readonly
+                <x-form.input
+                    required="required"
+                    type="email"
+                    wire:model.defer='email'
+                    id="txt_email"
+                    label="{{__('Email')}}"
+                    placeholder="{{__('Email')}}"
+                    :error="$errors->first('email')" readonly
                     />
             @endif
 
 
         @if(!$user_id)
         <x-form.input
+            required="required"
             type="password"
             wire:model.defer='password'
             id="txt_pasword"
@@ -57,7 +62,7 @@
         @if($user_id == auth()->user()->id)
 
         @else
-        <x-form.select wire:model.defer='role' :error="$errors->first('role')" id="txt_role" label="{{ __('Role') }}">
+        <x-form.select wire:model.defer='role' required="required" :error="$errors->first('role')" id="txt_role" label="{{ __('Role') }}">
             <option value="">-Select Role-</option>
             @foreach($roles as $role)
             <option value="{{ $role->name }}">{{ ucfirst($role->name) }}</option>

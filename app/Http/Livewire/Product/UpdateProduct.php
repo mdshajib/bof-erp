@@ -151,6 +151,11 @@ class UpdateProduct extends BaseComponent
     public function UpdateVariationSubmit()
     {
         try {
+            $rules = [
+                'variation_section.*.low_quantity_alert'    => 'required|numeric|gt:0',
+            ];
+
+            $this->validate($rules);
             $status = (new ProductManagementService())->updateVariation($this->variation_section);
             if ($status) {
                 $this->currentStep = 3;
@@ -180,6 +185,11 @@ class UpdateProduct extends BaseComponent
     public function UpdatePriceSubmit()
     {
         try {
+            $rules = [
+                'price_section.*.cogs_price'    => 'required|numeric|gt:0',
+                'price_section.*.selling_price' => 'required|numeric|gt:0',
+            ];
+            $this->validate($rules);
             $status = (new ProductManagementService())->updatePrice($this->price_section);
             if ($status) {
                 $this->currentStep = 4;

@@ -115,7 +115,7 @@ class AddProduct extends BaseComponent
     {
         try {
             $rules = [
-                'variation_section.*.low_quantity_alert'    => 'required',
+                'variation_section.*.low_quantity_alert'    => 'required|numeric|gt:0',
             ];
 
             $this->validate($rules);
@@ -166,8 +166,8 @@ class AddProduct extends BaseComponent
     {
         try {
                 $rules = [
-                    'price_section.*.cogs_price'     => 'required',
-                    "price_section.*.selling_price"  => 'required',
+                    'price_section.*.cogs_price'     => 'required|numeric|gt:0',
+                    "price_section.*.selling_price"  => 'required|numeric|gt:0',
                 ];
 
                 $this->validate($rules);

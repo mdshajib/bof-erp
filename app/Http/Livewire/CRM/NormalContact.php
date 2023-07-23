@@ -91,7 +91,7 @@ class NormalContact extends BaseComponent
 
             if (! $this->contact_id) {
                 $rules['contact.email']    = 'nullable|email|unique:contacts,email,NULL,id,deleted_at,NULL';
-                $rules['contact.phone']    = 'required|unique:contacts,phone,NULL,id,deleted_at,NULL';
+                $rules['contact.phone']    = 'required|numeric|unique:contacts,phone,NULL,id,deleted_at,NULL';
                 $this->validate($rules);
 
                 $status = (new ContactService())->save($this->contact);
@@ -99,7 +99,7 @@ class NormalContact extends BaseComponent
                     $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Contact Create', 'message' => 'Contact create successfully']);
                 }
             } else {
-                $rules['contact.phone']    = 'required|unique:contacts,phone,'.$this->contact_id.',id,deleted_at,NULL';
+                $rules['contact.phone']    = 'required|numeric|unique:contacts,phone,'.$this->contact_id.',id,deleted_at,NULL';
                 $rules['contact.email']    = 'nullable|email|unique:contacts,email,'.$this->contact_id.',id,deleted_at,NULL';
 
                 $this->validate($rules);
