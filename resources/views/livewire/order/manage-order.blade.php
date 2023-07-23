@@ -98,6 +98,10 @@
                         <button wire:click.prevent = "printOrder({{ $order->id }})" class="btn btn-sm btn-primary me-2 px-3">
                             <i class="fas fa-print"></i>
                         </button>
+
+                        <button wire:click.prevent = "invoice({{ $order->id }})" class="btn btn-sm btn-secondary me-2 px-3">
+                            <i class="fas fa-file"></i>
+                        </button>
                     </td>
                     <td>
                         <button wire:click="OrderView({{ $order->id }})" class="btn btn-secondary btn-sm"><i class="fa fa-eye fa-color-primary"></i></button>
@@ -115,6 +119,7 @@
             <div class="col-sm-12 col-md-7">{{ $orders->links() }}</div>
         </div>
         @include('livewire.order._order_details')
+        @include('livewire.preview.preview')
 {{--        @include('livewire.x-loading')--}}
     <x-notify/>
 </div>

@@ -18,6 +18,7 @@ class ManageOrder extends BaseComponent
     use WithSorting;
     use WithBulkActions;
 
+    public $order_report_name;
     public $order_number;
     public $view_row_section = [];
     public $order_summary    = [];
@@ -83,6 +84,18 @@ class ManageOrder extends BaseComponent
     {
         try {
             return (new ThermalPrintService())->print($order_id);
+        }
+        catch(\Exception $ex) {
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
+        }
+    }
+
+    public function invoice($order_id)
+    {
+        try {
+            $invoice_url = (new OrderManagementService())->invoicePrint($order_id);
+            $this->order_report_name = url($invoice_url);
+            $this->dispatchBrowserEvent('openOrderReportPreviewModal');
         }
         catch(\Exception $ex) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Error', 'message' => $ex->getMessage() ]);
