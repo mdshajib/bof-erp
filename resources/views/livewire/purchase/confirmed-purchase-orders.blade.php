@@ -84,7 +84,7 @@
                                 <button class="btn btn-sm btn-primary btn-rounded" wire:click.prevent="generateBarcode({{$order->id}})">
                                     Generate Barcode
                                 </button>
-                                <button class="btn btn-sm btn-warning btn-rounded" wire:click.prevent="markAsOpen({{$order->id}})">
+                                <button class="btn btn-sm btn-warning btn-rounded mt-1" wire:click.prevent="markAsOpen({{$order->id}})">
                                     Make as Open
                                 </button>
                             @endif

@@ -67,7 +67,7 @@ class AddProduct extends BaseComponent
             'supplier'     => null,
             'description'  => null,
             'path'         => null,
-            'type'         => null,
+            'type'         => 'finished-product',
         ];
         $this->price_section = [];
 

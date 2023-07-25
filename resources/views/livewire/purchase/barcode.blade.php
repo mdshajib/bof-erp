@@ -69,9 +69,15 @@
         <div class="block">
             <div class="card">
                 @foreach($purchase_items as $key => $item)
-                    @php $loop = 1; @endphp
+                    @php
+                        $loop = 1;
+                        $length = $item->quantity;
+                        if($item->unit == 'yard'){
+                            $length = 1;
+                        }
+                    @endphp
                     <p style="font-size: 10px;">{{ $item->variation_name }}</p>
-                    @while($loop <= $item->quantity)
+                    @while($loop <= $length)
                         <div style="width: 180px;padding: 10px 3px; float: left;border:1px solid #dedede;">
                             <table border="0">
                                 <tr>

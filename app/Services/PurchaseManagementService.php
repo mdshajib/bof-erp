@@ -19,7 +19,7 @@ class PurchaseManagementService
         try
         {
             $purchase_items = Sku::query()
-                ->select('id','variation_id','selling_price','quantity')
+                ->select('id','variation_id','selling_price','quantity','unit')
                 ->addSelect([
                     'variation_name' => ProductVariation::select('variation_name')->whereColumn('skus.variation_id','product_variations.id')
                 ])
@@ -226,13 +226,14 @@ class PurchaseManagementService
         try {
             DB::beginTransaction();
             $purchase_items = PurchaseItem::query()
+                ->with(['product:id,type'])
                 ->select('product_id','variation_id','quantity','cogs_price','supplier_id','loan','selling_price')
                 ->where('purchase_order_id', $purchase_id)->get();
             if(! count($purchase_items) >0){
                 throw new Exception('Purchase id not found.');
             }
             foreach ($purchase_items as $item){
-
+                $type = 'pcs';
                 $sku = $this->generateSKU($purchase_id, $item->variation_id);
                 $sku_item = [];
                 $sku_item['id']                  = $sku;
@@ -241,6 +242,10 @@ class PurchaseManagementService
                 $sku_item['variation_id']        = $item->variation_id;
                 $sku_item['supplier_id']         = $item->supplier_id;
                 $sku_item['quantity']            = $item->quantity;
+                if($item?->product?->type == 'raw-material'){
+                    $type = 'yard';
+                }
+                $sku_item['unit']                = $type;
                 $sku_item['loan']                = $item->loan;
                 $sku_item['cogs_price']          = $item->cogs_price;
                 $sku_item['selling_price']       = $item->selling_price;
