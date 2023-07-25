@@ -40,8 +40,8 @@
                                 <th>SKU</th>
                                 <th>Purchase Order</th>
                                 <th>Quantity</th>
-                                <th>COGS Price</th>
-                                <th>Selling Price</th>
+                                <th>Total COGS Price | COGS Price</th>
+                                <th>Total Selling Price | Selling Price</th>
                                 <th>Profit</th>
                                 <th>Loss</th>
                             </tr>
@@ -68,8 +68,8 @@
                                         </a>
                                     </td>
                                     <td>{{ $item['quantity'] }}</td>
-                                    <td>{{ $item['cogs_price'] * $item['quantity'] }} / {{ $item['cogs_price'] }}</td>
-                                    <td>{{ $item['total_sales_price'] }} / {{ $item['unit_sales_price'] }}</td>
+                                    <td>{{ $item['cogs_price'] * $item['quantity'] }} | {{ $item['cogs_price'] }}</td>
+                                    <td>{{ $item['total_sales_price'] }} | {{ $item['unit_sales_price'] }}</td>
                                     <td>{{ $profit }}</td>
                                     <td>{{ $loss }}</td>
                                 </tr>

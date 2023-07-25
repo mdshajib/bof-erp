@@ -77,6 +77,7 @@ class CreateOrder extends BaseComponent
                 'quantity'            => 1,
                 'stock'               => $sku_with_item->stock->quantity,
                 'cogs_price'          => $sku_with_item->cogs_price,
+                'selling_price'      => $sku_with_item->selling_price,
                 'unit_price'          => $this->is_special ? $sku_with_item->cogs_price : $sku_with_item->selling_price,
                 'discount'            => 0,
                 'applied_discount_id' => null,
@@ -267,22 +268,23 @@ class CreateOrder extends BaseComponent
     public function updatedPhone($phone)
     {
         $this->is_special = false;
+        $this->name       = null;
         $contact = (new ContactService())->contactFindByPhone($phone);
         if($contact){
             $this->name = $contact->name;
             if($contact->special){
                 $this->is_special = true;
-                $this->reCalculateForSpecialContact();
             }
         }
+        $this->reCalculateForSpecialContact($this->is_special);
     }
 
-    private function reCalculateForSpecialContact()
+    private function reCalculateForSpecialContact($is_special = false)
     {
         try {
             foreach ($this->row_section as $key => $row_section){
-                $this->row_section[$key]['unit_price']        = $row_section['cogs_price'];
-                $this->row_section[$key]['gross_amount']      = $row_section['quantity'] * $row_section['cogs_price'];
+                $this->row_section[$key]['unit_price']        = $is_special ? $row_section['cogs_price'] : $row_section['selling_price'];
+                $this->row_section[$key]['gross_amount']      = $is_special ? $row_section['quantity'] * $row_section['cogs_price'] : $row_section['quantity'] * $row_section['selling_price'];
                 $this->row_section[$key]['total_discount']    = $row_section['quantity'] * $row_section['discount'];
                 $this->row_section[$key]['total_sales_price'] = $this->row_section[$key]['gross_amount'] - $this->row_section[$key]['total_discount'];
             }

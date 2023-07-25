@@ -66,6 +66,7 @@
                                     <tr>
                                         <th width="27%">Product Name</th>
                                         <th width="25%">Supplier</th>
+                                        <th width="5%">Loan</th>
                                         <th width="10%">Quantity</th>
                                         <th width="10%">COGS Price</th>
                                         <th width="11%">Selling Price</th>
