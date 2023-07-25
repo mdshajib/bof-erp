@@ -68,8 +68,8 @@
                                         </a>
                                     </td>
                                     <td>{{ $item['quantity'] }}</td>
-                                    <td>{{ $item['cogs_price'] * $item['quantity'] }}</td>
-                                    <td>{{ $item['total_sales_price'] }}</td>
+                                    <td>{{ $item['cogs_price'] * $item['quantity'] }} / {{ $item['cogs_price'] }}</td>
+                                    <td>{{ $item['total_sales_price'] }} / {{ $item['unit_sales_price'] }}</td>
                                     <td>{{ $profit }}</td>
                                     <td>{{ $loss }}</td>
                                 </tr>

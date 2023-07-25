@@ -86,8 +86,8 @@
                         @endif
                     </td>
                     <td> {{ $stock->quantity }} </td>
-                    <td> {{ $stock->quantity * $stock->sku?->cogs_price }} </td>
-                    <td> {{ $stock->quantity * $stock->sku?->selling_price }} </td>
+                    <td> {{ $stock->quantity * $stock->sku?->cogs_price }} / {{ $stock->sku?->cogs_price }}</td>
+                    <td> {{ $stock->quantity * $stock->sku?->selling_price }} / {{  $stock->sku?->selling_price }}</td>
                     <td>
                         <div class="ms-2">
                             {!! DNS1D::getBarcodeHTML($stock->sku_id, 'C128',1,30,'black') !!}

@@ -77,12 +77,12 @@
                         </a>
                     </td>
                     <td> {{ $transaction->quantity }} </td>
-                    <td> {{ $transaction->quantity * $transaction->sku?->cogs_price }} </td>
+                    <td> {{ $transaction->quantity * $transaction->sku?->cogs_price }} / {{  $transaction->sku?->cogs_price }}</td>
                     <td>
                         @if($transaction->type == 'out' && $transaction->is_adjust)
                             -
                         @else
-                            {{ $transaction->quantity * $transaction->sku?->selling_price }}
+                            {{ $transaction->quantity * $transaction->sku?->selling_price }} / {{ $transaction->sku?->selling_price }}
                         @endif
                     </td>
                     <td>
