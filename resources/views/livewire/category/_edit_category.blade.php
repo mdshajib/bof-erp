@@ -34,7 +34,6 @@
                     <select id="type" class="form-control" wire:model.defer="type">
                         <option value="ready-made">Ready Made</option>
                         <option value="made-in-house">Made In House</option>
-                        <option value="made-in-house">Made In House</option>
                         <option value="raw-material">Raw Material</option>
                     </select>
 
