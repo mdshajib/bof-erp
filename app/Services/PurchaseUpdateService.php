@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ProductVariation;
 use App\Models\PurchaseItem;
 use App\Models\PurchaseOrder;
 use Carbon\Carbon;
@@ -98,6 +99,10 @@ class PurchaseUpdateService
                 $purchase_item['cogs_price']        = $item['cogs_price'];
 
                 PurchaseItem::updateOrCreate(['id' => $item['id']], $purchase_item);
+
+                if($order_payload['amount_confirmed']){
+                    $this->updateLatestVariationPrice($item['variation_id'], $item['cogs_price'], $item['selling_price']);
+                }
             }
 
             $this->deletePurchaseItems($order_payload['delete_item_ids']);
@@ -107,6 +112,13 @@ class PurchaseUpdateService
             throw $ex;
         }
 
+    }
+
+    private function updateLatestVariationPrice($variation_id, $cogs_price, $selling_price)
+    {
+        return ProductVariation::query()
+            ->where('id', $variation_id)
+            ->update(['cogs_price' => $cogs_price, 'selling_price' => $selling_price]);
     }
 
     private function deletePurchaseItems($delete_item_ids): bool

@@ -7,7 +7,7 @@
         {{ $row_section[$key]['supplier'] }}
     </td>
     <td>
-        <x-form.check class="mt-2-7 p-2" wire:model.lazy="row_section.{{ $key }}.loan" id="txt_active"/>
+        <x-form.check class="mt-2-7 p-2" wire:model.lazy="row_section.{{ $key }}.loan" id="txt_loan"/>
         @error('row_section.'.$key.'.loan')<div class="text-danger order-table-height-22"> {{ $message }} </div> @enderror
     </td>
 	<td>
