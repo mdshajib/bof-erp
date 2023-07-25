@@ -50,4 +50,9 @@ class Sku extends Model
         return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
     }
 
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class, 'sku_id', 'id');
+    }
+
 }

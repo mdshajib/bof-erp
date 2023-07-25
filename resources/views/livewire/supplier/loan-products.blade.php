@@ -53,12 +53,21 @@
                 <x-table.th>SKU</x-table.th>
                 <x-table.th>Supplier</x-table.th>
                 <x-table.th>Quantity</x-table.th>
-                <x-table.th>COGS Price</x-table.th>
-                <x-table.th>Selling Price</x-table.th>
+                <x-table.th>Total COGS Price | COGS Price</x-table.th>
+                <x-table.th>Total Selling Price | Selling Price</x-table.th>
+                <x-table.th>Return</x-table.th>
+                <x-table.th>To be Pay</x-table.th>
+                <x-table.th>Status</x-table.th>
             </tr>
         </x-slot>
         <x-slot name="body">
             @forelse($products as $product)
+                @php
+                    $to_be_pay = $product?->quantity * $product?->cogs_price;
+                    if($product?->transaction_sum_quantity != null){
+                        $to_be_pay = $to_be_pay - $product?->cogs_price * $product?->transaction_sum_quantity;
+                    }
+                @endphp
                 <tr>
                     <td>{{ $product?->variation->variation_name }}</td>
                     <td>
@@ -69,8 +78,11 @@
                     <td>{{ $product->id }}</td>
                     <td>{{ $product?->supplier?->name }}</td>
                     <td>{{ $product?->quantity }}</td>
-                    <td>{{ $product?->quantity * $product?->cogs_price }} / {{ $product?->cogs_price }}</td>
-                    <td>{{ $product?->quantity * $product?->selling_price }} / {{ $product?->selling_price }}</td>
+                    <td>{{ $product?->quantity * $product?->cogs_price }} | {{ $product?->cogs_price }}</td>
+                    <td>{{ $product?->quantity * $product?->selling_price }} | {{ $product?->selling_price }}</td>
+                    <td>{{ $product?->transaction_sum_quantity }}</td>
+                    <td>{{ $to_be_pay }}</td>
+                    <td> &#9989;</td>
                 </tr>
             @empty
                 <tr>

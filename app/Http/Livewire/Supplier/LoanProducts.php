@@ -32,7 +32,9 @@ class LoanProducts extends BaseComponent
             ->with([
                 'variation:id,variation_name',
                 'supplier:id,name'
-            ])
+            ])->withSum([
+                'transaction' => fn($q) => $q->where('type', 'out')->where('is_adjust', 1)
+            ],'quantity')
             ->where('loan', 1)
             ->when($this->filter['purchase_id'], fn ($q, $purchase_id)  => $q->where('purchase_order_id', 'like', "%{$purchase_id}%"))
             ->latest();
