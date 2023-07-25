@@ -68,9 +68,9 @@
                     </td>
                     <td>{{ $product->id }}</td>
                     <td>{{ $product?->supplier?->name }}</td>
-                    <td>{{ $product->quantity }}</td>
-                    <td>{{ $product->quantity * $product->cogs_price }}</td>
-                    <td>{{ $product->quantity * $product->selling_price }}</td>
+                    <td>{{ $product?->quantity }}</td>
+                    <td>{{ $product?->quantity * $product?->cogs_price }} / {{ $product?->cogs_price }}</td>
+                    <td>{{ $product?->quantity * $product?->selling_price }} / {{ $product?->selling_price }}</td>
                 </tr>
             @empty
                 <tr>
