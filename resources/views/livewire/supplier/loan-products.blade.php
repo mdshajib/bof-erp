@@ -82,7 +82,13 @@
                     <td>{{ $product?->quantity * $product?->selling_price }} | {{ $product?->selling_price }}</td>
                     <td>{{ $product?->transaction_sum_quantity }}</td>
                     <td>{{ $to_be_pay }}</td>
-                    <td> &#9989;</td>
+                    <td>
+                        @if($product?->loan_paid)
+                            &#9989;
+                        @else
+                            <button class="btn btn-primary btn-sm" wire:click.prevent="pidNow({{ $product->id }})">Paid Now</button>
+                        @endif
+                    </td>
                 </tr>
             @empty
                 <tr>
