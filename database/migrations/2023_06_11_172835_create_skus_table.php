@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('quantity')->default(0);
             $table->float('selling_price', 8, 2)->default(0);
             $table->float('cogs_price', 8, 2)->default(0);
+            $table->string('unit')->nullable();
             $table->tinyInteger('loan')->default(0);
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
