@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Supplier;
 
 use App\Http\Livewire\BaseComponent;
 use App\Models\Sku;
+use App\Services\SkuManagementService;
 use App\Traits\WithBulkActions;
 use App\Traits\WithCachedRows;
 use App\Traits\WithPerPagePagination;
@@ -61,5 +62,17 @@ class LoanProducts extends BaseComponent
     {
         $this->reset('filter');
         $this->hideOffCanvas();
+    }
+
+    public function pidNow($sku)
+    {
+        try {
+            $status = (new SkuManagementService())->paidLoanProduct($sku);
+            if ($status) {
+                $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Update loan', 'message' => 'Loan Paid success']);
+            }
+        }catch (\Exception $ex){
+            $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Update loan',  'message' => $ex->getMessage() ]);
+        }
     }
 }
