@@ -101,6 +101,9 @@
                         <button wire:click.prevent = "invoice({{ $order->id }})" class="btn btn-sm btn-secondary me-2 px-3">
                             <i class="fas fa-file"></i>
                         </button>
+                        <a href="{{ route('order.edit', ['order_id' => $order->id]) }}" class="btn btn-sm btn-secondary px-3 mt-1">
+                            <i class="fas fa-edit"></i>
+                        </a>
                     </td>
                     <td>
                         <button wire:click="OrderView({{ $order->id }})" class="btn btn-secondary btn-sm"><i class="fa fa-eye fa-color-primary"></i></button>

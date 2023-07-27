@@ -12,6 +12,7 @@ use App\Http\Livewire\Product\AddProduct;
 use App\Http\Livewire\Product\ManageProduct;
 use App\Http\Livewire\Product\UpdateProduct;
 use App\Http\Livewire\Order\CreateOrder;
+use App\Http\Livewire\Order\UpdateOrder;
 use App\Http\Livewire\Order\ManageOrder;
 use App\Http\Livewire\Order\UnpaidOrders;
 use App\Http\Livewire\Inventory\Stockin;
@@ -29,6 +30,7 @@ use \App\Http\Livewire\NewPos\Pos;
 use \App\Http\Livewire\CRM\SpecialContact;
 use \App\Http\Livewire\CRM\NormalContact;
 use \App\Http\Livewire\Supplier\LoanProducts;
+use \App\Http\Livewire\Log\AppActivityLog;
 
 Route::get('/', [HomeController::class, 'home']);
 
@@ -59,6 +61,7 @@ Route::group(['middleware'=> ['auth']], function () {
     Route::get('orders/create', CreateOrder::class)->name('order.create');
     Route::get('orders', ManageOrder::class)->name('order.manage');
     Route::get('orders/unpaid', UnpaidOrders::class)->name('order.unpaid');
+    Route::get('orders/{order_id}', UpdateOrder::class)->name('order.edit');
 
     Route::get('purchases', ManagePurchase::class)->name('purchase.manage');
     Route::get('purchases/create', CreatePurchaseOrder::class)->name('purchase.create');
@@ -80,6 +83,7 @@ Route::group(['middleware'=> ['auth']], function () {
 
     // New Pos
     Route::get('/pos', Pos::class)->name('pos');
+    Route::get('/logs', AppActivityLog::class)->name('logs');
 
 
 });
