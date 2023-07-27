@@ -156,4 +156,29 @@ class OrderCreateService
             throw $ex;
         }
     }
+
+    public function updateOrder($order_payload)
+    {
+        DB::beginTransaction();
+        try {
+            $sales_order    = SalesOrder::query()->find($order_payload['order_id']);
+            if($order_payload['paid_amount'] >= $sales_order->net_payment_amount){
+                $sales_order->is_paid    = 1;
+                $sales_order->due_amount = 0;
+
+            }else{
+                $sales_order->due_amount = $sales_order->net_payment_amount - $order_payload['paid_amount'];
+            }
+            $sales_order->paid_amount    = $order_payload['paid_amount'] ?? 0;
+            $sales_order->payment_method = $order_payload['payment_method'] ?? 'cash';
+            $sales_order->save();
+            DB::commit();
+
+            return $sales_order->id;
+
+        } catch(Exception $ex) {
+            DB::rollBack();
+            throw $ex;
+        }
+    }
 }

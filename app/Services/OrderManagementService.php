@@ -82,8 +82,6 @@ class OrderManagementService
                 ->with([
                     'sales_items:id,sales_order_id,variation_id,sku_id,unit_sales_price,cogs_price,quantity,gross_amount,discount_amount,total_discount_amount,total_sales_price',
                     'sales_items.variation:id,variation_name',
-                    'sales_items.sku:id,selling_price,cogs_price',
-                    'sales_items.sku.stock:sku_id,quantity',
                     'customer:id,name,phone'
                 ])
                 ->findOrFail($order_id);
@@ -114,9 +112,6 @@ class OrderManagementService
                     'supplier_id'         => $item->supplier_id,
                     'sku_id'              => $item->sku_id,
                     'quantity'            => $item->quantity,
-                    'stock'               => $item->sku?->stock->quantity,
-                    'cogs_price'          => $item->sku?->cogs_price,
-                    'selling_price'       => $item->sku?->selling_price,
                     'unit_price'          => $item->unit_sales_price,
                     'discount'            => $item->discount_amount,
                     'applied_discount_id' => $item->applied_discount_id,

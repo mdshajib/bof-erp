@@ -16,75 +16,19 @@
             <div class="card">
                 <div class="card-body p-3 order-create">
                     <div class="row">
-                        <div class="col-md-6 col-lg-6">
-                            <div class="row">
-                                <div class="col-md-6 col-lg-6">
-                                    <div class="mb-2">
-                                        <form wire:submit.prevent="readBarcode" name="product_find">
-                                            <label for="barcode" class="form-label required">Barcode</label>
-                                            <div class="form-group has-search">
-                                                <span class="fa fa-search form-control-feedback"></span>
-                                                <input type="text" class="form-control" id="barcode" placeholder="Barcode" wire:model.defer="barcode" autofocus autocomplete="off" />
-                                                @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-lg-6">
-                                    <div class="mb-2">
-                                        <label for="product_name" class="form-label">Or Product Name</label>
-                                        <div class="form-group has-search">
-                                            <span class="fa fa-search form-control-feedback"></span>
-                                            <input type="text" class="form-control" id="product_name" placeholder="Product Name" wire:model="product_name" autocomplete="off" />
-                                            @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
-                                        </div>
-                                        @if(count($product_list) > 0)
-                                            <div class="dialog">
-                                                @foreach($product_list as $product_variation)
-                                                    <a wire:click.prevent="getProductInfo({{$product_variation->id}})">
-                                                        <div> {{$product_variation->variation_name}} </div>
-                                                    </a>
-                                                @endforeach
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
+                        <div class="col-md-3">
+                            <div class="mb-2">
+                                <label for="phone" class="form-label">Customer Phone</label><br/>
+                                <label for="phone" class="form-label">{{ $phone }}</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-2">
-                                <label for="phone" class="form-label">Customer Phone</label>
-                                <div class="form-group has-search">
-                                    <span class="fa fa-search form-control-feedback"></span>
-                                    <input type="text" class="form-control" maxlength="11" id="phone" placeholder="Customer Phone" wire:model.lazy="phone" autocomplete="off" />
-                                    @error('phone') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-2">
-                                <label for="customer_name" class="form-label">Customer Name</label>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="customer_name" placeholder="Customer Name" wire:model.defer="name" autocomplete="off" />
-                                    @error('name') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                                <label for="customer_name" class="form-label">Customer Name</label> <br/>
+                                <label for="customer_name" class="form-label">{{ $name }}</label>
                             </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <div class="mb-2">
-                                <label for="order_note" class="form-label">Order Notes</label>
-                                <input type="text" class="form-control" id="order_note" placeholder="Enter Order notes" wire:model.defer="order_note">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="mb-2">
-                                <label for="internal_comments" class="form-label">Internal Comments</label>
-                                <input type="text" class="form-control" id="internal_comments" placeholder="Internal comments here" wire:model.defer="internal_comments">
-                            </div>
-                        </div>
                         <div class="col-md-3">
                             <div class="mb-2">
                                 <label for="paid_amount" class="form-label required">Paid Amount</label>
@@ -115,12 +59,10 @@
                                         <th width="8%">Discount</th>
                                         <th width="10%">Total Discount</th>
                                         <th width="8%">Total</th>
-                                        <th width="6%">Stock</th>
-                                        <th width="6%">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @include('livewire.order._add_row')
+                                    @include('livewire.order._show_row')
                                     </tbody>
                                 </table>
                             </div>
@@ -151,9 +93,6 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <div class="col-md-4 mt-2">
-                                {{--                            <div class="d-grid gap-2">--}}
-                                {{--                                <button type="button" wire:click="saveOrder"  class="btn btn-primary btn-light">Confirm Order</button>--}}
-                                {{--                            </div>--}}
                                 <button type="button" wire:click="saveOrder"  class="btn btn-primary btn-light btn-label w-50 me-2" wire:loading.attr="disabled">
                                     <i class="fas fa-shopping-basket label-icon"></i>
                                     Confirm Order
@@ -161,10 +100,10 @@
                                         <i class="fas fa-spin fa-spinner mr-2"></i>
                                     </div>
                                 </button>
-                                <button type="button" wire:click="orderCancel"  class="btn btn-danger btn-label w-46" >
+                                <a href="{{ route('order.manage') }}"  class="btn btn-danger btn-label w-46" >
                                     <i class="bx bx-block label-icon"></i>
                                     Cancel Order
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
