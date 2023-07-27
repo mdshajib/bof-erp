@@ -16,7 +16,7 @@ class StockManagementService
          DB::beginTransaction();
         try
         {
-            $is_adjust = 0;  $item = []; $message = null;$type = 'in';
+            $is_adjust = 0;  $item = []; $message = null;$type = 'in'; $note = 'Stock Added';
             $sku = Sku::query()
                 ->select('id','product_id','variation_id','purchase_order_id','quantity','supplier_id')
                 ->with(['stock:sku_id,product_id,variation_id,quantity'])
@@ -36,29 +36,18 @@ class StockManagementService
                 $this->createStock($item);
             }
             else {
-
                 if ($stock_type === 'add') {
                     if($sku->stock?->sku_id == $barcode){
                         throw new Exception("Already stock added with this barcode!!");
                     }
                     $this->stockIncrement($sku->id, $sku->quantity);
-                    $message = 'Product stock added.';
-                } else if ($stock_type === 'adjust_plus') {
-                    $this->stockIncrement($sku->id, $sku->quantity);
-                    $is_adjust = 1;
-                    $message = 'Product adjust plus added.';
-                } else if ($stock_type === 'adjust_minus') {
-                    $this->stockDecrement($sku->id, $sku->quantity);
-                    $message = 'Product adjust minus added.';
-                    $type = 'out';
-                    $is_adjust = 1;
                 }
             }
 
-            $this->createTransaction( $item, $type, $is_adjust);
+            $this->createTransaction( $item, $type, $is_adjust, $note);
 
             DB::commit();
-
+            $message = 'Product stock added.';
             return $message;
         }
         catch(Exception $ex)
@@ -73,7 +62,7 @@ class StockManagementService
         return $this->todayTransactions();
     }
 
-    public function stockPlus($barcode, $quantity = 0)
+    public function stockPlus($barcode, $quantity = 0, $note = null)
     {
         DB::beginTransaction();
         try{
@@ -96,7 +85,7 @@ class StockManagementService
             }else{
                 $this->stockIncrement($sku->id, $quantity);
             }
-            $this->createTransaction( $item, 'in', 1);
+            $this->createTransaction( $item, 'in', 1, $note);
 
             DB::commit();
             return 'Product adjust plus added.';
@@ -108,7 +97,7 @@ class StockManagementService
         }
     }
 
-    public function stockMinus($barcode, $quantity = 0)
+    public function stockMinus($barcode, $quantity = 0,  $note = null)
     {
         DB::beginTransaction();
         try{
@@ -133,7 +122,7 @@ class StockManagementService
             $item['quantity']     = $quantity;
 
             $this->stockDecrement($sku->id, $quantity);
-            $this->createTransaction( $item, 'out', 1);
+            $this->createTransaction( $item, 'out', 1, $note);
 
             DB::commit();
             return 'Product adjust minus added.';

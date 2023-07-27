@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('variation_id')->references('id')->on('product_variations')->onDelete('Cascade');
             $table->foreignId('supplier_id')->references('id')->on('suppliers')->onDelete('Cascade');
             $table->string('sku_id')->nullable();
-            $table->integer('quantity')->default(0);
+            $table->float('quantity',6,2)->default(0);
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
 

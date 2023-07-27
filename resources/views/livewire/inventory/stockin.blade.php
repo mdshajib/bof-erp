@@ -52,9 +52,8 @@
                         <div class="tab-pane {{ $activeTab == 'adjustPlus' ? 'active' : ''}}" id="adjustPlus" role="tabpanel">
                             <div class="mb-3">
                                 <form class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <div class="mb-3">
-                                            <label for="sku" class="form-label font-size-14">Enter Barcode</label>
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control" id="sku" name="sku" placeholder="Barcode" wire:model.defer="sku" autocomplete="off" autofocus />
@@ -62,15 +61,21 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label" for="quantity">Quantity</label>
                                             <input type="number" class="form-control" id="quantity" wire:model.defer="quantity" placeholder="Qt">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="mb-3 pt-4">
-                                            <button class="btn btn-primary mt-1" wire:click.prevent="adjustPlus"> Adjust <i class="fa fa-plus ms-2"></i></button>
+
+                                    <div class="col-md-8">
+                                        <div class="mb-3 ">
+                                            <input type="text" class="form-control" id="note" name="note" placeholder="note *" wire:model.defer="note" />
+                                            @error('note') <span class="invalid-feedback d-block text-danger mb-3">{{ $message }}</span> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <button class="btn form-control btn-primary" wire:click.prevent="adjustPlus"> Adjust <i class="fa fa-plus ms-2"></i></button>
                                         </div>
                                     </div>
                                 </form>
@@ -79,9 +84,8 @@
                         <div class="tab-pane {{ $activeTab == 'adjustMinus' ? 'active' : ''}}" id="adjustMinus" role="tabpanel">
                             <div class="mb-3">
                                 <form class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <div class="mb-3">
-                                            <label for="sku" class="form-label font-size-14">Enter Barcode</label>
                                             <div class="form-group has-search">
                                                 <span class="fa fa-search form-control-feedback"></span>
                                                 <input type="text" class="form-control" id="sku" name="sku" placeholder="Barcode" wire:model.defer="sku" autocomplete="off" autofocus />
@@ -89,15 +93,20 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="mb-3">
-                                            <label class="form-label" for="quantity">Quantity</label>
                                             <input type="number" class="form-control" id="quantity" wire:model.defer="quantity" placeholder="Qt">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="mb-3 pt-4">
-                                            <button class="btn btn-danger mt-1" wire:click.prevent="adjustMinus"> Adjust <i class="fa fa-minus ms-2"></i></button>
+                                    <div class="col-md-8">
+                                        <div class="mb-3 ">
+                                            <input type="text" class="form-control" id="note" name="note" placeholder="note *" wire:model.defer="note" />
+                                            @error('note') <span class="invalid-feedback d-block text-danger mb-3">{{ $message }}</span> @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <button class="btn form-control btn-danger" wire:click.prevent="adjustMinus"> Adjust <i class="fa fa-minus ms-2"></i></button>
                                         </div>
                                     </div>
                                 </form>

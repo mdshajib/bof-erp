@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('variation_id')->references('id')->on('product_variations')->onDelete('Cascade');
             $table->foreignId('supplier_id')->references('id')->on('suppliers')->onDelete('Cascade');
             $table->string('sku_id')->nullable();
-            $table->integer('quantity');
+            $table->float('quantity',6,2)->default(0);
             $table->integer('stock_after_transaction')->default(0);
             $table->string('type')->comment('in,out');
             $table->tinyInteger('is_adjust')->default(0)->comment('1 for adjust yes and 0 for no adjust');

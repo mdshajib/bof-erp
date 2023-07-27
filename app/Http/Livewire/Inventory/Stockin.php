@@ -13,6 +13,7 @@ class Stockin extends BaseComponent
 
     public $sku;
     public $quantity = 0;
+    public $note = null;
 
     public function render()
     {
@@ -36,32 +37,42 @@ class Stockin extends BaseComponent
     public function adjustPlus()
     {
         try {
-            $status = (new StockManagementService())->stockPlus($this->sku, $this->quantity);
+            $rules = [
+                'quantity'  => 'required|numeric|gt:0',
+                'note'      => 'required',
+            ];
+
+            $this->validate($rules);
+            $status = (new StockManagementService())->stockPlus($this->sku, $this->quantity, $this->note);
             if($status != null) {
                 $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Stock Operation', 'message' => $status]);
+                $this->note     = null;
                 $this->sku      = null;
                 $this->quantity = 0;
             }
         } catch (Exception $ex) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Stock Error', 'message' => $ex->getMessage()]);
-            $this->sku = '';
-            $this->quantity = 0;
         }
     }
 
     public function adjustMinus()
     {
         try {
-            $status = (new StockManagementService())->stockMinus($this->sku, $this->quantity);
+            $rules = [
+                'quantity'  => 'required|numeric|gt:0',
+                'note'      => 'required',
+            ];
+
+            $this->validate($rules);
+            $status = (new StockManagementService())->stockMinus($this->sku, $this->quantity, $this->note);
             if($status != null) {
                 $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Stock Operation', 'message' => $status]);
+                $this->note     = null;
                 $this->sku      = null;
                 $this->quantity = 0;
             }
         } catch (Exception $ex) {
             $this->dispatchBrowserEvent('notify', ['type' => 'error', 'title' => 'Stock Error', 'message' => $ex->getMessage()]);
-            $this->sku = '';
-            $this->quantity = 0;
         }
     }
 

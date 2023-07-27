@@ -26,7 +26,7 @@ trait StockAndTransaction
         return Stock::where('sku_id', $sku)->first()?->quantity;
     }
 
-    public function createTransaction( $item, $type = 'out', $is_adjust = 0)
+    public function createTransaction( $item, $type = 'out', $is_adjust = 0, $note = null)
     {
         $current_stock = $this->currentStock($item['sku_id']);
         $transaction['outlet_id']               = $item['outlet_id'];
@@ -38,6 +38,7 @@ trait StockAndTransaction
         $transaction['stock_after_transaction'] = $current_stock ? $current_stock : 0;
         $transaction['type']                    = $type;
         $transaction['is_adjust']               = $is_adjust;
+        $transaction['note']                    = $note;
         $transaction['created_by']              = auth()->user()->id;
 
         return Transaction::create($transaction);

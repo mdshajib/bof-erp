@@ -32,7 +32,7 @@ class TransactionList extends BaseComponent
     public function getRowsQueryProperty()
     {
         $query = Transaction::query()
-            ->select('id','variation_id','sku_id','quantity','type','is_adjust','created_by','created_at')
+            ->select('id','variation_id','sku_id','quantity','type','is_adjust','note','created_by','created_at')
             ->with([
                 'user:id,first_name,last_name',
                 'variation:id,variation_name',
