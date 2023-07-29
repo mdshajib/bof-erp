@@ -50,14 +50,14 @@ class ThermalPrintService
             $printer->text("\n");
 
             $printer->text($total. $discount. $net_payable);
-            $printer->text("\n");
-            $paid = 'Paid: '.$order_data['order_info']['paid_amount'];
+            $printer->text("\n\n");
+            $paid = 'Paid : '.$order_data['order_info']['paid_amount'];
             $due  = 'Due: '. $order_data['summary']['net_amount'] - $order_data['order_info']['paid_amount'];
-            $paid = str_pad($paid , 15, " ");
+            $paid = str_pad($paid , 13, " ");
             $due  = str_pad($due , 15, " ");
             $printer->text($paid. $due);
             $printer->text("\n\n");
-            $printer->setTextSize(1, 2);
+            $printer->setTextSize(2, 2);
             $printer->text("Developed By SCSS");
             $printer->text("\n\n");
             $printer->cut();
