@@ -52,9 +52,9 @@ class ThermalPrintService
             $printer->text($total. $discount. $net_payable);
             $printer->text("\n");
 
-            $paid = 'Paid: '.$order_data['paid_amount'];
+            $paid = 'Paid: '.$order_data['order_info']['paid_amount'];
             $paid = str_pad($paid , 15, " ");
-            $due  = 'Due: '. $net_payable - $order_data['paid_amount'];
+            $due  = 'Due: '. $net_payable - $order_data['order_info']['paid_amount'];
             $due  = str_pad($due , 15, " ");
             $printer->text($paid. $due);
             $printer->text("\n\n");
