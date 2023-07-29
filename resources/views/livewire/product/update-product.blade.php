@@ -71,7 +71,7 @@
                                                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                                                     <div class="mb-3">
                                                         <label class="required" for="category">Product Category</label>
-                                                        <x-form.select id="category" wire:model.defer="product_info.category" placeholder="{{ __('Category') }}">
+                                                        <x-form.select id="category" wire:model.lazy="product_info.category" placeholder="{{ __('Category') }}">
                                                             <option value="">Select Category</option>
                                                             @foreach($categories as $category)
                                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -155,7 +155,7 @@
                                 <div>
                                     <div class="text-left mb-4">
                                         <h5>Product Price</h5>
-                                        <p class="card-title-desc">Fill in all information below</p>
+                                        <p class="card-title-desc">Fill in all information below. COGS Price must greater than 0</p>
                                     </div>
                                     <form>
                                         <div class="row">
@@ -174,8 +174,8 @@
                             <div class="tab-pane {{ $currentStep == 4 ? 'active' : '' }}" id="progress-product-media">
                                 <div>
                                     <div class="text-left mb-4">
-                                        <h5>Product Image/Video</h5>
-                                        <p class="card-title-desc">Fill in all information below</p>
+                                        <h5>Product Image</h5>
+                                        <p class="card-title-desc">Fill in all information below. Minimum size 200x200</p>
                                     </div>
                                     @include('livewire.product._add_image')
                                     <ul class="pager wizard twitter-bs-wizard-pager-link">

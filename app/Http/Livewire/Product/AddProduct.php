@@ -35,7 +35,7 @@ class AddProduct extends BaseComponent
     public function mount()
     {
         $this->initDefaults();
-        $this->categories  = Category::select('id', 'name')->where('is_active', 1)->get();
+        $this->categories  = Category::select('id', 'name','type')->where('is_active', 1)->get();
         $this->suppliers   = Supplier::select('id', 'name','address')->where('is_active', 1)->get();
     }
     public function render()
@@ -115,7 +115,8 @@ class AddProduct extends BaseComponent
     {
         try {
             $rules = [
-                'variation_section.*.low_quantity_alert'    => 'required|numeric|gt:0',
+                'variation_section.*.low_quantity_alert'  => 'required|numeric|gt:0',
+                'variation_section.*.variation_name'      => 'required',
             ];
 
             $this->validate($rules);
@@ -153,6 +154,14 @@ class AddProduct extends BaseComponent
     {
         $fields = explode('.', $name);
 
+        if(count($fields) > 1 && $fields[1] == 'category'){
+            $this->product_info['type'] = 'finished-product';
+            $cat = $this->categories->where('id',$value )->first();
+            if($cat && $cat->type == 'raw-material'){
+                $this->product_info['type'] = $cat->type;
+            }
+        }
+
         if(count($fields) > 2) {
             $key          = $fields[1];
             if ($fields[2] == 'cogs_price') {
@@ -160,6 +169,8 @@ class AddProduct extends BaseComponent
                 $this->price_section[$key]['selling_price'] = $selling_price;
             }
         }
+
+
     }
 
     public function productPriceSubmit()

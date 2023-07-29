@@ -56,7 +56,7 @@
                 <x-table.th>Total COGS Price | COGS Price</x-table.th>
                 <x-table.th>Total Selling Price | Selling Price</x-table.th>
                 <x-table.th>Return</x-table.th>
-                <x-table.th>To be Pay</x-table.th>
+                <x-table.th>Payable</x-table.th>
                 <x-table.th>Status</x-table.th>
             </tr>
         </x-slot>
@@ -71,7 +71,7 @@
                 <tr>
                     <td>{{ $product?->variation->variation_name }}</td>
                     <td>
-                        <a href="{{ route('purchase.view', ['purchase_id' => $product->purchase_order_id]) }}">
+                        <a class="btn-link logo-color" href="{{ route('purchase.view', ['purchase_id' => $product->purchase_order_id]) }}">
                             PR#{{ str_pad($product->purchase_order_id, 6, '0', STR_PAD_LEFT) }}
                         </a>
                     </td>

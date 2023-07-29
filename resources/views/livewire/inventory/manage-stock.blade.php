@@ -74,7 +74,7 @@
                 <tr>
                     <td> {{ $stock->variation?->variation_name }} </td>
                     <td>
-                        <a href="{{ route('purchase.view', ['purchase_id' => $stock->sku?->purchase_order_id]) }}">
+                        <a class="btn-link logo-color" href="{{ route('purchase.view', ['purchase_id' => $stock->sku?->purchase_order_id]) }}">
                             PR#{{ str_pad($stock->sku?->purchase_order_id, 6, '0', STR_PAD_LEFT) }}
                         </a>
                     </td>

@@ -32,7 +32,7 @@ class UpdateProduct extends BaseComponent
 
     public function render()
     {
-        $this->categories  = Category::select('id', 'name')->where('is_active', 1)->get();
+        $this->categories  = Category::select('id', 'name', 'type')->where('is_active', 1)->get();
         $this->suppliers   = Supplier::select('id', 'name','address')->where('is_active', 1)->get();
 
         return $this->view('livewire.product.update-product',[]);
@@ -172,6 +172,14 @@ class UpdateProduct extends BaseComponent
     public function updated($name, $value)
     {
         $fields = explode('.', $name);
+
+        if(count($fields) > 1 && $fields[1] == 'category'){
+            $this->product_info['type'] = 'finished-product';
+            $cat = $this->categories->where('id',$value )->first();
+            if($cat && $cat->type == 'raw-material'){
+                $this->product_info['type'] = $cat->type;
+            }
+        }
 
         if(count($fields) > 2) {
             $key          = $fields[1];

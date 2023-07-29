@@ -73,7 +73,7 @@
                     </td>
                     <td> {{ $transaction->sku_id }} </td>
                     <td>
-                        <a href="{{ route('purchase.view', ['purchase_id' => $transaction->sku?->purchase_order_id]) }}">
+                        <a class="btn-link logo-color" href="{{ route('purchase.view', ['purchase_id' => $transaction->sku?->purchase_order_id]) }}">
                             PR#{{ str_pad($transaction->sku?->purchase_order_id, 6, '0', STR_PAD_LEFT) }}
                         </a>
                     </td>
