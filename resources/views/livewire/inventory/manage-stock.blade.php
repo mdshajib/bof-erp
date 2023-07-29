@@ -88,14 +88,7 @@
                     <td> {{ $stock->quantity }} </td>
                     <td> {{ $stock->quantity * $stock->sku?->cogs_price }} | {{ $stock->sku?->cogs_price }}</td>
                     <td> {{ $stock->quantity * $stock->sku?->selling_price }} | {{  $stock->sku?->selling_price }}</td>
-                    <td>
-                        <div class="ms-2">
-                            {!! DNS1D::getBarcodeHTML($stock->sku_id, 'C128',1,30,'black') !!}
-                        </div>
-                        <div>
-                            <span style="letter-spacing: 0.12rem;">{{ $stock->sku_id }}</span>
-                        </div>
-                    </td>
+                    <td> {{ $stock->sku_id }} </td>
                     <td>{{ $stock?->supplier?->name }}, {{ $stock?->supplier?->address }}</td>
                 </tr>
             @empty
