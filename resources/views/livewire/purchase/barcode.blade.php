@@ -82,7 +82,7 @@
                             <table border="0">
                                 <tr>
                                     <td height="15" style="padding: 0 5px;text-align: center;">
-                                        <img style="width: auto;" src="{!! DNS1D::getBarcodePNGPath($item->id, 'C128',1,40) !!}">
+                                        <img style="width: auto;" src="{{ public_path().'/generated_barcode/'.$item->id.'.png' }}">
                                     </td>
                                 </tr>
                                 <tr>

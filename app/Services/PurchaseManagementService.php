@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Mpdf\Mpdf;
+use \Milon\Barcode\DNS1D;
 
 class PurchaseManagementService
 {
@@ -251,6 +252,7 @@ class PurchaseManagementService
                 $sku_item['selling_price']       = $item->selling_price;
 
                 Sku::updateOrCreate(['id' => $sku], $sku_item);
+                DNS1D::getBarcodePNGPATH($sku, 'C128',1,40);
             }
             PurchaseOrder::where('id', $purchase_id)->update(['barcode_print' => 1]);
             DB::commit();
