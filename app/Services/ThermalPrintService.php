@@ -57,7 +57,7 @@ class ThermalPrintService
             $due  = str_pad($due , 15, " ");
             $printer->text($paid. $due);
             $printer->text("\n\n");
-            $printer->setTextSize(2, 2);
+            $printer->setTextSize(1, 1);
             $printer->text("Developed By SCSS");
             $printer->text("\n\n");
             $printer->cut();
