@@ -13,8 +13,8 @@ class ThermalPrintService
         try
         {
             $order_data = (new OrderManagementService())->viewOrderDetails($order_id);
-
-            $connector = new WindowsPrintConnector('RONGTA 80mm Series Printer');
+            $printer_name = config('bof.printer_name');
+            $connector = new WindowsPrintConnector($printer_name);
             $printer = new Printer($connector);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setTextSize(1, 1);
