@@ -14,6 +14,7 @@ class Dashboard extends BaseComponent
         $data['month']  = $this->getMonthData();
         $data['year']   = $this->getYearData();
 
+        $data['analytics'] = $this->productsAnalytics();
         return $this->view('livewire.dashboard', $data);
     }
 
@@ -48,6 +49,15 @@ class Dashboard extends BaseComponent
     {
         try {
             return (new DashboardService())->yearData();
+        } catch (\Exception $ex){
+            return $ex->getMessage();
+        }
+    }
+
+    private function productsAnalytics()
+    {
+        try {
+            return (new DashboardService())->productAnalytics();
         } catch (\Exception $ex){
             return $ex->getMessage();
         }

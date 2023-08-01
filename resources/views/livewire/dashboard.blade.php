@@ -91,7 +91,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="card card-h-100">
                 <div class="card-body">
-                    <div id="monthly_sales" class="apex-charts" dir="ltr"></div>
+                    <div id="product_analytics" class="apex-charts" dir="ltr"></div>
                 </div>
             </div>
         </div>
@@ -101,6 +101,8 @@
 @push('footer')
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script>
-        monthlyBarChart();
+        let product_bar_chart  = @json($analytics['bar']);
+        let range_series       = @json($analytics['range_series']);
+        monthlyBarChart(product_bar_chart,range_series);
     </script>
 @endpush

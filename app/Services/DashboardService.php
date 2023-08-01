@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Product;
+use App\Models\SalesItem;
 use App\Models\SalesOrder;
 use Carbon\Carbon;
 use Exception;
@@ -125,5 +127,58 @@ class DashboardService
         {
             throw $ex;
         }
+    }
+
+    public function productAnalytics()
+    {
+        $full_response = [];
+        $sales_items = SalesItem::query()->selectRaw('product_id,SUM(total_sales_price) as price, Month(created_at) as order_date')
+            ->addSelect([
+                'product' => Product::select('title')->whereColumn('products.id','sales_items.product_id'),
+            ])
+            ->groupBy('product_id')
+            ->groupBy(DB::raw('Month(created_at)'))
+            ->get();
+
+        $products         = $sales_items->pluck('product')->toArray();
+        $products         = array_unique($products);
+        $response         = [];
+        $counter          = 1;
+
+        if (count($products) > 0) {
+            foreach ($products as $product) {
+                $color = $this->generateColor();
+                $summary = 0;
+                $monthly_data_set = [];
+                $monthData = $sales_items->where('product', $product);
+                if (count($monthData) > 0) {
+                    for ($monthnumber = 1; $monthnumber <= 12; $monthnumber++) {
+                        $filter             = $monthData->where('order_date', $monthnumber)->first();
+                        $monthly_data_set[] = $filter ? number_format($filter->price, 2, '.', '') : 0;
+                        $summary            += $filter ? $filter->price : 0;
+                        if ($counter == 1) {
+                            $range_series[] = date('M.', mktime(0, 0, 0, $monthnumber, 10));
+                        }
+                    }
+                    $counter++;
+                }
+
+                $response[] = [
+                    'name'    => $product,
+                    'summary' => number_format($summary, 2),
+                    'data'    => $monthly_data_set,
+                    'color'   => $color,
+                ];
+            }
+        }
+
+        $full_response['range_series'] = array_values($range_series);
+        $full_response['bar']          = $response;
+        return $full_response;
+    }
+
+    public function generateColor()
+    {
+        return '#'.str_pad(dechex(mt_rand(0xFFFFFF / 6, 0xFFFFFF)), 2, '0', STR_PAD_LEFT);
     }
 }

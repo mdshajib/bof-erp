@@ -74,4 +74,9 @@ class ProductCreateService
              throw $ex;
          }
     }
+
+    public function generateColor()
+    {
+        return '#'.str_pad(dechex(mt_rand(0xFFFFFF / 6, 0xFFFFFF)), 2, '0', STR_PAD_LEFT);
+    }
 }

@@ -1,18 +1,6 @@
-function monthlyBarChart(){
+function monthlyBarChart(series, range_series){
     var options = {
-        series: [{
-            name: 'PRODUCT A',
-            data: [44, 55, 41, 67, 22, 43, 66, 66,77, 87, 99, 76]
-        }, {
-            name: 'PRODUCT B',
-            data: [44, 55, 41, 67, 22, 43, 66, 66,77, 87, 99, 76]
-        }, {
-            name: 'PRODUCT C',
-            data: [44, 55, 41, 67, 22, 43, 66, 66,77, 87, 99, 76]
-        }, {
-            name: 'PRODUCT D',
-            data: [44, 55, 41, 67, 22, 43, 66, 66,77, 87, 99, 76]
-        }],
+        series: series,
         title: {
             text: 'This Year Sales'
         },
@@ -62,7 +50,7 @@ function monthlyBarChart(){
             shared: true,
         },
         xaxis: {
-            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            categories: range_series,
             title: {
                 text: "Month"
             }
@@ -83,7 +71,7 @@ function monthlyBarChart(){
         }
     };
 
-    var chart = new ApexCharts(document.querySelector("#monthly_sales"), options);
+    var chart = new ApexCharts(document.querySelector("#product_analytics"), options);
     chart.render();
 }
 
