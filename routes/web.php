@@ -88,3 +88,7 @@ Route::group(['middleware'=> ['auth']], function () {
 
 });
 
+Route::get('/receipt', function (){
+    return view('livewire.order.receipt');
+});
+
