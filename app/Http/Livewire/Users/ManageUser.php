@@ -131,7 +131,8 @@ class ManageUser extends BaseComponent
         $data['password']   = bcrypt($this->password);
         $data['is_active']  = $this->active;
         $data['role']       = $this->role;
-        User::create($data);
+        $user = User::create($data);
+        $user->assignRole($this->role);
 
         $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Active', 'message' => 'User created successfully']);
     }
@@ -145,6 +146,7 @@ class ManageUser extends BaseComponent
             $user->is_active  = $this->active;
             $user->role       = $this->role;
             $user->save();
+            $user->syncRoles($this->role);
 
             $this->dispatchBrowserEvent('notify', ['type' => 'success', 'title' => 'Active', 'message' => 'User updated successfully']);
         } catch (\Exception $ex) {

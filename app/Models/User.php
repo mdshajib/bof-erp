@@ -12,10 +12,11 @@ use Laravel\Sanctum\HasApiTokens;
 use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, SoftDeletes, LogsActivity;
+    use HasApiTokens, HasRoles, HasFactory, HasProfilePhoto, Notifiable, SoftDeletes, LogsActivity;
 
     protected $dates = ['deleted_at'];
 
