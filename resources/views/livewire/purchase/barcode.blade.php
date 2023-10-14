@@ -27,7 +27,7 @@
         margin-bottom: 5px;
     }
     .card{
-        width: 100%;
+        width: 190px;
     }
     .bar-card{
         width: auto;
