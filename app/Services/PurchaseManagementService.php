@@ -26,13 +26,14 @@ class PurchaseManagementService
                 ])
                 ->where('purchase_order_id', $purchase_order_id)
                 ->get();
-
+            $this->makeBarcode($purchase_items);
             $pdf_data  = view('livewire.purchase.barcode', compact('purchase_items'))->render();
             //return $pdf_data;
             $file_dir   = 'public'.DIRECTORY_SEPARATOR.'barcodes'.DIRECTORY_SEPARATOR;
             $file_name  = 'barcodes-'.$purchase_order_id.'.pdf';
             $file_dir   = 'barcodes/'.$this->makeLabelPDF($pdf_data, $file_name, $file_dir);
             $url        = Storage::disk('local')->url($file_dir);
+            $this->removeBarcode($purchase_items);
 
             return $url;
         }
@@ -94,6 +95,21 @@ class PurchaseManagementService
 
         return $file_name;
 
+    }
+
+    private function makeBarcode($skus)
+    {
+        foreach ($skus as $sku){
+            DNS1D::getBarcodePNGPATH($sku->id, 'C128',1,40);
+        }
+    }
+
+    private function removeBarcode($skus)
+    {
+        foreach ($skus as $sku) {
+            $file = public_path('generated_barcode/' . $sku->id . '.png');
+            unlink($file);
+        }
     }
 
     /**
@@ -306,7 +322,7 @@ class PurchaseManagementService
                 $sku_item['selling_price']       = $item->selling_price;
 
                 Sku::updateOrCreate(['id' => $sku], $sku_item);
-                DNS1D::getBarcodePNGPATH($sku, 'C128',1,40);
+//                DNS1D::getBarcodePNGPATH($sku, 'C128',1,40);
             }
             PurchaseOrder::where('id', $purchase_id)->update(['barcode_print' => 1]);
             DB::commit();

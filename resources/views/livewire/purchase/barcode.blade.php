@@ -76,6 +76,25 @@
                             $length = 1;
                         }
                     @endphp
+
+                    <div style="width: 144px;padding: 2px; float: left;">
+                        <table border="0">
+                            <tr>
+                                <td height="15" style="padding: 2px;text-align: center;">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="5" style="text-align: center;">
+                                    <span style="">{{ $item->variation_name }} </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="6" style="text-align: center;font-weight: bold;"></td>
+                            </tr>
+                        </table>
+                    </div>
+
                     @while($loop <= $length)
                         <div style="width: 144px;padding: 2px; float: left;">
                             <table border="0">
