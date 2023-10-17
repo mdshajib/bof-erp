@@ -76,28 +76,26 @@
                             $length = 1;
                         }
                     @endphp
-                    <p style="font-size: 10px;">{{ $item->variation_name }}</p>
                     @while($loop <= $length)
-                        <div style="width: 180px;padding: 10px 3px; float: left;border:1px solid #dedede;">
+                        <div style="width: 144px;padding: 2px; float: left;">
                             <table border="0">
                                 <tr>
-                                    <td height="15" style="padding: 0 5px;text-align: center;">
+                                    <td height="15" style="padding: 2px;text-align: center;">
                                         <img style="width: auto;" src="{{ public_path().'/generated_barcode/'.$item->id.'.png' }}">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td height="6" style="text-align: center;">
-                                        <span style="letter-spacing: 0.18rem;"> {{ $item->id }} </span>
+                                    <td height="5" style="text-align: center;">
+                                        <span style=""> {{ $item->id }} </span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td height="8" style="text-align: center;font-weight: bold;">{{ $item->selling_price }} Tk</td>
+                                    <td height="6" style="text-align: center;font-weight: bold;">{{ $item->selling_price }} Tk</td>
                                 </tr>
                             </table>
                         </div>
                         @php $loop ++; @endphp
                     @endwhile
-                    <hr/>
                 @endforeach
             </div>
         </div>

@@ -31,7 +31,7 @@ class PurchaseManagementService
             //return $pdf_data;
             $file_dir   = 'public'.DIRECTORY_SEPARATOR.'barcodes'.DIRECTORY_SEPARATOR;
             $file_name  = 'barcodes-'.$purchase_order_id.'.pdf';
-            $file_dir   = 'barcodes/'.$this->makePDF($pdf_data, $file_name, $file_dir);
+            $file_dir   = 'barcodes/'.$this->makeLabelPDF($pdf_data, $file_name, $file_dir);
             $url        = Storage::disk('local')->url($file_dir);
 
             return $url;
@@ -41,6 +41,60 @@ class PurchaseManagementService
             throw $ex;
         }
      }
+
+    private function makeLabelPDF( $pdf_data, $file_name, $file_dir, $header = null, $footer = null)
+    {
+
+        $defaultConfig     = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs          = $defaultConfig['fontDir'];
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData          = $defaultFontConfig['fontdata'];
+        $font_dir          = 'public'.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'fonts';
+        $config = [
+            'mode'          => '',
+            'format'        => [38,25],
+            'margin_left'   => 0.7,
+            'margin_right'  => 0.7,
+            'margin_top'    => 0.7,
+            'margin_bottom' => 0,
+            'fontDir'       => array_merge($fontDirs, [
+                base_path($font_dir),
+            ]),
+            'fontdata' => $fontData + [
+                    'futurapt' => [
+                        'R' => 'FuturaPT-Book.ttf',
+                    ],
+                ],
+            'default_font' => 'futurapt',
+        ];
+
+        $mpdf                      = new mPDF($config);
+        $mpdf->ignore_invalid_utf8 = true;
+        $mpdf->showImageErrors     = true;
+
+        if (! empty($header)) {
+//            $mpdf->SetHTMLHeader($header);
+        }
+        if (! empty($footer)) {
+//            $mpdf->SetHTMLFooter($footer);
+        } else {
+//            $mpdf->setFooter('{PAGENO} / {nb}');
+        }
+        $mpdf->WriteHTML($pdf_data);
+
+        $files     =  Storage::disk('local')->allFiles($file_dir);
+        // Delete Files
+        Storage::disk('local')->delete($files);
+        $file_dir .= $file_name;
+        ob_start();
+        $mpdf->Output($file_name, 'I');
+        $content = ob_get_contents();
+        ob_end_clean();
+        Storage::disk('local')->put($file_dir, $content);
+
+        return $file_name;
+
+    }
 
     /**
      * Make mPDF.
