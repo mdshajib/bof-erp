@@ -26,13 +26,14 @@ class PurchaseManagementService
                 ])
                 ->where('purchase_order_id', $purchase_order_id)
                 ->get();
-
+            $this->makeBarcode($purchase_items);
             $pdf_data  = view('livewire.purchase.barcode', compact('purchase_items'))->render();
             //return $pdf_data;
             $file_dir   = 'public'.DIRECTORY_SEPARATOR.'barcodes'.DIRECTORY_SEPARATOR;
             $file_name  = 'barcodes-'.$purchase_order_id.'.pdf';
-            $file_dir   = 'barcodes/'.$this->makePDF($pdf_data, $file_name, $file_dir);
+            $file_dir   = 'barcodes/'.$this->makeLabelPDF($pdf_data, $file_name, $file_dir);
             $url        = Storage::disk('local')->url($file_dir);
+            $this->removeBarcode($purchase_items);
 
             return $url;
         }
@@ -41,6 +42,75 @@ class PurchaseManagementService
             throw $ex;
         }
      }
+
+    private function makeLabelPDF( $pdf_data, $file_name, $file_dir, $header = null, $footer = null)
+    {
+
+        $defaultConfig     = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs          = $defaultConfig['fontDir'];
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData          = $defaultFontConfig['fontdata'];
+        $font_dir          = 'public'.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'fonts';
+        $config = [
+            'mode'          => '',
+            'format'        => [38,25],
+            'margin_left'   => 0.7,
+            'margin_right'  => 0.7,
+            'margin_top'    => 0.7,
+            'margin_bottom' => 0,
+            'fontDir'       => array_merge($fontDirs, [
+                base_path($font_dir),
+            ]),
+            'fontdata' => $fontData + [
+                    'futurapt' => [
+                        'R' => 'FuturaPT-Book.ttf',
+                    ],
+                ],
+            'default_font' => 'futurapt',
+        ];
+
+        $mpdf                      = new mPDF($config);
+        $mpdf->ignore_invalid_utf8 = true;
+        $mpdf->showImageErrors     = true;
+
+        if (! empty($header)) {
+//            $mpdf->SetHTMLHeader($header);
+        }
+        if (! empty($footer)) {
+//            $mpdf->SetHTMLFooter($footer);
+        } else {
+//            $mpdf->setFooter('{PAGENO} / {nb}');
+        }
+        $mpdf->WriteHTML($pdf_data);
+
+        $files     =  Storage::disk('local')->allFiles($file_dir);
+        // Delete Files
+        Storage::disk('local')->delete($files);
+        $file_dir .= $file_name;
+        ob_start();
+        $mpdf->Output($file_name, 'I');
+        $content = ob_get_contents();
+        ob_end_clean();
+        Storage::disk('local')->put($file_dir, $content);
+
+        return $file_name;
+
+    }
+
+    private function makeBarcode($skus)
+    {
+        foreach ($skus as $sku){
+            DNS1D::getBarcodePNGPATH($sku->id, 'C128',1,40);
+        }
+    }
+
+    private function removeBarcode($skus)
+    {
+        foreach ($skus as $sku) {
+            $file = public_path('generated_barcode/' . $sku->id . '.png');
+            unlink($file);
+        }
+    }
 
     /**
      * Make mPDF.
@@ -252,7 +322,7 @@ class PurchaseManagementService
                 $sku_item['selling_price']       = $item->selling_price;
 
                 Sku::updateOrCreate(['id' => $sku], $sku_item);
-                DNS1D::getBarcodePNGPATH($sku, 'C128',1,40);
+//                DNS1D::getBarcodePNGPATH($sku, 'C128',1,40);
             }
             PurchaseOrder::where('id', $purchase_id)->update(['barcode_print' => 1]);
             DB::commit();
