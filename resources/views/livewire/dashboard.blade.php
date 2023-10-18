@@ -101,8 +101,8 @@
 @push('footer')
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script>
-        let product_bar_chart  = @json($analytics['bar']);
-        let range_series       = @json($analytics['range_series']);
+        let product_bar_chart  = @json($analytics['bar'] ?? []);
+        let range_series       = @json($analytics['range_series']?? []);
         monthlyBarChart(product_bar_chart,range_series);
     </script>
 @endpush
