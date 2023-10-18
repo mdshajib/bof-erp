@@ -171,6 +171,7 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         Rakibhstu\Banglanumber\NumberToBanglaServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Spatie\Backup\BackupServiceProvider::class
 
     ])->toArray(),
 

@@ -84,6 +84,7 @@ Route::group(['middleware'=> ['auth']], function () {
     // New Pos
     Route::get('/pos', Pos::class)->name('pos');
     Route::get('/logs', AppActivityLog::class)->name('logs');
+    Route::get('/backup', \App\Http\Livewire\Backup\DatabaseBackup::class)->name('backup');
 
 
 });
