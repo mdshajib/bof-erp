@@ -54,6 +54,8 @@
                     <x-menu.item text="Sales" link="{{ route('reports.sales') }}" class="{{ (request()->is('/reports/sales')) ? 'active' : '' }}"/>
                 </x-menu.list>
 
+                <x-menu.item text="{{ __('Backup') }}" link="{{ route('backup') }}" icon="archive" class="{{ (request()->is('backup*')) ? 'active' : '' }} "/>
+
             </ul>
         </div>
     </div>
