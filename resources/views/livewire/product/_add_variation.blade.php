@@ -30,7 +30,7 @@
                                     allowImagePreview
                                     imagePreviewMaxHeight="200"
                                     allowFileSizeValidation
-                                    maxFileSize="30mb"
+                                    maxFileSize="40mb"
                                 />
 
                                 @error('variation_section.'.$key.'.path') <span class="text-danger">{{ $message }}</span> @enderror

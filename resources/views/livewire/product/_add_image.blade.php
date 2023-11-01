@@ -23,7 +23,7 @@
 								allowFileTypeValidation
 								acceptedFileTypes="['image/*']"
 								allowFileSizeValidation
-								maxFileSize="30mb"
+								maxFileSize="40mb"
 								allowImageValidateSize
 							/>
 
