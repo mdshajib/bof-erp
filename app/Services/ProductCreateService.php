@@ -25,7 +25,7 @@ class ProductCreateService
                 $product->supplier_id        = trim($product_info['supplier']);
                 $product->type               = trim($product_info['type']);
                 $product->description        = trim($product_info['description']);
-                $store_path                  = 'public'.DIRECTORY_SEPARATOR.'products';
+                $store_path                  = 'public/products';
                 $url                         = $image_section['path'] != null ? $this->imageUpload($image_section['path'], $store_path) : null;
                 $product->image_path         = $url;
 
@@ -39,7 +39,7 @@ class ProductCreateService
                     $variant_save                      = new ProductVariation();
                     $variant_save->product_id          = $this->product_id;
                     $variant_save->variation_name      = trim($variation['variation_name']);
-                    $store_path                        = 'public'.DIRECTORY_SEPARATOR.'variations';
+                    $store_path                        = 'public/variations';
                     $url                               = $variation['path'] != null ? $this->imageUpload($variation['path'], $store_path) : null;
                     $variant_save->image_path          = $url;
                     $variant_save->cogs_price          = trim($price_section[$key]['cogs_price']);

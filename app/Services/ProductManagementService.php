@@ -78,7 +78,7 @@ class ProductManagementService
     {
         try {
             DB::beginTransaction();
-            $store_path = 'public'.DIRECTORY_SEPARATOR.'products';
+            $store_path = 'public/'.'products';
             $url = $image_section['path'] != null ? $this->imageUpload($image_section['path'], $store_path) : null;
             Product::where('id', $image_section['product_id'])->update(['image_path' => $url]);
             DB::commit();
