@@ -8,7 +8,7 @@
                         <div class="col-lg-3">
                             <div class="mb-3">
                                 <label for="path" class="form-label">{{ __('Current Image') }}</label>
-                                <img src="{{$product_info['path']}}" alt="product-image" class="me-1 d-block" height="111">
+                                <img src="{{url(''.$product_info['path'])}}" alt="product-image" class="me-1 d-block" height="111">
                             </div>
                         </div>
                     @endif

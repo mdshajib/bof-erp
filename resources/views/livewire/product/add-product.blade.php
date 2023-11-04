@@ -163,7 +163,7 @@
                                 <div>
                                     <div class="text-left mb-4">
                                         <h5>Product Image</h5>
-                                        <p class="card-title-desc">Fill in all information below. Minimum size 200x200</p>
+                                        <p class="card-title-desc">Fill in all information below.</p>
                                     </div>
                                     @include('livewire.product._add_image')
                                     <ul class="pager wizard twitter-bs-wizard-pager-link">

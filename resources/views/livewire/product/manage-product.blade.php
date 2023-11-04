@@ -108,7 +108,7 @@
                     <td> {{ $product->supplier->name }}, {{ $product->supplier->address }}</td>
                     <td>
                         @if($product->image_path)
-                            <img src="{{ $product->image_path }}" alt="product-image" class="me-1" height="55">
+                            <img src="{{ url(''.$product->image_path) }}" alt="product-image" class="me-1" height="55">
                         @endif
                     </td>
                     <td>
